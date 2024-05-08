@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="English">
+  <head>
+    <title>Sign up</title>
+    <link rel="stylesheet" href="signup.css" />
+    <script>
+      function limitCheckboxes() {
+        const checkboxes = document.querySelectorAll('.role-check input[type="checkbox"]');
+        checkboxes.forEach((checkbox) => {
+          checkbox.addEventListener('change', () => {
+            checkboxes.forEach((cb) => {
+              if (cb !== checkbox) {
+                cb.checked = false;
+              }
+            });
+          });
+        });
+      }
+    </script>
+  </head>
+  <body onload="limitCheckboxes()">
+    <div class="container">
+      <div class="member-container">
+        <div class="header">
+          <div>WELCOME!</div>
+        </div>
+        <div class="user-info">
+          <div class="user-info-name">
+            <div>* ID</div>
+            <input type="text" />
+          </div>
+          <div class="user-info-pw">
+            <div>* Password</div>
+            <input type="Password" />
+            <div class="user-info-pw-check">
+              <div>* Verify Password</div>
+              <input type="password" />
+            </div>
+          </div>
+          <div class="role-check">
+            <div>* Your Role</div>
+            <ul>
+              <li>
+                <input type="checkbox" id="admin_role" name="role" value="admin"/>
+                <label for="admin_role">Administer</label>
+              </li>
+              <li>
+                <input type="checkbox" id="pl_role" name="role" value="pl"/>
+                <label for="pl_role">PL</label>
+              </li>
+              <li>
+                <input type="checkbox" id="developer_role" name="role" value="developer"/>
+                <label for="developer_role">Developer</label>
+              </li>
+              <li>
+                <input type="checkbox" id="tester_role" name="role" value="tester"/>
+                <label for="tester_role">Tester</label>
+              </li>
+            </ul>
+          </div>
+          <div class="btn">
+            <button>Sign Up</button>
+          </div>
+          <div class="signin-link">
+            <p><a href="signin.html">Go back to Sign In</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
