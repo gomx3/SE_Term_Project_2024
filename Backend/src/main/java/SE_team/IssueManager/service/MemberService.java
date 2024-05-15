@@ -19,7 +19,7 @@ public class MemberService {
         this.memRepo=memberRepository;
     }
 
-    public String join(Member member) {     //회원가입 서비스
+    public String signUp(Member member) {     //회원가입 서비스
         validateDuplicateMember(member);
         memRepo.save(member);
         return member.getId();
