@@ -1,8 +1,7 @@
 package SE_team.IssueManager.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import SE_team.IssueManager.domain.enums.Role;
+import jakarta.persistence.*;
 
 @Entity
 public class Member {
@@ -10,8 +9,14 @@ public class Member {
     @Id
     private String id;
 
-    @Column
+    @Column(name="pw")
     private String pw;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="role")
+    private Role role;
+
+
 
     public String getId() {
         return id;
@@ -27,5 +32,13 @@ public class Member {
 
     public void setPw(String pw) {
         this.pw = pw;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
