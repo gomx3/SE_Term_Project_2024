@@ -1,0 +1,19 @@
+.container {
+    background: aliceblue;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 450px;
+    height: 600px;
+    border: 1px solid #aacdff;
+    border-radius: 20px;
+}
+
+.sidebar_container {
+    background-color: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 1px solid skyblue;
+    border-radius: 20px;
+}

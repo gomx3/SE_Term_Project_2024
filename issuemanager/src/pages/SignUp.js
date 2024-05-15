@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './signup.css';
+import styles from './Signup.module.css';
 
 function SignUp() {
   // 선택된 역할 상태를 관리하는 useState 훅
@@ -17,25 +17,25 @@ function SignUp() {
             <title>Sign up</title>
         </head>
         <body>
-            <div class="container">
-            <div class="member-container">
-                <div class="header">
+            <div className={styles.container}>
+            <div className={styles.member_container}>
+                <div className={styles.header}>
                 <div>WELCOME!</div>
                 </div>
-                <div class="user-info">
-                <div class="user-info-id">
+                <div className={styles.user_info}>
+                <div className={styles.user_info_id}>
                     <div>* ID</div>
                     <input type="text" />
                 </div>
-                <div class="user-info-pw">
+                <div className={styles.user_info_pw}>
                     <div>* Password</div>
                     <input type="Password" />
-                    <div class="user-info-pw-check">
+                    <div className={styles.user_info_pw_check}>
                     <div>* Verify Password</div>
                     <input type="password" />
                     </div>
                 </div>
-                <div class="role-check">
+                <div className={styles.role_check}>
                     <div>* Your Role</div>
                     <ul>
                     <li>
@@ -84,10 +84,10 @@ function SignUp() {
                     </li>
                     </ul>
                 </div>
-                <div class="btn">
+                <div className={styles.btn}>
                     <button>Sign Up</button>
                 </div>
-                <div class="signin-link">
+                <div className={styles.signin_link}>
                     <p>Go back to <Link to="/signin">Sign In</Link></p>
                 </div>
                 </div>

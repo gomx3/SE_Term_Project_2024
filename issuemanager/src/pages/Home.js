@@ -1,12 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Header from './components/Header';
+import Sidebar from './components/Sidebar';
+import Body from './components/Body';
+import styles from './Home.module.css';
 
 function Home() {
   return (
-    <div>
-      <h2>Home</h2>
-      <Link to="/signin">Sign In</Link>
-    </div>
+    <section className={styles.home}>
+      <Header />
+      <div className={styles.container}>
+        <Sidebar />
+        <Body />
+      </div>
+    </section>
   );
 }
 
