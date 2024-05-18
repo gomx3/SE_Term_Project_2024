@@ -10,7 +10,7 @@ public class MemberResponseDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class SingUpRespDTO{  //회원가입 응답
-        String memberId;
+        long memberId;
     }
 
     @Getter
@@ -18,7 +18,8 @@ public class MemberResponseDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class GetMemberInfoDTO{   //회원정보
-        String memberId;
+        long memberId;
+        String email;
         Role role;
     }
 }
