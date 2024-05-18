@@ -9,7 +9,7 @@ public class MemberRequestDto {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class SignUpReqDTO{   //회원가입 요청
+    public static class SignUpRequestDTO {   //회원가입 요청
         private String email;
         private String pw;
         private Role role;

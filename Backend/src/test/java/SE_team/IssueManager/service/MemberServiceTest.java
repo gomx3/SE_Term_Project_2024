@@ -23,7 +23,7 @@ class MemberServiceTest {
     void 회원가입() throws Exception{
 
         //Given
-        MemberRequestDto.SignUpReqDTO member = MemberRequestDto.SignUpReqDTO.builder()
+        MemberRequestDto.SignUpRequestDTO member = MemberRequestDto.SignUpRequestDTO.builder()
             .email("spring")
             .pw("1234")
             .role(Role.ADMIN).build();
@@ -49,12 +49,12 @@ class MemberServiceTest {
     @Test
     void 중복이메일_확인(){
         //Given
-        MemberRequestDto.SignUpReqDTO member1 = MemberRequestDto.SignUpReqDTO.builder()
+        MemberRequestDto.SignUpRequestDTO member1 = MemberRequestDto.SignUpRequestDTO.builder()
                 .email("spring")
                 .pw("1234")
                 .role(Role.ADMIN).build();
 
-        MemberRequestDto.SignUpReqDTO member2 = MemberRequestDto.SignUpReqDTO.builder()
+        MemberRequestDto.SignUpRequestDTO member2 = MemberRequestDto.SignUpRequestDTO.builder()
                 .email("spring")
                 .pw("1234")
                 .role(Role.ADMIN).build();

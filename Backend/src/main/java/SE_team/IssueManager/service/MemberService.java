@@ -20,7 +20,7 @@ public class MemberService {
         this.memberRepository =memberRepository;
     }
 
-    public Member signUp(MemberRequestDto.SignUpReqDTO request) {     //회원가입 서비스
+    public Member signUp(MemberRequestDto.SignUpRequestDTO request) {     //회원가입 서비스
         Member member=Member.builder()
                         .pw(request.getPw())
                         .email(request.getEmail())
