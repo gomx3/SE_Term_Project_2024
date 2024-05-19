@@ -19,6 +19,6 @@ public class ApiResponse<T> {
 
     //생성 성공 응답
     public static <T> ApiResponse<T> created(T result) {
-        return new ApiResponse<T>(true,"100","created",result); //코드는 임의로 써놓음..수정 필요
+        return new ApiResponse<T>(true,"200","created",result);     //임의로 써놓음..수정 필요
     }
 }
