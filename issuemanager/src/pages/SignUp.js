@@ -17,9 +17,9 @@ function SignUp() {
             <title>Sign up</title>
         </head>
         <body>
-            <div class="container">
+            <div class="signup_container">
             <div class="member-container">
-                <div class="header">
+                <div class="signup_header">
                 <div>WELCOME!</div>
                 </div>
                 <div class="user-info">
