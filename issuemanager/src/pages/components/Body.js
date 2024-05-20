@@ -5,17 +5,17 @@ import styles from './Body.module.css';
 function Body() {
     return (
         <div className={styles.container}>
-            <div className={styles.sidebar_container}>
+            <div className={styles.body_container}>
                 <h2>This is Body</h2>
             </div>
-            <div className={styles.sidebar_container}>
-                <h2>issue1</h2>
+            <div className={styles.body_container}>
+                <div>issue1</div>
             </div>
-            <div className={styles.sidebar_container}>
-                <h2>issue2</h2>
+            <div className={styles.body_container}>
+                <div>issue2</div>
             </div>
-            <div className={styles.sidebar_container}>
-                <h2>issue3</h2>
+            <div className={styles.body_container}>
+                <div>issue3</div>
             </div>
         </div>
     );

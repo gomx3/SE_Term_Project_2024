@@ -9,10 +9,10 @@ function Sidebar() {
                 <h2>This is Sidebar</h2>
             </div>
             <div className={styles.sidebar_container}>
-                <h2>Project1</h2>
+            <div>Project1</div>
             </div>
             <div className={styles.sidebar_container}>
-                <h2>Project2</h2>
+                <div>Project2</div>
             </div>
         </div>
     );

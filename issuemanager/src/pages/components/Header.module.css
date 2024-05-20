@@ -5,14 +5,14 @@
     width: 1080px;
     height: 150px;
     margin-top: 60px;
-    margin-bottom: 60px;
-    background: aliceblue;
-    border: 1px solid #aacdff;
+    margin-bottom: 30px;
+    background: #ffffff;
+    border: 1px solid #BDBDBD;
     border-radius: 20px;
 }
 
 .head_container {
-    color:#aacdff;
+    color:#0068ff;
     display: flex;
     flex-direction: row;
     align-items: start;
