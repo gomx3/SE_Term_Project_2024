@@ -1,0 +1,52 @@
+.project-info-container {
+    padding: 20px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .project-info-container h1 {
+    font-size: 25px;
+    margin-top: 0;
+    margin-bottom: 5px;
+  }
+  
+  .project-info-container p {
+    margin: 0;
+  }
+  
+  .add-account-container {
+    margin-top: 5px;
+  }
+  
+  .add-account-button {
+    width: 420px;
+    height: 40px;
+    margin-right: 10px;
+    cursor: pointer;
+    margin:0;
+  }
+  
+  .account-input-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .account-input-container select,
+  .account-input-container input {
+    margin-right: 10px;
+    padding: 5px;
+    font-size: 14px;
+  }
+  
+  .account-cancel,
+  .account-add {
+    width: 80px;
+    height: 30px;
+    cursor: pointer;
+    margin:0;
+  }
+  
+  .project-issues {
+    margin-top: 20px;
+  }
+  

@@ -30,14 +30,14 @@ body, html, #root {
 }
 
 .home-catalog {
-  flex: 0 0 12%;  /* 메인 섹션의 15%를 차지합니다 */
+  flex: 0 0 11%;  /* 메인 섹션의 15%를 차지합니다 */
   padding: 10px;
-  border-right: 1px solid #ccc;
+  border-right: 1px solid #cccccc;
   background-color: #fafafa;
 }
 
 .home-content {
-  flex: 0 0 85%;  /* 메인 섹션의 85%를 차지합니다 */
+  flex: 0 0 89%;  /* 메인 섹션의 85%를 차지합니다 */
   padding: 10px;
 }
 
@@ -62,10 +62,16 @@ body, html, #root {
 .proj-cancel {
   width: 80px;
   height: 40px;
+  cursor: pointer;
 }
 
 .proj-add {
   width: 60px;
   height: 40px;
   margin-left: 21px;
+  cursor: pointer;
+}
+
+.project-item {
+  cursor: pointer; /* 프로젝트 항목에 포인터 커서를 설정합니다 */
 }
