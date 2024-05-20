@@ -10,9 +10,9 @@ function SignIn() {
           <title>Sign In</title>
         </head>
         <body>
-          <div class="container">
+          <div class="signin_container">
             <div class="member-container">
-              <div class="header">
+              <div class="signin_header">
                 <div>WELCOME BACK!</div>
               </div>
               <div class="user-info">

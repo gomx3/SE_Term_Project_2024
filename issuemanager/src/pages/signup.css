@@ -10,7 +10,7 @@
     justify-content: center;
   }
   
-  .container {
+  .signup_container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -19,8 +19,8 @@
     margin-top: 60px;
     margin-bottom: 60px;
     background: #ffffff;
-    border: 1px solid #aacdff;
-    box-shadow: 7px 7px 39px rgba(0, 104, 255, 0.25);
+    border: 1px solid #aa90c8;
+    box-shadow: 7px 7px 39px #d6d6d6;
     border-radius: 20px;
   }
   
@@ -34,14 +34,14 @@
     margin-bottom: 70px;
   }
   
-  .header {
+  .signup_header {
     width: 466px;
     height: 94px;
     font-weight: 700;
     font-size: 50px;
     text-align: center;
     line-height: 47px;
-    color: #0068ff;
+    color: #9664cf;
   }
   
   .user-info {
@@ -87,15 +87,15 @@
     display: inline-block;
     width: 17px;
     height: 17px;
-    border: 2px solid #0068ff;
+    border: 2px solid #b492da;
     border-radius: 4px;
     vertical-align: middle;
     margin-right: 10px;
   }
   
   .role-check input[type="checkbox"]:checked + label:before {
-    background-color: #0068ff;
-    border-color: #0068ff;
+    background-color: #b492da;
+    border-color: #b492da;
     content:'✔';
     background-repeat: no-repeat;
     background-position: center;
@@ -123,9 +123,9 @@
     font-size: 18px;
     line-height: 27px;
     text-align: center;
-    color: #0068ff;
+    color: #9664cf;
     background: #ffffff;
-    border: 1px solid #0068ff;
+    border: 1px solid #9664cf;
     border-radius: 10px;
   }
 
