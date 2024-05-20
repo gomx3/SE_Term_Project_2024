@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './home.css';  // CSS 파일을 임포트합니다
+import Project from './project';
 
 function Home() {
   return (
     <div className="home-container">
       <header className="home-header">
-        <h2>Home</h2>
+        <h2>IssueManager</h2>
         <Link to="/signin">Sign In</Link>
       </header>
       <main className="home-main">
@@ -75,6 +76,7 @@ function Catalog() {
 function Content() {
   return (
     <section className="home-content">
+      {/* <Project/> */}
       <h3>Content</h3>
       <p>Welcome to the content area. Select an item from the catalog to view more details.</p>
     </section>
