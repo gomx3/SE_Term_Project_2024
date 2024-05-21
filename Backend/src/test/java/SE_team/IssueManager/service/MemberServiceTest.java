@@ -24,7 +24,7 @@ class MemberServiceTest {
 
         //Given
         MemberRequestDto.SignUpRequestDTO member = MemberRequestDto.SignUpRequestDTO.builder()
-            .email("spring")
+            .memberId("spring")
             .pw("1234")
             .role(Role.ADMIN).build();
 
@@ -50,12 +50,12 @@ class MemberServiceTest {
     void 중복이메일_확인(){
         //Given
         MemberRequestDto.SignUpRequestDTO member1 = MemberRequestDto.SignUpRequestDTO.builder()
-                .email("spring")
+                .memberId("spring")
                 .pw("1234")
                 .role(Role.ADMIN).build();
 
         MemberRequestDto.SignUpRequestDTO member2 = MemberRequestDto.SignUpRequestDTO.builder()
-                .email("spring")
+                .memberId("spring")
                 .pw("1234")
                 .role(Role.ADMIN).build();
 

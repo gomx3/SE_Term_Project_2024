@@ -23,7 +23,7 @@ public class MemberService {
     public Member signUp(MemberRequestDto.SignUpRequestDTO request) {     //회원가입 서비스
         Member member=Member.builder()
                         .pw(request.getPw())
-                        .email(request.getEmail())
+                        .memberId(request.getMemberId())
                         .role(request.getRole()).build();
 
         validateDuplicateMember(member);
@@ -32,7 +32,7 @@ public class MemberService {
     }
 
     public void validateDuplicateMember(Member member) {    //아이디 중복 확인
-        memberRepository.findByEmail(member.getEmail())
+        memberRepository.findByMemberId(member.getMemberId())
                 .ifPresent(mem -> {
                     throw new IllegalStateException("이미 존재하는 회원입니다.");
                 });

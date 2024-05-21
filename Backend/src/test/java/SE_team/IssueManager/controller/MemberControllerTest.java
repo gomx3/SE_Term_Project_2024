@@ -1,13 +1,10 @@
 package SE_team.IssueManager.controller;
 
-import SE_team.IssueManager.ApiResponse;
 import SE_team.IssueManager.domain.Member;
 import SE_team.IssueManager.domain.enums.Role;
 import SE_team.IssueManager.dto.MemberRequestDto;
-import SE_team.IssueManager.dto.MemberResponseDto;
 import SE_team.IssueManager.repository.MemberRepository;
 import SE_team.IssueManager.service.MemberService;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.transaction.Transactional;
@@ -15,17 +12,13 @@ import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @AutoConfigureMockMvc
@@ -47,12 +40,12 @@ class MemberControllerTest {
     void 회원가입() throws Exception{
 
         String pw="1234";
-        String email="spring";
+        String memberId= "spring";
         Role role=Role.ADMIN;
 
         MemberRequestDto.SignUpRequestDTO request=MemberRequestDto.SignUpRequestDTO.builder()
                 .pw(pw)
-                .email(email)
+                .memberId(memberId)
                 .role(role).build();
 
 
@@ -69,23 +62,23 @@ class MemberControllerTest {
 
 
         Member findMem=memberService.findMemberById(1L).get();
-        assertEquals(findMem.getEmail(),email);
+        assertEquals(findMem.getMemberId(),memberId);
 
     }
     @Test
-    void 중복이메일()throws Exception{
+    void 중복이메일()throws Exception{   //아직 미완성 (예외처리 작업중)..
 
         String pw="1234";
-        String email="spring";
+        String memberId="spring";
         Role role=Role.ADMIN;
 
         MemberRequestDto.SignUpRequestDTO request1=MemberRequestDto.SignUpRequestDTO.builder()
                 .pw(pw)
-                .email(email)
+                .memberId(memberId)
                 .role(role).build();
         MemberRequestDto.SignUpRequestDTO request2=MemberRequestDto.SignUpRequestDTO.builder()
                 .pw(pw)
-                .email(email)
+                .memberId(memberId)
                 .role(role).build();
 
 

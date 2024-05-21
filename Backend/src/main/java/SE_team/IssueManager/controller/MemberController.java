@@ -28,7 +28,7 @@ public class MemberController {
     ){
         Member member=memberService.signUp(signUpRequestDto);
         MemberResponseDto.SingUpRespDTO resp=MemberResponseDto.SingUpRespDTO.builder()
-                .memberId(member.getId()).build();
+                .id(member.getId()).build();
         return ApiResponse.created(resp);
     }
 
