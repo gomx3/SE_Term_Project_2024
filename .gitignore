@@ -1,6 +1,8 @@
 # Compiled class file
 *.class
 
+application-aws.properties
+
 # Log file
 *.log
 
