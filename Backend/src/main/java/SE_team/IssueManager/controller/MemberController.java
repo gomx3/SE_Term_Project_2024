@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import static org.springframework.http.codec.ServerSentEvent.builder;
 
 @RestController
-@RequestMapping("/member")
+@RequestMapping("/members")
 public class MemberController {
 
     private final MemberService memberService;
@@ -22,7 +22,7 @@ public class MemberController {
         this.memberService=memberService;
     }
 
-    @PostMapping("/sign_up")
+    @PostMapping("/sign-up")
     public ApiResponse<MemberResponseDto.SingUpRespDTO> signUp(
             @Valid @RequestBody MemberRequestDto.SignUpRequestDTO signUpRequestDto
     ){

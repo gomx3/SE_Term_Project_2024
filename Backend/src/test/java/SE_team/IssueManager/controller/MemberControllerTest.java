@@ -85,7 +85,7 @@ class MemberControllerTest {
         String body1=mapper.writeValueAsString(request1);
         String body2=mapper.writeValueAsString(request2);
 
-        ResultActions action=mockMvc.perform(MockMvcRequestBuilders.post("/member/sign_up")
+        ResultActions action=mockMvc.perform(MockMvcRequestBuilders.post("/members/sign-up")
                 .content(body1)
                 .contentType("application/json"));
 
@@ -96,7 +96,7 @@ class MemberControllerTest {
         });
 
         ServletException e=assertThrows(ServletException.class,
-                ()->mockMvc.perform(MockMvcRequestBuilders.post("/member/sign_up")
+                ()->mockMvc.perform(MockMvcRequestBuilders.post("/members/sign-up")
                         .content(body2)
                         .contentType("application/json")));
         //assertEquals(e.getMessage(),"이미 존재하는 회원입니다.");
