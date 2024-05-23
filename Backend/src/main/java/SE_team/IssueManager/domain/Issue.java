@@ -34,9 +34,11 @@ public class Issue extends BaseTimeEntity{
     @ManyToOne(fetch =FetchType.LAZY)
     private Member reporter;
 
+    @Setter
     @ManyToOne(fetch =FetchType.LAZY)
     private Member fixer;
 
+    @Setter
     @ManyToOne(fetch =FetchType.LAZY)
     private Member assignee;
 

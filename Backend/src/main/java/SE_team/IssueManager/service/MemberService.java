@@ -2,6 +2,8 @@ package SE_team.IssueManager.service;
 
 import SE_team.IssueManager.domain.Member;
 import SE_team.IssueManager.dto.MemberRequestDto;
+import SE_team.IssueManager.payload.code.status.ErrorStatus;
+import SE_team.IssueManager.payload.exception.handler.MemberHandler;
 import SE_team.IssueManager.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +36,7 @@ public class MemberService {
     public void validateDuplicateMember(Member member) {    //아이디 중복 확인
         memberRepository.findByMemberId(member.getMemberId())
                 .ifPresent(mem -> {
-                    throw new IllegalStateException("이미 존재하는 회원입니다.");
+                    throw new MemberHandler(ErrorStatus.MEMBER_ID_EXISTS);
                 });
     }
 

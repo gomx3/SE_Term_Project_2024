@@ -1,0 +1,34 @@
+package SE_team.IssueManager.domain.converter;
+
+import SE_team.IssueManager.controller.IssueController;
+import SE_team.IssueManager.domain.Issue;
+import SE_team.IssueManager.dto.IssueResponseDto;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+public class IssueConverter {
+    public static IssueResponseDto.GetIssueDto toIssueDto(Issue issue) {
+        return IssueResponseDto.GetIssueDto.builder()
+                .issueId(issue.getId())
+                .title(issue.getTitle())
+                .description(issue.getDescription())
+                .reporter(issue.getReporter().getMemberId())
+                .fixer(issue.getFixer().getMemberId())
+                .assignee(issue.getAssignee().getMemberId())
+                .status(issue.getStatus())
+                .priority(issue.getPriority())
+                .category(issue.getCategory())
+                .createdAt(issue.getCreatedAt()).build();
+    }
+
+    public static IssueResponseDto.GetIssueResponseDto toIssueDtoList(List<Issue> issues) {
+        List<IssueResponseDto.GetIssueDto> issueDtoList = issues.stream()
+                .map(IssueConverter::toIssueDto)
+                .toList();
+        return IssueResponseDto.GetIssueResponseDto.builder()
+                .issueList(issueDtoList).build();
+    }
+}

@@ -18,10 +18,7 @@ public class ApiResponse<T> {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private T result;
 
-    //생성 성공 응답
-    public static <T> ApiResponse<T> created(T result) {
-        return new ApiResponse<T>(true,"200","created",result);     //임의로 써놓음..수정 필요
-    }
+
     //성공 시
     public static <T> ApiResponse<T> onSuccess(SuccessStatus status,T result) {
         return new ApiResponse<T>(true,status.getCode(),status.getMessage(),result);

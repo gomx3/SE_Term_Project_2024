@@ -50,7 +50,7 @@ class MemberControllerTest {
 
         String body=mapper.writeValueAsString(request);
 
-        ResultActions action=mockMvc.perform(MockMvcRequestBuilders.post("/member/sign_up")
+        ResultActions action=mockMvc.perform(MockMvcRequestBuilders.post("/member/sign-up")
                 .content(body)
                 .contentType("application/json"));
 
