@@ -1,0 +1,104 @@
+.container {
+    display: flex;
+    width: 100%;
+    padding: 50px;
+    flex-direction: column;
+}
+
+.up, .down {
+    border-top: 1px solid #cfcfcf;
+    width: 100%;
+}
+
+.comments-container {
+    width: 100%;
+    padding: 50px;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #9664cf;
+}
+    
+label {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: .5rem;
+    font-weight: 600;
+    color: #586069;
+}
+    
+input[type="text"],
+input[type="date"],
+textarea,
+select {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #24292e;
+    vertical-align: middle;
+    background-color: #fafbfc;
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    outline: none;
+    box-shadow: inset 0 1px 2px rgba(27,31,35,.075);
+    resize: none;
+}
+    
+input[type="text"]:focus,
+input[type="date"]:focus,
+textarea:focus,
+select:focus {
+    border-color: #9664cf;
+    box-shadow: inset 0 1px 2px rgba(27,31,35,.075), 0 0 0 3px rgba(3,102,214,.3);
+}
+
+.category-container {
+    display: flex; /* Flexbox를 사용하여 아이템을 수평 정렬 */
+    align-items: center; /* 세로 방향 중앙 정렬 */
+    margin-bottom: 8px; /* 각 항목 사이의 공간 */
+}
+  
+.category-container input[type="radio"] {
+    margin-right: 10px; /* 라디오 버튼과 라벨 사이의 공간 */
+}
+
+button {
+    width: 150px;
+    height: 50px;
+    cursor: pointer;
+    border-radius: 6px;
+    line-height: 20px;
+    margin: 10px;
+}
+    
+button[type="submit"] {
+    margin-top: 50px;
+    color: #FFFFFF;
+    background-color: #9664cf;
+}
+
+button:hover {
+    opacity: 0.7;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+    
+li {
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    background-color: #f6f8fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+}

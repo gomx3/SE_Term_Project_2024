@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import styles from './Signup.module.css';
+import './signup.css';
 
 function SignUp() {
   // 선택된 역할 상태를 관리하는 useState 훅
@@ -17,25 +17,25 @@ function SignUp() {
             <title>Sign up</title>
         </head>
         <body>
-            <div className={styles.container}>
-            <div className={styles.member_container}>
-                <div className={styles.header}>
+            <div class="signup_container">
+            <div class="member-container">
+                <div class="signup_header">
                 <div>WELCOME!</div>
                 </div>
-                <div className={styles.user_info}>
-                <div className={styles.user_info_id}>
+                <div class="user-info">
+                <div class="user-info-id">
                     <div>* ID</div>
                     <input type="text" />
                 </div>
-                <div className={styles.user_info_pw}>
+                <div class="user-info-pw">
                     <div>* Password</div>
                     <input type="Password" />
-                    <div className={styles.user_info_pw_check}>
+                    <div class="user-info-pw-check">
                     <div>* Verify Password</div>
                     <input type="password" />
                     </div>
                 </div>
-                <div className={styles.role_check}>
+                <div class="role-check">
                     <div>* Your Role</div>
                     <ul>
                     <li>
@@ -84,10 +84,10 @@ function SignUp() {
                     </li>
                     </ul>
                 </div>
-                <div className={styles.btn}>
+                <div class="btn">
                     <button>Sign Up</button>
                 </div>
-                <div className={styles.signin_link}>
+                <div class="signin-link">
                     <p>Go back to <Link to="/signin">Sign In</Link></p>
                 </div>
                 </div>

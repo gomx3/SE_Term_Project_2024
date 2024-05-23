@@ -10,49 +10,49 @@
     justify-content: center;
   }
   
-  .container {
+  .signin_container {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 670px;
-    height: 860px;
-    margin-top: 60px;
+    height: 650px;
+    margin-top: 120px;
     margin-bottom: 60px;
     background: #ffffff;
-    border: 1px solid #aacdff;
-    box-shadow: 7px 7px 39px rgba(0, 104, 255, 0.25);
+    border: 1px solid #aa90c8;
+    box-shadow: 7px 7px 39px #d6d6d6;
     border-radius: 20px;
   }
   
-  .member_container {
+  .member-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 470px;
-    height: 698px;
+    height: 418px;
     margin-top: 72px;
     margin-bottom: 70px;
   }
   
-  .header {
+  .signin_header {
     width: 466px;
     height: 94px;
     font-weight: 700;
     font-size: 50px;
     text-align: center;
     line-height: 47px;
-    color: #0068ff;
+    color: #9664cf;
   }
   
-  .user_info {
+  .user-info {
     margin-top: 39px;
   }
   
-  .user_info div {
+  .user-info div {
     margin-top: 21px;
   }
   
-  .user_info input {
+  .user-info input {
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
@@ -62,50 +62,7 @@
     width: 466px;
     margin-top: 21px;
   }
-  
-  .role_check ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .role_check li {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-  }
-  
-  .role_check input[type="checkbox"] {
-    display: none;
-  }
-  
-  .role_check label {
-    cursor: pointer;
-  }
-  
-  .role_check label:before {
-    content: "";
-    display: inline-block;
-    width: 17px;
-    height: 17px;
-    border: 2px solid #0068ff;
-    border-radius: 4px;
-    vertical-align: middle;
-    margin-right: 10px;
-  }
-  
-  .role_check input[type="checkbox"]:checked + label:before {
-    background-color: #0068ff;
-    border-color: #0068ff;
-    content:'✔';
-    background-repeat: no-repeat;
-    background-position: center;
-    content: "\2713"; /* 체크 표시 */
-    color: white; /* 체크 표시 색상 */
-    text-align: center; /* 체크 표시 정렬 */
-    line-height: 17px; /* 체크 표시 세로 정렬 */
-  }
-  
-  
+
   .btn {
     display: flex;
     flex-direction: column;
@@ -123,13 +80,13 @@
     font-size: 18px;
     line-height: 27px;
     text-align: center;
-    color: #0068ff;
+    color: #9664cf;
     background: #ffffff;
-    border: 1px solid #0068ff;
+    border: 1px solid #9664cf;
     border-radius: 10px;
   }
 
-  .signin_link{
+  .signup-link{
     font-weight: 400;
     font-size: 16px;
     text-align: center;

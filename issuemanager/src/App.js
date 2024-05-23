@@ -3,7 +3,7 @@ import { Routes , Route } from "react-router-dom"
 import Home from './pages/Home';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
-import styles from './App.module.css';
+import EditIssue from './pages/EditIssue';
 
 class App extends React.Component {
 
@@ -12,11 +12,12 @@ class App extends React.Component {
     this.state={};
   }
 
-  render() {
+render() {
     return <Routes>
       <Route path ="/" element = {<Home />}></Route>
       <Route path ="/signin" element = {<SignIn />}></Route>
       <Route path ="/signup" element = {<SignUp />}></Route>
+      <Route path ="/editissue" element = {<EditIssue />}></Route>
     </Routes>
   };
 }

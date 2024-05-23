@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styles from './Signin.module.css';
+import './signin.css';
 
 function SignIn() {
   return (
@@ -10,24 +10,24 @@ function SignIn() {
           <title>Sign In</title>
         </head>
         <body>
-          <div className={styles.container}>
-            <div className={styles.member_container}>
-            <div className={styles.header}>
+          <div class="signin_container">
+            <div class="member-container">
+              <div class="signin_header">
                 <div>WELCOME BACK!</div>
               </div>
-              <div className={styles.user_info}>
-                <div className={styles.user_info_id}>
+              <div class="user-info">
+                <div class="user-info-id">
                   <div>* ID</div>
                   <input type="text" />
                 </div>
-                <div className={styles.user_info_pw}>
+                <div class="user-info-pw">
                   <div>* PASSWORD</div>
                   <input type="password" />
                 </div>
-                <div className={styles.btn}>
+                <div class="btn">
                   <button>Sign In</button>
                 </div>
-                <div className={styles.signup_link}>
+                <div class="signup-link">
                   <p>
                     Don't have an account yet? <Link to="/signup">Sign Up</Link>
                   </p>

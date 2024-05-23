@@ -1,0 +1,71 @@
+/* Home.css */
+
+body, html, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.home-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.home-header {
+  flex: 0 0 15%;  /* 화면 높이의 15%를 차지합니다 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background-color: #f8f5f9;
+  border-bottom: 1px solid #ccc;
+}
+
+.home-main {
+  flex: 0 0 88%;  /* 화면 높이의 85%를 차지합니다 */
+  display: flex;
+}
+
+.home-catalog {
+  flex: 0 0 12%;  /* 메인 섹션의 15%를 차지합니다 */
+  padding: 10px;
+  border-right: 1px solid #ccc;
+  background-color: #fafafa;
+}
+
+.home-content {
+  flex: 0 0 85%;  /* 메인 섹션의 85%를 차지합니다 */
+  padding: 10px;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  margin-left: 10px; /* 입력 상자와 버튼 사이에 간격을 
+  줍니다 */
+}
+
+.add-button {
+  font-size: 15px;
+  width: 160px;
+  height: 60px;
+  background-color: #d7c3de; /* Add 버튼의 배경색을 지정합니다 */
+  color: #fff; /* Add 버튼의 텍스트 색상을 지정합니다 */
+  border: none; /* Add 버튼의 테두리를 없앱니다 */
+  border-radius: 5px; /* Add 버튼의 모서리를 둥글게 만듭니다 */
+  cursor: pointer; /* 마우스 커서를 포인터로 변경합니다 */
+  margin-left: 10px;
+}
+.proj-cancel {
+  width: 80px;
+  height: 40px;
+}
+
+.proj-add {
+  width: 60px;
+  height: 40px;
+  margin-left: 21px;
+}
