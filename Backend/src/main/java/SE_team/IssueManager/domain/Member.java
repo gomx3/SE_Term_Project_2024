@@ -3,6 +3,8 @@ package SE_team.IssueManager.domain;
 import SE_team.IssueManager.domain.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Setter
 @Getter

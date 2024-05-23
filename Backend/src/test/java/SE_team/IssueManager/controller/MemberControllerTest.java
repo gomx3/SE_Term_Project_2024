@@ -28,8 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MemberControllerTest {
     @Autowired
     private MemberService memberService;
-    @Autowired
-    private MemberRepository memberRepository;
+
 
     @Autowired
     private MockMvc mockMvc;
