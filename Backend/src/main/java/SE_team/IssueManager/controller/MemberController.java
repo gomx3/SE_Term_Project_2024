@@ -1,6 +1,6 @@
 package SE_team.IssueManager.controller;
 
-import SE_team.IssueManager.ApiResponse;
+import SE_team.IssueManager.payload.ApiResponse;
 import SE_team.IssueManager.domain.Member;
 import SE_team.IssueManager.dto.MemberRequestDto;
 import SE_team.IssueManager.dto.MemberResponseDto;
