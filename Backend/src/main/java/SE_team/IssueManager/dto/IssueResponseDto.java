@@ -45,4 +45,14 @@ public class IssueResponseDto {
     public static class GetIssueResponseDto {   //이슈 조회
         private List<GetIssueDto> issueList;
     }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class AssignIssueResponseDto {
+        private Long issueId;
+        private Long assigneeId;
+        private String fixerId;
+    }
 }

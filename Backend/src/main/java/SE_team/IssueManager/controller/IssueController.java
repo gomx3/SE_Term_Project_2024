@@ -57,4 +57,19 @@ public class IssueController {
         return ApiResponse.onSuccess(SuccessStatus.Issue_OK,
                 IssueConverter.toIssueDtoList(issueList));
     }
+
+    @PatchMapping("/{issueId}/assign")
+    public ApiResponse<IssueResponseDto.AssignIssueResponseDto> assignIssue(
+            @PathVariable(name="issueId")Long issueId,
+            @RequestBody IssueRequestDto.AssignIssueRequestDto assignIssueRequestDto
+    ){
+        Issue updatedIssue=issueService.assignIssue(assignIssueRequestDto,issueId);
+        IssueResponseDto.AssignIssueResponseDto response=IssueResponseDto.AssignIssueResponseDto.builder()
+                .issueId(issueId)
+                .assigneeId(updatedIssue.getAssignee().getId())
+                .fixerId(updatedIssue.getFixer().getMemberId())
+                .build();
+
+        return ApiResponse.onSuccess(SuccessStatus.Issue_OK,response);
+    }
 }

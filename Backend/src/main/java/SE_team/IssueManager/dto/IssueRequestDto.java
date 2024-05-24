@@ -19,6 +19,13 @@ public class IssueRequestDto {
         private Priority priority;
         private Category category;
     }
-
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class AssignIssueRequestDto {
+        private Long assigneeId;
+        private String fixerId;
+    }
 
 }

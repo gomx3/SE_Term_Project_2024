@@ -4,6 +4,7 @@ import SE_team.IssueManager.domain.Issue;
 import SE_team.IssueManager.domain.Member;
 import SE_team.IssueManager.domain.enums.Category;
 import SE_team.IssueManager.domain.enums.Priority;
+import SE_team.IssueManager.domain.enums.Role;
 import SE_team.IssueManager.domain.enums.Status;
 import SE_team.IssueManager.dto.IssueRequestDto;
 import SE_team.IssueManager.repository.IssueRepository;
@@ -87,6 +88,22 @@ public class IssueService {
         if(category!=null)
             spec=spec.and(IssueSpecification.findByCategory(category));
         return issueRepository.findAll(spec,sorting);
+    }
+
+    public Issue assignIssue(IssueRequestDto.AssignIssueRequestDto request, Long issueId) {
+        Member assignee=memberRepository.findById(request.getAssigneeId()).orElse(null);
+        Member fixer=memberRepository.findByMemberId(request.getFixerId()).orElse(null);
+
+        if(assignee!=null&&fixer!=null&&assignee.getRole()== Role.PL && fixer.getRole()==Role.DEV){
+            Issue issue=issueRepository.findById(issueId).orElse(null);
+            if(issue!=null){
+                issue.setAssignee(assignee);
+                issue.setFixer(fixer);
+                issue.setStatus(Status.ASSIGNED);
+                return issue;
+            }
+        }
+        return null;
     }
 
 }
