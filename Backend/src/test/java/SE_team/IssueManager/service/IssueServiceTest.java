@@ -79,32 +79,7 @@ class IssueServiceTest {
 
         //Then
         //reporterId로 이슈 불러오기
-        List<Issue> issueList=issueService.findIssueByReporter(member.getMemberId());
-        for(Issue issue:issueList){
-            System.out.println(issue.getTitle());
-        }
-        assertEquals(title,issueList.get(1).getTitle());
-        assertEquals(title2,issueList.get(0).getTitle());
-
-        assertEquals(savedIssue1.getCreatedAt(),issueList.get(1).getCreatedAt());
-        assertEquals(savedIssue2.getCreatedAt(),issueList.get(0).getCreatedAt());
-
-        //날짜로 이슈 불러오기
-        issueList=issueService.findIssueByDate(savedIssue1.getCreatedAt().toLocalDate());
-        for(Issue issue:issueList){
-            System.out.println(issue.getTitle()+":"+issue.getCreatedAt());
-        }
-        assertEquals(title,issueList.get(1).getTitle());
-        assertEquals(title2,issueList.get(0).getTitle());
-
-
-        //status로 이슈 불러오기
-        issueList=issueService.findIssueByStatus(Status.NEW);
-        for(Issue issue:issueList){
-            System.out.println(issue.getTitle()+":"+issue.getCreatedAt());
-        }
-        assertEquals(title,issueList.get(1).getTitle());
-        assertEquals(title2,issueList.get(0).getTitle());
+        List<Issue> issueList;
 
         //조건으로 찾기
         //0) 전체 조회

@@ -11,6 +11,7 @@ import SE_team.IssueManager.dto.IssueResponseDto;
 import SE_team.IssueManager.payload.code.status.SuccessStatus;
 import SE_team.IssueManager.service.IssueService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,14 +19,18 @@ import java.util.stream.IntStream;
 
 @RestController
 @RequestMapping("/issues")
-@RequiredArgsConstructor
 public class IssueController {
     private final IssueService issueService;
+
+    @Autowired
+    IssueController(IssueService issueService) {
+        this.issueService = issueService;
+    }
 
     //이슈 등록
     @PostMapping("/projects/{projectId}")
     public ApiResponse<IssueResponseDto.CreateIssueResponseDto> createIssue(
-            @PathVariable Long projectId,
+            @PathVariable(name="projectId") Long projectId,
             @RequestBody IssueRequestDto.CreateIssueRequestDto createIssueRequestDto
     ){
         Issue issue=issueService.createIssue(createIssueRequestDto);
@@ -39,7 +44,7 @@ public class IssueController {
     //이슈 조회(검색 가능)
     @GetMapping("/projects/{projectId}")
     public ApiResponse<IssueResponseDto.GetIssueResponseDto> getIssue(
-            @PathVariable Long projectId,
+            @PathVariable (name = "projectId")Long projectId,
             @RequestParam(required=false,name = "reporterId") String reporterId,
             @RequestParam(required=false,name="fixerId") String fixerId,
             @RequestParam(required = false,name="assigneeId") String assigneeId,

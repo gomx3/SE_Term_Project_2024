@@ -2,6 +2,7 @@ package SE_team.IssueManager.domain.converter;
 
 import SE_team.IssueManager.controller.IssueController;
 import SE_team.IssueManager.domain.Issue;
+import SE_team.IssueManager.domain.Member;
 import SE_team.IssueManager.dto.IssueResponseDto;
 
 import java.util.ArrayList;
@@ -11,13 +12,17 @@ import java.util.stream.IntStream;
 
 public class IssueConverter {
     public static IssueResponseDto.GetIssueDto toIssueDto(Issue issue) {
+        Member fixer=issue.getFixer();
+        String fixerId=(fixer!=null)?fixer.getMemberId():null;
+        Member assignee=issue.getAssignee();
+        String assigneeId=(assignee!=null)?assignee.getMemberId():null;
         return IssueResponseDto.GetIssueDto.builder()
                 .issueId(issue.getId())
                 .title(issue.getTitle())
                 .description(issue.getDescription())
                 .reporter(issue.getReporter().getMemberId())
-                .fixer(issue.getFixer().getMemberId())
-                .assignee(issue.getAssignee().getMemberId())
+                .fixer(fixerId)
+                .assignee(assigneeId)
                 .status(issue.getStatus())
                 .priority(issue.getPriority())
                 .category(issue.getCategory())

@@ -39,7 +39,7 @@ class MemberControllerTest {
     void 회원가입() throws Exception{
 
         String pw="1234";
-        String memberId= "spring";
+        String memberId= "seoyeon2";
         Role role=Role.ADMIN;
 
         MemberRequestDto.SignUpRequestDTO request=MemberRequestDto.SignUpRequestDTO.builder()
@@ -50,13 +50,13 @@ class MemberControllerTest {
 
         String body=mapper.writeValueAsString(request);
 
-        ResultActions action=mockMvc.perform(MockMvcRequestBuilders.post("/member/sign-up")
+        ResultActions action=mockMvc.perform(MockMvcRequestBuilders.post("/members/sign-up")
                 .content(body)
                 .contentType("application/json"));
 
         action.andExpect(result -> {
             MockHttpServletResponse response=result.getResponse();
-            System.out.println(response.getContentAsString());
+            System.out.println("응답:"+response.getContentAsString());
         });
 
 

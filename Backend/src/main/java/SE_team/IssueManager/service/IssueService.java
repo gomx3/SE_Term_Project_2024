@@ -25,7 +25,9 @@ import java.util.Optional;
 @Transactional
 public class IssueService {
 
+    @Autowired
     private final IssueRepository issueRepository;
+    @Autowired
     private final MemberRepository memberRepository;
 
 
@@ -39,7 +41,7 @@ public class IssueService {
                 .build();
         Issue savedIssue= issueRepository.save(issue);
 
-        Member reporter=memberRepository.findById(request.getReporterId()).get();
+        Member reporter=memberRepository.findById(request.getReporterId()).orElse(null);
         savedIssue.setReporter(reporter);
 
 
