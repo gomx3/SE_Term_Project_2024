@@ -1,6 +1,5 @@
 package SE_team.IssueManager.dto;
 
-import SE_team.IssueManager.domain.Issue;
 import SE_team.IssueManager.domain.enums.Category;
 import SE_team.IssueManager.domain.enums.Priority;
 import SE_team.IssueManager.domain.enums.Status;
@@ -52,8 +51,8 @@ public class IssueResponseDto {
     @AllArgsConstructor
     public static class AssignIssueResponseDto {
         private Long issueId;
-        private Long assigneeId;
-        private String fixerId;
+        private Long assignerId;
+        private String assigneeId;
     }
 
     @Getter

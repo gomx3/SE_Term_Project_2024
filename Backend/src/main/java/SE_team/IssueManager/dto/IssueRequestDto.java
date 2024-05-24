@@ -25,15 +25,17 @@ public class IssueRequestDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class AssignIssueRequestDto {
-        private Long assigneeId;
-        private String fixerId;
+        private Long id;
+        private String assigneeId;
     }
     @Getter
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class UpdateIssueStatusRequestDto {
-        private Long id;
+        private Long id;    //회원 id
         private Status status;
+        private String assigneeId;
     }
+
 }

@@ -17,9 +17,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -91,14 +89,13 @@ public class IssueService {
     }
 
     public Issue assignIssue(IssueRequestDto.AssignIssueRequestDto request, Long issueId) {
-        Member assignee=memberRepository.findById(request.getAssigneeId()).orElse(null);
-        Member fixer=memberRepository.findByMemberId(request.getFixerId()).orElse(null);
+        Member assigner=memberRepository.findById(request.getId()).orElse(null);
+        Member assignee=memberRepository.findByMemberId(request.getAssigneeId()).orElse(null);
 
-        if(assignee!=null&&fixer!=null&&assignee.getRole()== Role.PL && fixer.getRole()==Role.DEV){
+        if(assigner!=null&&assignee!=null&&assigner.getRole()== Role.PL && assignee.getRole()==Role.DEV){
             Issue issue=issueRepository.findById(issueId).orElse(null);
             if(issue!=null){
                 issue.setAssignee(assignee);
-                issue.setFixer(fixer);
                 issue.setStatus(Status.ASSIGNED);
                 return issue;
             }
@@ -106,10 +103,34 @@ public class IssueService {
         return null;
     }
 
-    public Issue updateIssueState(Long issueId, Status status){
+    public Issue updateIssueState(Long id,Long issueId, Status status,String assigneeId){
         Issue issue=issueRepository.findById(issueId).orElse(null);
         if(issue!=null){
-            issue.setStatus(status);
+            switch(status){
+                case ASSIGNED -> {
+                    Member assignee=memberRepository.findByMemberId(assigneeId).orElse(null);
+                    if(assignee!=null && assignee.getRole()== Role.DEV){
+                        issue.setAssignee(assignee);
+                        issue.setStatus(Status.ASSIGNED);
+                    }
+                }
+                case FIXED -> {
+                    Member fixer=memberRepository.findById(id).orElse(null);
+                    if(fixer!=null && fixer.getRole()== Role.DEV){
+                        issue.setFixer(fixer);
+                        issue.setStatus(Status.FIXED);
+                    }
+                }
+                case RESOLVED -> {
+                    issue.setStatus(Status.RESOLVED);
+                }
+                case CLOSED -> {
+                    issue.setStatus(Status.CLOSED);
+                }
+                case REOPENED -> {
+                    issue.setStatus(Status.REOPENED);
+                }
+            }
             return issue;
         }
         return null;

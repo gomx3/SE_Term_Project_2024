@@ -64,19 +64,19 @@ public class IssueController {
         Issue updatedIssue=issueService.assignIssue(assignIssueRequestDto,issueId);
         IssueResponseDto.AssignIssueResponseDto response=IssueResponseDto.AssignIssueResponseDto.builder()
                 .issueId(issueId)
-                .assigneeId(updatedIssue.getAssignee().getId())
-                .fixerId(updatedIssue.getFixer().getMemberId())
+                .assignerId(updatedIssue.getAssignee().getId())
+                .assigneeId(updatedIssue.getFixer().getMemberId())
                 .build();
 
         return ApiResponse.onSuccess(SuccessStatus.ISSUE_OK,response);
     }
 
-    @PatchMapping("/{issueId}/status-update")
+    @PatchMapping("/{issueId}")
     public ApiResponse<IssueResponseDto.UpdateIssueStatusResponseDto> updateIssueStatus(
             @PathVariable(name="issueId") Long issueId,
-            @RequestBody IssueRequestDto.UpdateIssueStatusRequestDto updateIssueStatusRequestDto
+            @RequestBody IssueRequestDto.UpdateIssueStatusRequestDto requestDto
     ){
-        Issue updatedIssue=issueService.updateIssueState(issueId,updateIssueStatusRequestDto.getStatus());
+        Issue updatedIssue=issueService.updateIssueState(requestDto.getId(),issueId,requestDto.getStatus(),requestDto.getAssigneeId());
         IssueResponseDto.UpdateIssueStatusResponseDto response=IssueResponseDto.UpdateIssueStatusResponseDto.builder()
                 .issueId(updatedIssue.getId())
                 .status(updatedIssue.getStatus()).build();
