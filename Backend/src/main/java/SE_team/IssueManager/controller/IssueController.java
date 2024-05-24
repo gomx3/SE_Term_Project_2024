@@ -10,12 +10,10 @@ import SE_team.IssueManager.dto.IssueRequestDto;
 import SE_team.IssueManager.dto.IssueResponseDto;
 import SE_team.IssueManager.payload.code.status.SuccessStatus;
 import SE_team.IssueManager.service.IssueService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.IntStream;
 
 @RestController
 @RequestMapping("/issues")
@@ -38,7 +36,7 @@ public class IssueController {
                 .issueId(issue.getId())
                 .createdAt(issue.getCreatedAt())
                 .build();
-        return ApiResponse.onSuccess(SuccessStatus.Issue_OK,resp);
+        return ApiResponse.onSuccess(SuccessStatus.ISSUE_OK,resp);
     }
 
     //이슈 조회(검색 가능)
@@ -54,7 +52,7 @@ public class IssueController {
     ) {
         List<Issue> issueList=issueService.findByCondition(reporterId,fixerId,assigneeId,status,priority,category);
 
-        return ApiResponse.onSuccess(SuccessStatus.Issue_OK,
+        return ApiResponse.onSuccess(SuccessStatus.ISSUE_OK,
                 IssueConverter.toIssueDtoList(issueList));
     }
 
@@ -70,6 +68,18 @@ public class IssueController {
                 .fixerId(updatedIssue.getFixer().getMemberId())
                 .build();
 
-        return ApiResponse.onSuccess(SuccessStatus.Issue_OK,response);
+        return ApiResponse.onSuccess(SuccessStatus.ISSUE_OK,response);
+    }
+
+    @PatchMapping("/{issueId}/status-update")
+    public ApiResponse<IssueResponseDto.UpdateIssueStatusResponseDto> updateIssueStatus(
+            @PathVariable(name="issueId") Long issueId,
+            @RequestBody IssueRequestDto.UpdateIssueStatusRequestDto updateIssueStatusRequestDto
+    ){
+        Issue updatedIssue=issueService.updateIssueState(issueId,updateIssueStatusRequestDto.getStatus());
+        IssueResponseDto.UpdateIssueStatusResponseDto response=IssueResponseDto.UpdateIssueStatusResponseDto.builder()
+                .issueId(updatedIssue.getId())
+                .status(updatedIssue.getStatus()).build();
+        return ApiResponse.onSuccess(SuccessStatus.ISSUE_OK,response);
     }
 }

@@ -106,4 +106,13 @@ public class IssueService {
         return null;
     }
 
+    public Issue updateIssueState(Long issueId, Status status){
+        Issue issue=issueRepository.findById(issueId).orElse(null);
+        if(issue!=null){
+            issue.setStatus(status);
+            return issue;
+        }
+        return null;
+    }
+
 }

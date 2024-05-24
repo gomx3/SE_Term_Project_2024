@@ -2,6 +2,7 @@ package SE_team.IssueManager.dto;
 
 import SE_team.IssueManager.domain.enums.Category;
 import SE_team.IssueManager.domain.enums.Priority;
+import SE_team.IssueManager.domain.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,5 +28,12 @@ public class IssueRequestDto {
         private Long assigneeId;
         private String fixerId;
     }
-
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class UpdateIssueStatusRequestDto {
+        private Long id;
+        private Status status;
+    }
 }

@@ -55,4 +55,13 @@ public class IssueResponseDto {
         private Long assigneeId;
         private String fixerId;
     }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class UpdateIssueStatusResponseDto {
+        private Long issueId;
+        private Status status;
+    }
 }
