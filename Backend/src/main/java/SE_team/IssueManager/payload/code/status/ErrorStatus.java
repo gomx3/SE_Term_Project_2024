@@ -11,8 +11,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 @AllArgsConstructor
 public enum ErrorStatus implements BaseErrorCode {
-    MEMBER_ID_EXISTS(HttpStatus.CONFLICT,"MEMBER_1000","이미 아이디가 존재합니다")
-    ;
+    MEMBER_ID_EXISTS(HttpStatus.CONFLICT,"MEMBER_1000","id already exists"),;
 
     private final HttpStatus httpStatus;
     private final String code;
