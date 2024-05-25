@@ -59,20 +59,20 @@ public class IssueController {
                 IssueConverter.toIssueDtoList(issueList));
     }
 
-    @PatchMapping("/{issueId}/assign")
-    public ApiResponse<IssueResponseDto.AssignIssueResponseDto> assignIssue(
-            @PathVariable(name="issueId")Long issueId,
-            @RequestBody IssueRequestDto.AssignIssueRequestDto assignIssueRequestDto
-    ){
-        Issue updatedIssue=issueService.assignIssue(assignIssueRequestDto,issueId);
-        IssueResponseDto.AssignIssueResponseDto response=IssueResponseDto.AssignIssueResponseDto.builder()
-                .issueId(issueId)
-                .assignerId(updatedIssue.getAssignee().getId())
-                .assigneeId(updatedIssue.getFixer().getMemberId())
-                .build();
-
-        return ApiResponse.onSuccess(SuccessStatus.ISSUE_OK,response);
-    }
+//    @PatchMapping("/{issueId}/assign")
+//    public ApiResponse<IssueResponseDto.AssignIssueResponseDto> assignIssue(
+//            @PathVariable(name="issueId")Long issueId,
+//            @RequestBody IssueRequestDto.AssignIssueRequestDto assignIssueRequestDto
+//    ){
+//        Issue updatedIssue=issueService.assignIssue(assignIssueRequestDto,issueId);
+//        IssueResponseDto.AssignIssueResponseDto response=IssueResponseDto.AssignIssueResponseDto.builder()
+//                .issueId(issueId)
+//                .assignerId(updatedIssue.getAssignee().getId())
+//                .assigneeId(updatedIssue.getFixer().getMemberId())
+//                .build();
+//
+//        return ApiResponse.onSuccess(SuccessStatus.ISSUE_OK,response);
+//    }
 
     @PatchMapping("/{issueId}")
     public ApiResponse<IssueResponseDto.UpdateIssueStatusResponseDto> updateIssueStatus(
