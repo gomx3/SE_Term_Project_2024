@@ -9,6 +9,7 @@ import SE_team.IssueManager.domain.enums.Status;
 import SE_team.IssueManager.dto.IssueRequestDto;
 import SE_team.IssueManager.dto.IssueResponseDto;
 import SE_team.IssueManager.payload.code.status.SuccessStatus;
+import SE_team.IssueManager.repository.IssueRepository;
 import SE_team.IssueManager.service.IssueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +20,12 @@ import java.util.List;
 @RequestMapping("/issues")
 public class IssueController {
     private final IssueService issueService;
+    private final IssueRepository issueRepository;
 
     @Autowired
-    IssueController(IssueService issueService) {
+    IssueController(IssueService issueService, IssueRepository issueRepository) {
         this.issueService = issueService;
+        this.issueRepository = issueRepository;
     }
 
     //이슈 등록
@@ -82,4 +85,14 @@ public class IssueController {
                 .status(updatedIssue.getStatus()).build();
         return ApiResponse.onSuccess(SuccessStatus.ISSUE_OK,response);
     }
+
+    @DeleteMapping("/{issueId}")
+    public ApiResponse<?> deleteIssue(
+            @PathVariable (name="issueId") Long issueId,
+            @RequestParam(name="memberId") Long memberId
+    ){
+        issueService.deleteIssue(memberId, issueId);
+        return ApiResponse.onSuccess(SuccessStatus.ISSUE_OK,null);
+    }
+
 }

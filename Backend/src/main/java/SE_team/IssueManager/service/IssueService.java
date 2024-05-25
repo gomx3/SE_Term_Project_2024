@@ -135,5 +135,11 @@ public class IssueService {
         }
         return null;
     }
+    public void deleteIssue(Long memberId, Long issueId) {
+        Issue issue=issueRepository.findById(issueId).orElse(null);
+        if(issue!=null){
+            issueRepository.delete(issue);
+        }
+    }
 
 }
