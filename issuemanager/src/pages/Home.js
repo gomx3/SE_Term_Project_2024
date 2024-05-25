@@ -9,7 +9,6 @@ function Home() {
       <header className="home-header">
         <h2>IssueManager</h2>
         <Link to="/signin">Sign In</Link>
-        <Link to= "/editissue">Edit Issue</Link>
       </header>
       <main className="home-main">
         <Catalog />
