@@ -5,16 +5,9 @@ import SE_team.IssueManager.domain.enums.Priority;
 import SE_team.IssueManager.domain.enums.Status;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.data.annotation.CreatedDate;
-
-
-import java.time.LocalDateTime;
 
 @Entity
-@Setter
 @Getter
 @Builder
 @NoArgsConstructor
@@ -30,15 +23,12 @@ public class Issue extends BaseTimeEntity{
     @Column(name="description")
     private String description;
 
-    @Setter
     @ManyToOne(fetch =FetchType.LAZY)
     private Member reporter;
 
-    @Setter
     @ManyToOne(fetch =FetchType.LAZY)
     private Member fixer;
 
-    @Setter
     @ManyToOne(fetch =FetchType.LAZY)
     private Member assignee;
 
@@ -61,4 +51,15 @@ public class Issue extends BaseTimeEntity{
     private Category category=Category.OTHERS;
 
 
+    public void updateAssignee(Member assignee) {
+        this.assignee = assignee;
+    }
+
+    public void updateFixer(Member fixer) {
+        this.fixer = fixer;
+    }
+
+    public void updateStatus(Status status) {
+        this.status = status;
+    }
 }

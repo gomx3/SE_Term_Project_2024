@@ -24,15 +24,9 @@ import java.util.List;
 @Repository
 public interface IssueRepository extends JpaRepository<Issue,Long> , JpaSpecificationExecutor<Issue> {
 
-    List<Issue> findByReporterOrderByCreatedAtDesc(Member reporter);
-    List<Issue> findByFixerOrderByCreatedAtDesc(Member fixer);
-    List<Issue> findByAssigneeOrderByCreatedAtDesc(Member assigner);
+
     @Query(value = "select * from issue e where DATE(e.created_at)=:date order by created_at DESC",nativeQuery = true)
     List<Issue> findByCreatedDateOrderByCreatedAtDesc(@Param("date") LocalDate date);
-    List<Issue> findByStatusOrderByCreatedAtDesc(Status status);
-    List<Issue> findByPriorityOrderByCreatedAtDesc(Priority priority);
-    List<Issue> findByCategoryOrderByCreatedAtDesc(Category category);
 
     List<Issue> findAll(Specification<Issue> spec, Sort sorting);
-    //List<Issue> findByCondition(Member reporter, Member fixer, Member assignee,Status status, Priority priority, Category category);
 }

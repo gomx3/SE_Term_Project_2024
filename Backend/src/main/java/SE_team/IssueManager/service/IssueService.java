@@ -4,7 +4,6 @@ import SE_team.IssueManager.domain.Issue;
 import SE_team.IssueManager.domain.Member;
 import SE_team.IssueManager.domain.enums.Category;
 import SE_team.IssueManager.domain.enums.Priority;
-import SE_team.IssueManager.domain.enums.Role;
 import SE_team.IssueManager.domain.enums.Status;
 import SE_team.IssueManager.dto.IssueRequestDto;
 import SE_team.IssueManager.payload.code.status.ErrorStatus;
@@ -38,19 +37,18 @@ public class IssueService {
 
 
     public Issue createIssue(IssueRequestDto.CreateIssueRequestDto request) {
+        Member reporter=memberRepository.findById(request.getReporterId()).orElse(null);
+        if(reporter==null) throw new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND);
+
         Issue issue=Issue.builder()
                 .title(request.getTitle())
                 .description(request.getDescription())
+                .reporter(reporter)
                 .priority(request.getPriority())
                 .category(request.getCategory())
                 .build();
+
         Issue savedIssue= issueRepository.save(issue);
-
-        Member reporter=memberRepository.findById(request.getReporterId()).orElse(null);
-        if(reporter==null) throw new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND);
-        savedIssue.setReporter(reporter);
-
-
         return savedIssue;
     }
 
@@ -109,8 +107,8 @@ public class IssueService {
             Issue issue=issueRepository.findById(issueId).orElse(null);
             if(issue==null)throw new IssueHandler(ErrorStatus.ISSUE_NOT_FOUND);
 
-            issue.setAssignee(assignee);
-            issue.setStatus(Status.ASSIGNED);
+            issue.updateAssignee(assignee);
+            issue.updateStatus(Status.ASSIGNED);
             return issue;
         }
     }
@@ -130,26 +128,26 @@ public class IssueService {
                 if(assigner.getRole()!=PL || assignee.getRole()!=DEV)
                     throw new IssueHandler(ErrorStatus.ISSUE_WRONG_ROLE_REQUEST);
 
-                issue.setAssignee(assignee);
-                issue.setStatus(Status.ASSIGNED);
+                issue.updateAssignee(assignee);
+                issue.updateStatus(Status.ASSIGNED);
             }
             case FIXED -> {
                 Member fixer=memberRepository.findById(id).orElse(null);
                 if(fixer==null)throw new IssueHandler(ErrorStatus.MEMBER_NOT_FOUND);
                 if(fixer.getRole()!=DEV) throw new IssueHandler(ErrorStatus.ISSUE_WRONG_ROLE_REQUEST);
 
-                issue.setFixer(fixer);
-                issue.setStatus(Status.FIXED);
+                issue.updateFixer(fixer);
+                issue.updateStatus(Status.FIXED);
 
             }
             case RESOLVED -> {
-                issue.setStatus(Status.RESOLVED);
+                issue.updateStatus(Status.RESOLVED);
             }
             case CLOSED -> {
-                issue.setStatus(Status.CLOSED);
+                issue.updateStatus(Status.CLOSED);
             }
             case REOPENED -> {
-                issue.setStatus(Status.REOPENED);
+                issue.updateStatus(Status.REOPENED);
             }
             default -> {
                 throw new IssueHandler(ErrorStatus.ISSUE_STATUS_BAD_REQUEST);

@@ -20,12 +20,10 @@ import java.util.List;
 @RequestMapping("/issues")
 public class IssueController {
     private final IssueService issueService;
-    private final IssueRepository issueRepository;
 
     @Autowired
     IssueController(IssueService issueService, IssueRepository issueRepository) {
         this.issueService = issueService;
-        this.issueRepository = issueRepository;
     }
 
     //이슈 등록

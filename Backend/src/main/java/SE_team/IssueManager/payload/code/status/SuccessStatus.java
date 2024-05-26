@@ -10,8 +10,9 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum SuccessStatus implements BaseCode {
 
-    ISSUE_OK(HttpStatus.OK,"ISSUE_2000","성공"),
-    MEMBER_OK(HttpStatus.OK,"MEMBER_1000","성공");
+    ISSUE_OK(HttpStatus.OK,"ISSUE_2000","success"),
+    MEMBER_OK(HttpStatus.OK,"MEMBER_1000","success"),
+    COMMENT_OK(HttpStatus.OK,"COMMENT_3000","success");
 
     private final HttpStatus httpStatus;
     private final String code;
