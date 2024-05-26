@@ -24,7 +24,7 @@ function SignIn() {
                   <div>* PASSWORD</div>
                   <input type="password" />
                 </div>
-                <div class="btn">
+                <div class="signon-btn">
                   <button>Sign In</button>
                 </div>
                 <div class="signup-link">
