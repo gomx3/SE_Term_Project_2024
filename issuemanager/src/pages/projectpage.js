@@ -70,6 +70,15 @@ function Projectinfo({ project }) {
           <h1>No project selected</h1>
         )}
       </div>
+      <div className="issue-btn-container">
+          <button className="issue-button">ALL Issues</button>
+          <button className="issue-button">My Issues</button>
+          <button className="issue-button">Statsics</button>
+          <button className="issue-create-button">Report New Issue</button>
+        </div>
+      <div className='issue-list'>
+
+      </div>
     </div>
   );
   
