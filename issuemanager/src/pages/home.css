@@ -58,11 +58,15 @@ body, html, #root {
   border-radius: 5px; /* Add 버튼의 모서리를 둥글게 만듭니다 */
   cursor: pointer; /* 마우스 커서를 포인터로 변경합니다 */
   margin-left: 10px;
+  margin-top: 0;
 }
+
 .proj-cancel {
   width: 80px;
   height: 40px;
   cursor: pointer;
+  margin-top: 10px;
+  margin-left: 2px;
 }
 
 .proj-add {
@@ -70,6 +74,7 @@ body, html, #root {
   height: 40px;
   margin-left: 10px;
   cursor: pointer;
+  margin-top: 10px;
 }
 
 .project-item {

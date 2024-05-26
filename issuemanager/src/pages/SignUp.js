@@ -135,7 +135,7 @@ function SignUp() {
                 </ul>
               </div>
               {error && <div className="error-message">{error}</div>}
-              <div className="btn">
+              <div className="signup-btn">
                 <button onClick={handleSignUp}>Sign Up</button>
               </div>
               <div className="signin-link">

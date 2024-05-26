@@ -9,8 +9,7 @@
   
   .project-info-container h1 {
     font-size: 25px;
-    margin-top: 0;
-    margin-bottom: 5px;
+    margin : 0;
   }
   
   .project-info-container p {
@@ -18,7 +17,8 @@
   }
   
   .add-account-container {
-    margin-top: 5px;
+    margin-top: 0;
+    border-bottom: 1px solid #ccc;
   }
   
   .add-account-button {
@@ -27,12 +27,15 @@
     margin-right: 10px;
     cursor: pointer;
     margin-bottom: 20px;
+    font-size: 15px;
+    background-color: #d7c3de;
+    border-color: #d7c3de;
+    color: white;
   }
   
   .account-input-container {
     display: flex;
     align-items: center;
- 
   }
   
   .account-input-container select,
@@ -48,7 +51,29 @@
     height: 30px;
     cursor: pointer;
     margin-bottom:30px;
+    margin-right: 5px;
   }
+
+  .issue-item,
+  .issue-header {
+    display: grid;
+    grid-template-columns: 160px 160px 320px 160px 160px 160px 160px;
+    grid-gap: 10px;
+    align-items: center;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+  }
+
+  .issue-header {
+    font-weight: bold;
+    background-color: #f5f4f5;
+  }
+
+  .issue-item > div {
+  margin-right: 20px;
+}
   
   .issue-btn-container{
     margin-bottom: 10px;
@@ -59,12 +84,11 @@
     font-size: 15px;
     margin-top: 0;
     width: 120px;
-    height: 50px;
+    height: 30px;
     margin-right: 40px;
     margin-bottom: 10px;
     color: rgb(0, 0, 0);
     border-color: rgb(121, 110, 129);
-    border-radius: 40px;
     background-color: #ffffff;
     cursor: pointer;
   }
@@ -73,9 +97,38 @@
     background-color: #d7c3de;
     border-color: #d7c3de;
     color: white;
-    margin-top: 0;
+    margin-top: 5px;
     width: 200px;
-    height: 50px;
-    margin-left: 450px;
+    height: 40px;
+    margin-left: 750px;
+    cursor: pointer;
+  }
+
+  .issue-detail-button{
+    margin-top: 0;
+    width: 180px;
+    height: 35px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .issue-button:hover,.issue-detail-button:hover {
+    background-color: #ddd;
+  }
+  
+  .issue-list {
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .status-select {
+    font-size: 15px;
+    width: 120px;
+    height: 30px;
+    margin-right: 40px;
+    margin-bottom: 10px;
+    color: rgb(0, 0, 0);
+    border-color: rgb(121, 110, 129);
+    background-color: #ffffff;
     cursor: pointer;
   }
