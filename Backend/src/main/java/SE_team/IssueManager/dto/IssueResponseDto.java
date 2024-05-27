@@ -63,4 +63,16 @@ public class IssueResponseDto {
         private Long issueId;
         private Status status;
     }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class GetStatisticsResponseDto{
+        private long projectId;
+        private int year;
+        private int month;
+        private long issueCount;
+        private long[] issueCountByCategory;
+    }
 }

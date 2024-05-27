@@ -22,7 +22,7 @@ public class IssueController {
     private final IssueService issueService;
 
     @Autowired
-    IssueController(IssueService issueService, IssueRepository issueRepository) {
+    IssueController(IssueService issueService) {
         this.issueService = issueService;
     }
 
@@ -32,7 +32,7 @@ public class IssueController {
             @PathVariable(name="projectId") Long projectId,
             @RequestBody IssueRequestDto.CreateIssueRequestDto createIssueRequestDto
     ){
-        Issue issue=issueService.createIssue(createIssueRequestDto);
+        Issue issue=issueService.createIssue(projectId,createIssueRequestDto);
         IssueResponseDto.CreateIssueResponseDto resp=IssueResponseDto.CreateIssueResponseDto.builder()
                 .issueId(issue.getId())
                 .createdAt(issue.getCreatedAt())
@@ -91,6 +91,16 @@ public class IssueController {
     ){
         issueService.deleteIssue(memberId, issueId);
         return ApiResponse.onSuccess(SuccessStatus.ISSUE_OK,null);
+    }
+
+    @GetMapping("/projects/{projectId}/statistics")
+    public ApiResponse<IssueResponseDto.GetStatisticsResponseDto> getStatistics(
+            @PathVariable(name="projectId") Long projectId,
+            @RequestParam(name="year") int year,
+            @RequestParam(name="month")int month
+    ){
+        IssueResponseDto.GetStatisticsResponseDto response=issueService.getIssueStatistics(year,month,projectId);
+        return ApiResponse.onSuccess(SuccessStatus.ISSUE_OK,response);
     }
 
 }

@@ -18,6 +18,8 @@ import org.springframework.lang.NonNullApi;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
 import java.util.Date;
 import java.util.List;
 
@@ -29,4 +31,8 @@ public interface IssueRepository extends JpaRepository<Issue,Long> , JpaSpecific
     List<Issue> findByCreatedDateOrderByCreatedAtDesc(@Param("date") LocalDate date);
 
     List<Issue> findAll(Specification<Issue> spec, Sort sorting);
+
+    @Query(value="select * from issue e where project_id=:projectId and YEAR(e.created_at)=:year and MONTH(e.created_at)=:month",nativeQuery = true)
+    List<Issue> findByProjectIdAndYearAndMonth(@Param("projectId") Long projectId, @Param("year") int year,@Param("month") int month);
+
 }

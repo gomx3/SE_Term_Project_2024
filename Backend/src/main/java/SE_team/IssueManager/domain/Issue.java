@@ -44,6 +44,7 @@ public class Issue extends BaseTimeEntity{
 
 //    @ManyToOne(fetch =FetchType.LAZY)
 //    private Project project;
+    private Long projectId;
 
     @Enumerated(EnumType.STRING)
     @Column(name="category")

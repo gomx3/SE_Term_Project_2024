@@ -6,6 +6,7 @@ import SE_team.IssueManager.domain.enums.Category;
 import SE_team.IssueManager.domain.enums.Priority;
 import SE_team.IssueManager.domain.enums.Status;
 import SE_team.IssueManager.dto.IssueRequestDto;
+import SE_team.IssueManager.dto.IssueResponseDto;
 import SE_team.IssueManager.payload.code.status.ErrorStatus;
 import SE_team.IssueManager.payload.exception.handler.IssueHandler;
 import SE_team.IssueManager.payload.exception.handler.MemberHandler;
@@ -36,7 +37,7 @@ public class IssueService {
 
 
 
-    public Issue createIssue(IssueRequestDto.CreateIssueRequestDto request) {
+    public Issue createIssue(Long projectId,IssueRequestDto.CreateIssueRequestDto request) {
         Member reporter=memberRepository.findById(request.getReporterId()).orElse(null);
         if(reporter==null) throw new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND);
 
@@ -44,6 +45,7 @@ public class IssueService {
                 .title(request.getTitle())
                 .description(request.getDescription())
                 .reporter(reporter)
+                .projectId(projectId)
                 .priority(request.getPriority())
                 .category(request.getCategory())
                 .build();
@@ -161,6 +163,26 @@ public class IssueService {
         if(issue==null)throw new IssueHandler(ErrorStatus.ISSUE_NOT_FOUND);
 
         issueRepository.delete(issue);
+    }
+
+    public IssueResponseDto.GetStatisticsResponseDto getIssueStatistics(int year, int month, Long projectId) {
+        IssueResponseDto.GetStatisticsResponseDto response;
+
+        List<Issue> issueList=issueRepository.findByProjectIdAndYearAndMonth(projectId, year,month);
+        long issueCount=issueList.size();
+        long[] issueCountByCategory =new long[5];
+        for(Issue issue:issueList){
+            int index=issue.getCategory().ordinal();
+            issueCountByCategory[index]++;
+        }
+
+        return IssueResponseDto.GetStatisticsResponseDto.builder()
+                .projectId(projectId)
+                .year(year)
+                .month(month)
+                .issueCount(issueCount)
+                .issueCountByCategory(issueCountByCategory)
+                .build();
     }
 
 }
