@@ -24,12 +24,19 @@ public class SecurityConfig {
                 .headers((headers) -> headers
                         .addHeaderWriter(new XFrameOptionsHeaderWriter(
                                 XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
+                /* spring security의 로그인 설정 담당 */
                 .formLogin((formLogin) -> formLogin
+                        /* 로그인 페이지의 url은 "/user/login" */
                         .loginPage("/user/login")
+                        /* 로그인 성공시 이동할 페이지는 루트 */
                         .defaultSuccessUrl("/"))
+                /* spring security의 로그아웃 설정 담당 */
                 .logout((logout) -> logout
+                        /* 로그아웃 페이지의 url은 "/user/logout" */
                         .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+                        /* 로그아웃 성공시 이동할 페이지는 루트 */
                         .logoutSuccessUrl("/")
+                        /* 로그아웃 시 생성된 사용자 세션 삭제 */
                         .invalidateHttpSession(true));
         return http.build();
     }
