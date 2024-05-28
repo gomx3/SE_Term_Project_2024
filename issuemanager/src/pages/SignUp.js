@@ -39,7 +39,7 @@ function SignUp() {
     };
 
     try {
-      const response = await fetch('https://api.yourdomain.com/signup', {
+      const response = await fetch('URL', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
