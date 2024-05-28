@@ -35,4 +35,13 @@ public interface IssueRepository extends JpaRepository<Issue,Long> , JpaSpecific
     @Query(value="select * from issue e where project_id=:projectId and YEAR(e.created_at)=:year and MONTH(e.created_at)=:month",nativeQuery = true)
     List<Issue> findByProjectIdAndYearAndMonth(@Param("projectId") Long projectId, @Param("year") int year,@Param("month") int month);
 
+    @Query(
+            value = "select fixer_id "
+            +"from issue "
+            +"where category=:category and project_id=:projectId and fixer_id is not null "
+            +"group by fixer_id "
+            +"order by count(*) desc"
+            ,nativeQuery = true
+    )
+    long[] findDevByCategory(@Param("projectId")long projectId,@Param("category")String category);
 }

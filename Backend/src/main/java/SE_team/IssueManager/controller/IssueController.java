@@ -14,6 +14,7 @@ import SE_team.IssueManager.service.IssueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -100,6 +101,18 @@ public class IssueController {
             @RequestParam(name="month")int month
     ){
         IssueResponseDto.GetStatisticsResponseDto response=issueService.getIssueStatistics(year,month,projectId);
+        return ApiResponse.onSuccess(SuccessStatus.ISSUE_OK,response);
+    }
+
+    @GetMapping("/projects/{projectId}/recommend")
+    public ApiResponse<IssueResponseDto.GetDevRecommend> getDevRecommend(
+            @PathVariable(name="projectId") Long projectId,
+            @RequestParam(name="category")Category category
+    ){
+        ArrayList<String> devList=issueService.getDevRecommend(projectId,category);
+        IssueResponseDto.GetDevRecommend response=IssueResponseDto.GetDevRecommend.builder()
+                .length(devList.size())
+                .devList(devList).build();
         return ApiResponse.onSuccess(SuccessStatus.ISSUE_OK,response);
     }
 

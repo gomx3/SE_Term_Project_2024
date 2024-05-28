@@ -60,7 +60,7 @@ class IssueServiceTest {
         String description="description1";
         String priority="MINOR";
         String priority2="MAJOR";
-        Category category=Category.OTHERS;
+        Category category=Category.MEMORY_LEAK;
 
         IssueRequestDto.CreateIssueRequestDto issueRequestDto1=IssueRequestDto.CreateIssueRequestDto.builder()
                 .reporterId(reporterId)
@@ -109,14 +109,20 @@ class IssueServiceTest {
         for(Issue issue:issueList){
             System.out.println(issue.getTitle()+":"+issue.getCreatedAt());
         }
-
+        //통계
         IssueResponseDto.GetStatisticsResponseDto issueStatistics=issueService.getIssueStatistics(2024,5,1L);
         List<Issue> issueList2=issueRepository.findByProjectIdAndYearAndMonth(1L,2024,5);
         System.out.println("2024-5 이슈");
         for(Issue issue:issueList2){
             System.out.println(issue.getTitle()+":"+issue.getCreatedAt());
         }
-        System.out.println(Year.of(2024)+""+ Month.of(5)+""+issueList.get(0).getCreatedAt().getMonth());
         System.out.println("이슈 개수:"+issueStatistics.getIssueCount());
+
+        //개발자 추천
+        long[] devIdList= issueRepository.findDevByCategory(1L,"MEMORY_LEAK");
+        System.out.println("Memory leak 카테고리: ");
+        for(long devId:devIdList){
+            System.out.println(devId+" ");
+        }
     }
 }

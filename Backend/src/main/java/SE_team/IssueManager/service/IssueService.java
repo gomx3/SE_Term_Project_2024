@@ -20,6 +20,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static SE_team.IssueManager.domain.enums.Role.DEV;
@@ -183,6 +184,16 @@ public class IssueService {
                 .issueCount(issueCount)
                 .issueCountByCategory(issueCountByCategory)
                 .build();
+    }
+
+    public ArrayList<String> getDevRecommend(long projectId, Category category){
+        long[] devIdList= issueRepository.findDevByCategory(projectId,category.toString());
+        ArrayList<String> devList=new ArrayList<>();
+        for(int i=0;i<3;i++){
+            if(i>devIdList.length-1) break;
+            devList.add(memberRepository.findById(devIdList[i]).get().getMemberId());
+        }
+        return devList;
     }
 
 }
