@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -19,9 +21,10 @@ import SE_team.IssueManager.payload.exception.handler.LoginSuccessHandler;
 import SE_team.IssueManager.service.MemberService;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
 
-        private final MemberService memberService; // 필드명 변경
+        private final MemberService memberService;
 
         @Autowired // 의존성 주입
         public SecurityConfig(MemberService memberService) {
@@ -35,11 +38,9 @@ public class SecurityConfig {
                 CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
                 requestHandler.setCsrfRequestAttributeName("_csrf");
                 return http
+                                .cors().and()
                                 .csrf(csrf -> csrf
-                                                .csrfTokenRequestHandler(requestHandler)
-                                                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                                                .ignoringRequestMatchers("/", "/account/login/**", "/logout/**",
-                                                                "/register/validate/email"))
+                                                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                                 .authorizeHttpRequests(request -> request
                                                 .requestMatchers("/cart").hasRole("MEMBER")
                                                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
@@ -65,6 +66,11 @@ public class SecurityConfig {
                                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
                                 .httpBasic(Customizer.withDefaults())
                                 .build();
+        }
+
+        @Bean
+        public AuthenticationManager authenticationManager() throws Exception {
+                return authentication -> null; // 비활성화된 인증 매니저
         }
 
         @Bean

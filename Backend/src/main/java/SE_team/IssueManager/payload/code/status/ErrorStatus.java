@@ -14,6 +14,7 @@ public enum ErrorStatus implements BaseErrorCode {
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER_1001", "member not found"),
 
     INVALID_PASSWORD(HttpStatus.UNAUTHORIZED, "MEMBER_1002", "invalid password"),
+    INVALID_CREDENTIALS(HttpStatus.UNAUTHORIZED, "AUTH_401", "Invalid credentials"),
 
     ISSUE_NOT_FOUND(HttpStatus.NOT_FOUND, "ISSUE_1000", "issue not found"),
     ISSUE_WRONG_ROLE_REQUEST(HttpStatus.BAD_REQUEST, "ISSUE_1001", "the role is not allowed to do the behavior"),

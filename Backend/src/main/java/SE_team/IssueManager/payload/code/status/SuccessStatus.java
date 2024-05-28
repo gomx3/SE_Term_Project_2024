@@ -14,9 +14,11 @@ public enum SuccessStatus implements BaseCode {
     ISSUE_OK(HttpStatus.OK, "ISSUE_2000", "success"),
     MEMBER_OK(HttpStatus.OK, "MEMBER_1000", "success"),
     COMMENT_OK(HttpStatus.OK, "COMMENT_3000", "success"),
-
     SIGNUP_SUCCESS(HttpStatus.OK, "AUTH_1000", "signup success"),
+    LOGOUT_SUCCESS(HttpStatus.OK, "AUTH_1002", "logout success"),
     LOGIN_SUCCESS(HttpStatus.OK, "AUTH_1001", "login success");
+
+    // 로그아웃 석세스 만들기
 
     private final HttpStatus httpStatus;
     private final String code;
