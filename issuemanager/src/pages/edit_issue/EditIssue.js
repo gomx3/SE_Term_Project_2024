@@ -41,54 +41,6 @@ function EditIssue() {
      }));
   }, []);
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setIssue((prevIssue) => ({ ...prevIssue, [name]: value }));
-  }
-
-  function handleCategoryChange(category) {
-    setIssue((prevIssue) => {
-      if (prevIssue.category.includes(category)) {
-        return {
-          ...prevIssue,
-          category: prevIssue.category.filter((item) => item !== category),
-        };
-      } else {
-        return {
-          ...prevIssue,
-          category: [...prevIssue.category, category],
-        };
-      }
-    });
-  }
-
-  function addComment() {
-    setIssue((prevIssue) => ({
-      ...prevIssue,
-      comments: [
-        ...prevIssue.comments,
-        {
-          content: prevIssue.newComment,
-          created_at: new Date().toISOString(),
-          writer_id: userId, // 현재 사용자 ID 사용
-          id: 'id', // 고정된 이슈 ID 또는 동적으로 설정
-        }
-      ],
-      newComment: '',
-    }));
-  }
-
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth()는 0부터 시작합니다.
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-  
-    return `${year}-${month}-${day} ${hours}:${minutes}`;
-  }
-
   function handleSubmit() {
     console.log('Issue edited: ', issue);
   }
@@ -100,16 +52,19 @@ function EditIssue() {
         <div className={styles.pageTitleContainer}>
           {/*<h1 className={styles.h1}>{isEditMode ? 'ISSUE EDIT' : 'ISSUE DETAILS'}</h1>*/}
           <h1 className={styles.h1}>ISSUE DETAILS</h1>
-          <button className={styles.btn} type="edit" onClick={handleEditClick}>Edit</button>
+          <button
+            className={isEditMode ? styles.btnEditMode : styles.btnNotEditMode}
+            type="button"
+            onClick={handleEditClick}>
+            Edit
+          </button>
         </div>
         {/* 이슈 정보 */}
         <IssueInfo
           issue={issue}
-          handleChange={handleChange}
+          setIssue={setIssue}
           userId={userId}
           categories={categories}
-          handleCategoryChange={handleCategoryChange}
-          handleSubmit={handleSubmit}
           isEditMode={isEditMode}
         />
         <div className={styles.btns}>
@@ -122,9 +77,8 @@ function EditIssue() {
       <div className={styles.commentContainer}>
         <IssueComment
           issue={issue}
-          handleChange={handleChange}
-          addComment={addComment}
-          formatDate={formatDate}
+          setIssue={setIssue}
+          userId={userId}
         />
       </div>
     </div>

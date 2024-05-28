@@ -1,11 +1,32 @@
 import React from 'react';
 import styles from './EditIssue.module.css';
 
-function IssueInfo( {issue, handleChange, userId, categories, handleCategoryChange, isEditMode} ) {
+function IssueInfo( {issue, setIssue, userId, categories, isEditMode} ) {
     
     /* 임시 */
     const devList = ["seoyeon_dev", "seoyeon22", "user123"];
     const RecommendedReporterString = devList.join(', ');
+
+    function handleChange(e) {
+        const { name, value } = e.target;
+        setIssue((prevIssue) => ({ ...prevIssue, [name]: value }));
+    }
+    
+    function handleCategoryChange(category) {
+        setIssue((prevIssue) => {
+            if (prevIssue.category.includes(category)) {
+                return {
+                ...prevIssue,
+                category: prevIssue.category.filter((item) => item !== category),
+                };
+            } else {
+                return {
+                ...prevIssue,
+                category: [...prevIssue.category, category],
+                };
+            }
+        });
+    }
 
     return (
         <div>
@@ -61,7 +82,7 @@ function IssueInfo( {issue, handleChange, userId, categories, handleCategoryChan
                     disabled={isEditMode === false}
                 />
                 <div className={styles.recommendContainer}>
-                    <label className={styles.label} type="recommend">Recommended reporter: {RecommendedReporterString}</label>
+                    <label className={styles.recommendlabel}>Recommended reporter: {RecommendedReporterString}</label>
                 </div>
                 <label className={styles.label}>Reported Date</label>
                 <input className={styles.input}

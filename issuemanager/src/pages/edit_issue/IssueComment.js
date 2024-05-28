@@ -1,7 +1,39 @@
 import React from 'react';
 import styles from './EditIssue.module.css';
 
-function IssueComment( {issue, handleChange, addComment, formatDate} ) {
+function IssueComment( {issue, setIssue, userId} ) {
+    function handleChange(e) {
+        const { name, value } = e.target;
+        setIssue((prevIssue) => ({ ...prevIssue, [name]: value }));
+    }
+    
+    function addComment() {
+        setIssue((prevIssue) => ({
+          ...prevIssue,
+          comments: [
+            ...prevIssue.comments,
+            {
+              content: prevIssue.newComment,
+              created_at: new Date().toISOString(),
+              writer_id: userId, // 현재 사용자 ID 사용
+              id: 'id', // 고정된 이슈 ID 또는 동적으로 설정
+            }
+          ],
+          newComment: '',
+        }));
+    }
+    
+      function formatDate(dateString) {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth()는 0부터 시작합니다.
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+      
+        return `${year}-${month}-${day} ${hours}:${minutes}`;
+    }
+    
     return (
         <div>
             <h3>Add a Comment</h3>
