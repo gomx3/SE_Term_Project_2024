@@ -18,7 +18,7 @@ import SE_team.IssueManager.payload.code.status.SuccessStatus;
 import SE_team.IssueManager.service.AuthService;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/members")
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
