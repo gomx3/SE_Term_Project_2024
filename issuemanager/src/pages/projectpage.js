@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './projectpage.css'; // CSS 파일을 임포트합니다
 
 const admin = "admin1";
@@ -37,6 +38,18 @@ function Projectinfo({ project }) {
     // 임시로 하드코딩된 데이터를 사용합니다.
     setIssues(mockIssues);
   }, []);
+
+  // ========= 이슈 페이지 라우트 땜에 추가한 내용 확인하고 주석 지워용
+  const navigate = useNavigate();
+
+  const handleReportNewIssue = () => {
+    navigate('/createissue'); // 이슈 생성 페이지로 이동
+  };
+
+  const handleShowDetail = () => {
+    navigate('/editissue'); // 이슈 디테일 확인(+편집) 페이지로 이동
+  };
+  // =========
 
   const handleRoleChange = (event) => {
     setSelectedRole(event.target.value);
@@ -114,7 +127,7 @@ function Projectinfo({ project }) {
         </select>
         <button className="issue-button">My Issues</button>
         <button className="issue-button">Statistics</button>
-        <button className="issue-create-button">Report New Issue</button>
+        <button className="issue-create-button" onClick={handleReportNewIssue}>Report New Issue</button>
       </div>
       <div className="issue-list">
         <div className="issue-header">
@@ -134,7 +147,7 @@ function Projectinfo({ project }) {
               <div>{issue.reporterId}</div>
               <div>{issue.assigneeId}</div>
               <div>{issue.fixerId}</div>
-              <button className="issue-detail-button">Show Detail</button>
+              <button className="issue-detail-button" onClick={handleShowDetail}>Show Detail</button>
             </div>
           ))
         ) : (
