@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './home.css';  // CSS 파일을 임포트합니다
-import Project from './project';
+import Projectinfo from './projectpage';
 
 function Home() {
+  const [selectedProject, setSelectedProject] = useState(null); // 선택된 프로젝트 이름 상태
+
   return (
     <div className="home-container">
       <header className="home-header">
@@ -11,14 +13,14 @@ function Home() {
         <Link to="/signin">Sign In</Link>
       </header>
       <main className="home-main">
-        <Catalog />
-        <Content />
+        <Catalog setSelectedProject={setSelectedProject} />
+        <Content selectedProject={selectedProject} />
       </main>
     </div>
   );
 }
 
-function Catalog() {
+function Catalog({ setSelectedProject }) {
   const [showInput, setShowInput] = useState(false); // 입력 상자를 보여줄지 여부 상태
   const [projects, setProjects] = useState([]); // 프로젝트 리스트와 setter 선언
   const [newProjectName, setNewProjectName] = useState(''); // 새로운 프로젝트 이름 상태
@@ -52,17 +54,17 @@ function Catalog() {
       <h3>Projects</h3>
       <ul>
         {projects.map((project, index) => (
-          <li key={index}><Link to={`/project/${index}`}>{project}</Link></li>
+          <li key={index} className="project-item" onClick={() => setSelectedProject(project)}>
+            {project}
+          </li>
         ))}
       </ul>
       {showInput && (
         <div className="input-container">
           <div className="input-wrapper">
             <input type="text" value={newProjectName} onChange={handleInputChange} />
-            <div>
-              <button className="proj-cancel" onClick={cancelInput}>Cancel</button>
-              <button className="proj-add" onClick={addProject}>Add</button>
-            </div>
+            <button className="proj-cancel" onClick={cancelInput}>Cancel</button>
+            <button className="proj-add" onClick={addProject}>Add</button>
           </div>
         </div>
       )}
@@ -73,12 +75,10 @@ function Catalog() {
   );
 }
 
-function Content() {
+function Content({ selectedProject }) {
   return (
     <section className="home-content">
-      {/* <Project/> */}
-      <h3>Content</h3>
-      <p>Welcome to the content area. Select an item from the catalog to view more details.</p>
+      <Projectinfo project={selectedProject} />
     </section>
   );
 }
