@@ -24,14 +24,6 @@
     justify-content: space-between;
 }
 
-.recommendContainer {
-    display: flex;
-    flex-direction: row;
-    margin-left: 10px;
-    color: #707070;
-    font-weight: lighter;
-}
-
 .infoContainer {
     border-top: 1px solid #cfcfcf;
 }
@@ -61,10 +53,6 @@
     margin-bottom: .5rem;
     font-weight: 600;
     color: #586069;
-}
-
-.label[type="recommend"] {
-    font-weight: lighter;
 }
     
 .input[type="text"],

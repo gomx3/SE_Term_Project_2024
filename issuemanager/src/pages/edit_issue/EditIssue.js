@@ -29,7 +29,7 @@ function EditIssue() {
 
   const handleEditClick = () => {
     setIsEditMode((prevMode) => !prevMode);
-    console.log('Issue Edit Mode Toggled');
+    console.log('Issue Edit Mode Toggled', isEditMode);
   };
 
   useEffect(() => {
@@ -110,6 +110,7 @@ function EditIssue() {
           categories={categories}
           handleCategoryChange={handleCategoryChange}
           handleSubmit={handleSubmit}
+          isEditMode={isEditMode}
         />
         <div className={styles.btns}>
                 <button className={styles.btn} onClick={() => console.log('Issue closed')}>Close Issue</button>
