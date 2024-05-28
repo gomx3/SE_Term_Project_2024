@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import SE_team.IssueManager.domain.Member;
 import SE_team.IssueManager.dto.MemberRequestDto;
+import SE_team.IssueManager.dto.MemberResponseDto;
 import SE_team.IssueManager.payload.code.status.ErrorStatus;
 import SE_team.IssueManager.payload.exception.handler.MemberHandler;
 import SE_team.IssueManager.repository.MemberRepository;
@@ -21,10 +23,12 @@ import SE_team.IssueManager.security.CustomUserDetails;
 @Transactional
 public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
+        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
     @Override
@@ -36,7 +40,7 @@ public class MemberService implements UserDetailsService {
 
     public Member signUp(MemberRequestDto.SignUpRequestDTO request) { // 회원가입 서비스
         Member member = Member.builder()
-                .pw(request.getPw())
+                .pw(passwordEncoder.encode(request.getPw())) // 비밀번호 암호화
                 .memberId(request.getMemberId())
                 .role(request.getRole()).build();
 
@@ -70,5 +74,15 @@ public class MemberService implements UserDetailsService {
         }
 
         return member;
+    }
+
+    @Transactional
+    public void save(MemberResponseDto.MemberSaveDTO memberSaveDto) {
+        Member member = Member.builder()
+                .memberId(memberSaveDto.getMemberId())
+                .pw(passwordEncoder.encode(memberSaveDto.getPassword()))
+                .role(memberSaveDto.getRole())
+                .build();
+        memberRepository.save(member);
     }
 }

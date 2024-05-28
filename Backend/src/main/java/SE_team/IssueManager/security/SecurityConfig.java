@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -45,9 +45,9 @@ public class SecurityConfig {
                                 .authorizeHttpRequests((authorize) -> authorize
                                                 .anyRequest().permitAll())
                                 // 폼 로그인은 현재 사용하지 않음
-                                // .formLogin(formLogin -> formLogin
-                                // .loginPage("/login")
-                                // .defaultSuccessUrl("/home"))
+                                .formLogin(formLogin -> formLogin
+                                                .loginPage("/login")
+                                                .defaultSuccessUrl("/home"))
                                 .logout((logout) -> logout
                                                 .logoutSuccessUrl("/login")
                                                 .invalidateHttpSession(true))
@@ -69,7 +69,7 @@ public class SecurityConfig {
 
         @Bean
         public static PasswordEncoder passwordEncoder() {
-                return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+                return new BCryptPasswordEncoder();
         }
 
         @Bean
