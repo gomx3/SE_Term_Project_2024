@@ -39,8 +39,9 @@ public class MemberService implements UserDetailsService {
     }
 
     public Member signUp(MemberRequestDto.SignUpRequestDTO request) { // 회원가입 서비스
+        String encryptedPassword = passwordEncoder.encode(request.getPw());
         Member member = Member.builder()
-                .pw(passwordEncoder.encode(request.getPw())) // 비밀번호 암호화
+                .pw(encryptedPassword)
                 .memberId(request.getMemberId())
                 .role(request.getRole()).build();
 
