@@ -1,9 +1,9 @@
 package SE_team.IssueManager.service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -79,13 +79,19 @@ public class MemberService implements UserDetailsService {
         return member;
     }
 
-    public Set<Member> findMembersByIds(Set<String> memberIds) {
-        Set<Member> members = new HashSet<>();
+    public void validateMembersExist(Set<String> memberIds) {
+        Set<Member> existingMembers = memberRepository.findByMemberIdIn(memberIds);
+        Set<String> existingMemberIds = existingMembers.stream().map(Member::getMemberId).collect(Collectors.toSet());
+
         for (String memberId : memberIds) {
-            Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
-            optionalMember.ifPresent(members::add);
+            if (!existingMemberIds.contains(memberId)) {
+                throw new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND);
+            }
         }
-        return members;
+    }
+
+    public Set<Member> findMembersByIds(Set<String> memberIds) {
+        return memberRepository.findByMemberIdIn(memberIds);
     }
 
     @Transactional
