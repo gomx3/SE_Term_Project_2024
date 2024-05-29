@@ -1,5 +1,6 @@
 package SE_team.IssueManager.service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -79,7 +80,12 @@ public class MemberService implements UserDetailsService {
     }
 
     public Set<Member> findMembersByIds(Set<String> memberIds) {
-        return memberRepository.findByMemberIdIn(memberIds);
+        Set<Member> members = new HashSet<>();
+        for (String memberId : memberIds) {
+            Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
+            optionalMember.ifPresent(members::add);
+        }
+        return members;
     }
 
     @Transactional

@@ -40,12 +40,11 @@ public class ProjectService {
                 .members(initialMembers)
                 .build();
 
-        Project savedProject = projectRepository.save(project);
-        savedProject.setMembers(initialMembers);
+        Set<String> initialMemberIds = initialMembers.stream().map(Member::getMemberId).collect(Collectors.toSet());
 
-        ProjectDTO projectDTO = new ProjectDTO(savedProject.getId(), savedProject.getName(),
-                savedProject.getDescription(),
-                initialMembers.stream().map(Member::getMemberId).collect(Collectors.toSet()));
+        ProjectDTO projectDTO = new ProjectDTO(project.getId(), project.getName(),
+                project.getDescription(),
+                initialMemberIds);
         return ApiResponse.onSuccess(SuccessStatus.PROJECT_OK, projectDTO);
     }
 }
