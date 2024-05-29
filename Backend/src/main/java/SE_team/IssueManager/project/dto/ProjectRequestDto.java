@@ -1,5 +1,7 @@
 package SE_team.IssueManager.project.dto;
 
+import java.util.Set;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,5 +13,6 @@ public class ProjectRequestDto {
     public static class CreateProjectRequestDTO {
         private String name;
         private String description;
+        private Set<String> initialMemberIds;
     }
 }

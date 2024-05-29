@@ -2,6 +2,7 @@ package SE_team.IssueManager.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -75,6 +76,10 @@ public class MemberService implements UserDetailsService {
         }
 
         return member;
+    }
+
+    public Set<Member> findMembersByIds(Set<String> memberIds) {
+        return memberRepository.findByMemberIdIn(memberIds);
     }
 
     @Transactional
