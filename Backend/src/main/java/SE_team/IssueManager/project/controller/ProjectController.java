@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import SE_team.IssueManager.payload.ApiResponse;
 import SE_team.IssueManager.project.dto.ProjectRequestDto.CreateProjectRequestDTO;
 import SE_team.IssueManager.project.dto.ProjectResonseDto.ProjectDTO;
 import SE_team.IssueManager.project.service.ProjectService;
@@ -23,8 +24,8 @@ public class ProjectController {
     }
 
     @PostMapping
-    public ResponseEntity<ProjectDTO> createProject(@RequestBody CreateProjectRequestDTO request) {
-        ProjectDTO project = projectService.createProject(request);
-        return ResponseEntity.ok(project);
+    public ResponseEntity<ApiResponse<ProjectDTO>> createProject(@RequestBody CreateProjectRequestDTO request) {
+        ApiResponse<ProjectDTO> response = projectService.createProject(request);
+        return ResponseEntity.ok(response);
     }
 }
