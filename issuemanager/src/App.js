@@ -3,7 +3,7 @@ import { Routes , Route } from "react-router-dom"
 import Home from './pages/Home';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
-import CreateIssue from './pages/edit_issue/CreateIssue';
+import CreateIssue from './pages/create_issue/CreateIssue';
 import EditIssue from './pages/edit_issue/EditIssue';
 
 class App extends React.Component {

@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './EditIssue.module.css';
+import styles from './CreateIssue.module.css';
 
 function IssueComment( {issue, setIssue, userId} ) {
     function handleChange(e) {

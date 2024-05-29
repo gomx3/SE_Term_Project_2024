@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import IssueInfo from './IssueInfo';
 import IssueComment from './IssueComment';
-import styles from './EditIssue.module.css';
+import styles from './CreateIssue.module.css';
 
-function EditIssue() {
+function CreateIssue() {
   const [issue, setIssue] = useState({
     title: '',
     description: '',
@@ -18,7 +18,6 @@ function EditIssue() {
     newComment: '',
   });
   const [userId, setUserId] = useState('tester'); // 현재 사용자 id (A 또는 B, ...)
-  const [isEditMode, setIsEditMode] = useState(false);
   const categories = [
     'Memory Leak',
     'Crash Occurrence',
@@ -27,14 +26,8 @@ function EditIssue() {
     'Others',
   ]
 
-  const handleEditClick = () => {
-    setIsEditMode((prevMode) => !prevMode);
-    console.log('Issue Edit Mode Toggled', isEditMode);
-  };
-
   useEffect(() => {
-    // 컴포넌트가 처음 렌더링될 때 현재 날짜를 설정
-    const currentDate = new Date().toISOString().split('T')[0];
+    const currentDate = new Date().toISOString().split('T')[0]; // 컴포넌트가 처음 렌더링될 때 현재 날짜를 설정
     setIssue((prevIssue) => ({ 
       ...prevIssue, 
       reportedDate: currentDate,
@@ -48,32 +41,21 @@ function EditIssue() {
   return (
     <div className={styles.container}>
       <div className={styles.editContainer}>
-        {/* 페이지 타이틀 */}
-        <div className={styles.pageTitleContainer}>
-          {/*<h1 className={styles.h1}>{isEditMode ? 'ISSUE EDIT' : 'ISSUE DETAILS'}</h1>*/}
-          <h1 className={styles.h1}>ISSUE DETAILS</h1>
-          <button
-            className={isEditMode ? styles.btnEditMode : styles.btnNotEditMode}
-            type="button"
-            onClick={handleEditClick}>
-            Edit
-          </button>
+        <div>
+          <h1 className={styles.h1}>CREATE ISSUE</h1>
         </div>
-        {/* 이슈 정보 */}
         <IssueInfo
           issue={issue}
           setIssue={setIssue}
           userId={userId}
           categories={categories}
-          isEditMode={isEditMode}
         />
         <div className={styles.btns}>
                 <button className={styles.btn} onClick={() => console.log('Issue closed')}>Close Issue</button>
                 <button className={styles.btn} onClick={() => console.log('Issue resolved')}>Resolve Issue</button>
-                <button className={styles.btn} type="submit" onClick={handleSubmit}>Save</button>
+                <button className={styles.btn} type="submit" onClick={handleSubmit}>Create Issue</button>
         </div>
       </div>
-      {/* 이슈 코멘트 */}
       <div className={styles.commentContainer}>
         <IssueComment
           issue={issue}
@@ -85,4 +67,4 @@ function EditIssue() {
   );
 }
 
-export default EditIssue;
+export default CreateIssue;
