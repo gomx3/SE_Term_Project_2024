@@ -20,11 +20,11 @@ function EditIssue() {
   const [userId, setUserId] = useState('tester'); // 현재 사용자 id (A 또는 B, ...)
   const [isEditMode, setIsEditMode] = useState(false);
   const categories = [
-    'Memory Leak',
-    'Crash Occurrence',
-    'User Feedback',
-    'Security Vulnerability',
-    'Others',
+    'MEMORY_LEAK',
+    'CRASH',
+    'USER_FEEDBACK',
+    'SECURITY',
+    'OTHERS',
   ]
 
   const handleEditClick = () => {

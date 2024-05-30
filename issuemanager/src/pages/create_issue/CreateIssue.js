@@ -4,26 +4,36 @@ import IssueComment from './IssueComment';
 import styles from './CreateIssue.module.css';
 
 function CreateIssue() {
+  /* 프로젝트 정보 */
+  const projectId = `2`;
+  /* 사용자 정보 */
+  const [user, setUser] = useState({
+    id: 80,
+    memberId: 'tt', // 로그인한 사용자로 설정하게
+    role: 'TESTER',
+  });
+  /* 이슈 정보 (코멘트 포함) */
   const [issue, setIssue] = useState({
+    id: 7,
     title: '',
     description: '',
-    state: '',
-    category: '',
-    reporter: '',
+    state: 'NEW',
+    category: 'OTHERS',
+    reporter: user.memberId, // 로그인한 사용자
     reportedDate: '',
-    priority: '',
+    priority: 'MAJOR',
     assignee: '',
     fixer:'',
     comments: [],
     newComment: '',
   });
-  const [userId, setUserId] = useState('tester'); // 현재 사용자 id (A 또는 B, ...)
+  
   const categories = [
-    'Memory Leak',
-    'Crash Occurrence',
-    'User Feedback',
-    'Security Vulnerability',
-    'Others',
+    'MEMORY_LEAK',
+    'CRASH',
+    'USER_FEEDBACK',
+    'SECURITY',
+    'OTHERS',
   ]
 
   useEffect(() => {
@@ -34,10 +44,6 @@ function CreateIssue() {
      }));
   }, []);
 
-  function handleSubmit() {
-    console.log('Issue edited: ', issue);
-  }
-
   return (
     <div className={styles.container}>
       <div className={styles.editContainer}>
@@ -45,22 +51,18 @@ function CreateIssue() {
           <h1 className={styles.h1}>CREATE ISSUE</h1>
         </div>
         <IssueInfo
+          projectId={projectId}
+          user={user}
           issue={issue}
           setIssue={setIssue}
-          userId={userId}
           categories={categories}
         />
-        <div className={styles.btns}>
-                <button className={styles.btn} onClick={() => console.log('Issue closed')}>Close Issue</button>
-                <button className={styles.btn} onClick={() => console.log('Issue resolved')}>Resolve Issue</button>
-                <button className={styles.btn} type="submit" onClick={handleSubmit}>Create Issue</button>
-        </div>
       </div>
       <div className={styles.commentContainer}>
         <IssueComment
           issue={issue}
           setIssue={setIssue}
-          userId={userId}
+          user={user}
         />
       </div>
     </div>

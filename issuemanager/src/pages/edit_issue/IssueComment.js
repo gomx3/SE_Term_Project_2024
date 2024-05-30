@@ -23,7 +23,7 @@ function IssueComment( {issue, setIssue, userId} ) {
         }));
     }
     
-      function formatDate(dateString) {
+    function formatDate(dateString) {
         const date = new Date(dateString);
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth()는 0부터 시작합니다.
@@ -51,8 +51,8 @@ function IssueComment( {issue, setIssue, userId} ) {
                 {issue.comments.map((comment) => (
                 <li key={comment.id} className={styles.commentItem}>
                     <div className={styles.commentHeader}>
-                    <p className={styles.commentAuthor}>{comment.writer_id}</p>
-                    <p className={styles.commentDate}>{formatDate(comment.created_at)}</p>
+                        <p className={styles.commentAuthor}>{comment.writer_id}</p>
+                        <p className={styles.commentDate}>{formatDate(comment.created_at)}</p>
                     </div>
                     <hr className={styles.commentDivider} />
                     <div className={styles.commentContent}>

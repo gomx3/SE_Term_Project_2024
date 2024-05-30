@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect }from 'react';
 import styles from './EditIssue.module.css';
 
 function IssueInfo( {issue, setIssue, userId, categories, isEditMode} ) {
@@ -7,24 +7,25 @@ function IssueInfo( {issue, setIssue, userId, categories, isEditMode} ) {
     const devList = ["seoyeon_dev", "seoyeon22", "user123"];
     const RecommendedReporterString = devList.join(', ');
 
+    useEffect(() => {
+        fetch('http://localhost:8080/issues/projects/00')
+            .then((response) => response.json())
+            .then((data) => setIssue(data))
+            .catch((error) => console.error('Error fetching issue data:', error));
+    }, []);
+
     function handleChange(e) {
         const { name, value } = e.target;
         setIssue((prevIssue) => ({ ...prevIssue, [name]: value }));
     }
     
-    function handleCategoryChange(category) {
+    function handleCategoryChange(index) {
         setIssue((prevIssue) => {
-            if (prevIssue.category.includes(category)) {
-                return {
+            const category = categories[index];
+            return {
                 ...prevIssue,
-                category: prevIssue.category.filter((item) => item !== category),
-                };
-            } else {
-                return {
-                ...prevIssue,
-                category: [...prevIssue.category, category],
-                };
-            }
+                category: category,
+            };
         });
     }
 
@@ -56,18 +57,21 @@ function IssueInfo( {issue, setIssue, userId, categories, isEditMode} ) {
                 />
                 <label className={styles.label}>Issue Category</label>
                 <div>
-                    {categories.map((category) => (
-                    <div key={category} className={styles.categoryContainer}>
-                        <input className={styles.input}
-                        type="radio"
-                        id={category}
-                        name="category"
-                        value={category}
-                        checked={issue.category.includes(category)}
-                        onChange={() => handleCategoryChange(category)}
-                        disabled={isEditMode === false}
+                    {categories.map((category, index) => (
+                        <div key={index} className={styles.categoryContainer}>
+                        <input 
+                            className={styles.input}
+                            type="radio"
+                            id={category}
+                            name="category"
+                            value={category}
+                            checked={issue.category === category}
+                            onChange={() => handleCategoryChange(index)}
+                            disabled={isEditMode === false}
                         />
-                        <label className={styles.label} htmlFor={category}>{category}</label>
+                        <label className={styles.label} htmlFor={category}>
+                            {category}
+                        </label>
                     </div>
                     ))}
                 </div>
