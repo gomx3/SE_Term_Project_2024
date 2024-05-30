@@ -106,13 +106,14 @@
   }
   
   
-  .btn {
+  .signup-btn {
     display: flex;
     flex-direction: column;
     margin-top: 60px;
     width: 470px;
     height: 106px;
     border-top: 1px solid #e6e6e6;
+    color: #9664cf;
   }
   
   button {
@@ -123,7 +124,6 @@
     font-size: 18px;
     line-height: 27px;
     text-align: center;
-    color: #9664cf;
     background: #ffffff;
     border: 1px solid #9664cf;
     border-radius: 10px;
@@ -133,4 +133,9 @@
     font-weight: 400;
     font-size: 16px;
     text-align: center;
+  }
+
+  .error-message {
+    color: rgb(191, 29, 194);
+    margin-top: 10px;
   }
