@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import SE_team.IssueManager.payload.ApiResponse;
 import SE_team.IssueManager.project.dto.ProjectRequestDto.CreateProjectRequestDTO;
-import SE_team.IssueManager.project.dto.ProjectResonseDto.ProjectDTO;
+import SE_team.IssueManager.project.dto.ProjectResponseDto.ProjectDTO;
 import SE_team.IssueManager.project.service.ProjectService;
 
 @RestController
