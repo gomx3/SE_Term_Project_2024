@@ -1,16 +1,60 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import './home.css';  // CSS 파일을 임포트합니다
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import './home.css';
 import Projectinfo from './projectpage';
 
 function Home() {
-  const [selectedProject, setSelectedProject] = useState(null); // 선택된 프로젝트 이름 상태
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { state } = location;
+  const initialMemberId = state ? state.memberId : null;
+  const initialRole = state ? state.role : null;
+  const [memberId, setMemberId] = useState(initialMemberId);
+  const [role, setRole] = useState(initialRole);
+  const [error, setError] = useState('');
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/members/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({})
+      });
+
+      const data = await response.json();
+
+      console.log('Logout Response:', data);
+
+      if (data.isSuccess) {
+        alert('Logout successful!');
+        setMemberId(null);
+        setRole(null);
+        navigate('/signin');
+      } else {
+        setError(data.message || 'Logout failed.');
+      }
+    } catch (error) {
+      console.error('Logout Error:', error);
+      setError('An error occurred during logout.');
+    }
+  };
+
+  const [selectedProject, setSelectedProject] = useState(null);
 
   return (
     <div className="home-container">
       <header className="home-header">
         <h2>IssueManager</h2>
-        <Link to="/signin">Sign In</Link>
+        {memberId ? (
+          <div>
+            Welcome, {memberId} ({role})! <button onClick={handleLogout} className="logout-link">Logout</button>
+            {error && <div className="error-message">{error}</div>}
+          </div>
+        ) : (
+          <Link to="/signin">Sign In</Link>
+        )}
       </header>
       <main className="home-main">
         <Catalog setSelectedProject={setSelectedProject} />
@@ -21,32 +65,32 @@ function Home() {
 }
 
 function Catalog({ setSelectedProject }) {
-  const [showInput, setShowInput] = useState(false); // 입력 상자를 보여줄지 여부 상태
-  const [projects, setProjects] = useState([]); // 프로젝트 리스트와 setter 선언
-  const [newProjectName, setNewProjectName] = useState(''); // 새로운 프로젝트 이름 상태
+  const [showInput, setShowInput] = useState(false);
+  const [projects, setProjects] = useState([]);
+  const [newProjectName, setNewProjectName] = useState('');
 
   const toggleInput = () => {
-    setShowInput(!showInput); // 입력 상자를 토글합니다.
+    setShowInput(!showInput);
     if (!showInput) {
-      setNewProjectName(''); // 입력 상자가 나타날 때 새로운 프로젝트 이름 초기화
+      setNewProjectName('');
     }
   };
 
   const handleInputChange = (event) => {
-    setNewProjectName(event.target.value); // 입력 상자의 내용을 업데이트합니다.
+    setNewProjectName(event.target.value);
   };
 
   const cancelInput = () => {
-    toggleInput(); // 입력 상자를 닫습니다.
+    toggleInput();
   };
 
   const addProject = () => {
     if (newProjectName.trim() === '') {
-      alert('Please enter a project name.'); // 프로젝트 이름이 비어 있으면 알림 표시
+      alert('Please enter a project name.');
       return;
     }
-    setProjects([...projects, newProjectName]); // 새로운 프로젝트를 기존 프로젝트 리스트에 추가
-    toggleInput(); // 입력 상자를 닫습니다.
+    setProjects([...projects, newProjectName]);
+    toggleInput();
   };
 
   return (
