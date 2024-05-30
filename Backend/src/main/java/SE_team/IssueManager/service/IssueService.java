@@ -55,22 +55,6 @@ public class IssueService {
         return savedIssue;
     }
 
-//    public List<Issue> findIssueByReporter(String reporterId){
-//        Member reporter=memberRepository.findByMemberId(reporterId).get();
-//        return issueRepository.findByReporterOrderByCreatedAtDesc(reporter);
-//    }
-//
-//    public List<Issue> findIssueByDate(LocalDate date){
-//        return issueRepository.findByCreatedDateOrderByCreatedAtDesc(date);
-//    }
-//
-//    public List<Issue> findIssueByStatus(Status status){
-//        return issueRepository.findByStatusOrderByCreatedAtDesc(status);
-//    }
-//
-//    public List<Issue> findIssueByCategory(Category category){
-//        return issueRepository.findByCategoryOrderByCreatedAtDesc(category);
-//    }
 
     public List<Issue> findByCondition(String reporterId, String fixerId, String assigneeId, Status status, Priority priority, Category category ){
         Sort sorting=Sort.by(Sort.Order.desc("createdAt"));
