@@ -14,6 +14,7 @@ import SE_team.IssueManager.service.IssueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,7 +23,7 @@ public class IssueController {
     private final IssueService issueService;
 
     @Autowired
-    IssueController(IssueService issueService, IssueRepository issueRepository) {
+    IssueController(IssueService issueService) {
         this.issueService = issueService;
     }
 
@@ -32,7 +33,7 @@ public class IssueController {
             @PathVariable(name="projectId") Long projectId,
             @RequestBody IssueRequestDto.CreateIssueRequestDto createIssueRequestDto
     ){
-        Issue issue=issueService.createIssue(createIssueRequestDto);
+        Issue issue=issueService.createIssue(projectId,createIssueRequestDto);
         IssueResponseDto.CreateIssueResponseDto resp=IssueResponseDto.CreateIssueResponseDto.builder()
                 .issueId(issue.getId())
                 .createdAt(issue.getCreatedAt())
@@ -91,6 +92,28 @@ public class IssueController {
     ){
         issueService.deleteIssue(memberId, issueId);
         return ApiResponse.onSuccess(SuccessStatus.ISSUE_OK,null);
+    }
+
+    @GetMapping("/projects/{projectId}/statistics")
+    public ApiResponse<IssueResponseDto.GetStatisticsResponseDto> getStatistics(
+            @PathVariable(name="projectId") Long projectId,
+            @RequestParam(name="year") int year,
+            @RequestParam(name="month")int month
+    ){
+        IssueResponseDto.GetStatisticsResponseDto response=issueService.getIssueStatistics(year,month,projectId);
+        return ApiResponse.onSuccess(SuccessStatus.ISSUE_OK,response);
+    }
+
+    @GetMapping("/projects/{projectId}/recommend")
+    public ApiResponse<IssueResponseDto.GetDevRecommend> getDevRecommend(
+            @PathVariable(name="projectId") Long projectId,
+            @RequestParam(name="category")Category category
+    ){
+        ArrayList<String> devList=issueService.getDevRecommend(projectId,category);
+        IssueResponseDto.GetDevRecommend response=IssueResponseDto.GetDevRecommend.builder()
+                .length(devList.size())
+                .devList(devList).build();
+        return ApiResponse.onSuccess(SuccessStatus.ISSUE_OK,response);
     }
 
 }

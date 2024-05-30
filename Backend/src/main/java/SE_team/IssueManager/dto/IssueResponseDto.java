@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class IssueResponseDto {
@@ -62,5 +63,25 @@ public class IssueResponseDto {
     public static class UpdateIssueStatusResponseDto {
         private Long issueId;
         private Status status;
+    }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class GetStatisticsResponseDto{
+        private long projectId;
+        private int year;
+        private int month;
+        private long issueCount;
+        private long[] issueCountByCategory;
+    }
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class GetDevRecommend{
+        private int length;
+        private ArrayList<String> devList;
     }
 }
