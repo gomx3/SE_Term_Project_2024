@@ -49,13 +49,9 @@ class IssueControllerTest {
 
     //이슈 생성 정보
     Long projectId=1L;
-
     String title1 ="title1";
-
     String description="description1";
-
     String priority="MINOR";
-
     Category category=Category.MEMORY_LEAK;
 
 
@@ -185,7 +181,14 @@ class IssueControllerTest {
                         .contentType("application/json"))
                 .andExpect(jsonPath("$.code").value("ISSUE_1001"));
     }
-
+    @Test
+    @DisplayName("이슈 삭제")
+    void delete_issue() throws Exception {
+        Long id=member.getId();
+        mockMvc.perform(MockMvcRequestBuilders.delete("/issues/{issueId}",testIssue1.getId())
+                .param("memberId", String.valueOf(member.getId())))
+                .andExpect(status().isOk());
+    }
     @Test
     @DisplayName("월별 이슈 통계")
     void monthly_issue_statistics() throws Exception {
@@ -197,5 +200,6 @@ class IssueControllerTest {
                 .andExpect(jsonPath("$.result.issueCountByCategory[0]").value("1"));
 
     }
+
 
 }

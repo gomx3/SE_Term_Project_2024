@@ -187,8 +187,6 @@ class IssueServiceTest {
             ArrayList<String> devList=issueService.getDevRecommend(projectId,category);
             assertEquals(dev.getMemberId(),devList.get(0));
         }
-
-
     }
 
     @Test
