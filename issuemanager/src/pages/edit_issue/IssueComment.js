@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './EditIssue.module.css';
 
 function IssueComment({ user, issue, comment, setComment }) {
@@ -6,8 +6,46 @@ function IssueComment({ user, issue, comment, setComment }) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    // 기존 코멘트를 불러오는 함수
+    async function fetchComments() {
+        try {
+            const response = await fetch(`/comments/issues/${issue.id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            
+            const data = await response.json();
+
+            if (data.isSuccess) {
+                // 기존의 코멘트 상태를 업데이트합니다.
+                setComment(prevIssue => ({
+                    ...prevIssue,
+                    comments: data.result.commentList.map(comment => ({
+                        id: comment.commentId,
+                        memberId: comment.writer.memberId,
+                        content: comment.content,
+                        createdAt: formatDate(comment.createdAt)
+                    }))
+                }));
+            } else {
+                setError(data.message || 'Something went wrong');
+            }
+        } catch (error) {
+            setError('Network error');
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        fetchComments(); // 컴포넌트가 마운트되면 코멘트를 불러옵니다.
+    }, []);
+
+
     // API 요청을 보내기 전에, 로컬 상태에 코멘트를 추가하는 방식
-    const newComment = {
+    const localComment = {
         id: user.id,
         memberId: user.memberId,
         content: comment.newComment, // 현재 입력 필드에 있는 코멘트 내용
@@ -47,17 +85,17 @@ function IssueComment({ user, issue, comment, setComment }) {
                 }),
             });
 
-            const result = await response.json(); // response.json() 호출 결과를 기다린 후 변수에 할당
-            console.log(newComment);
+            const data = await response.json(); // response.json() 호출 결과를 기다린 후 변수에 할당
+            console.log(localComment);
 
-            if (result.isSuccess) {
+            if (data.isSuccess) {
                 setComment((prevIssue) => ({
                     ...prevIssue,
-                    comments: [...prevIssue.comments, newComment],
+                    comments: [...prevIssue.comments, localComment],
                     newComment: '', // 입력 필드 초기화
                 }));
             } else {
-                alert(result.message || 'Something went wrong');
+                alert(data.message || 'Something went wrong');
             }
         } catch (error) {
             alert('Network error');
@@ -78,7 +116,7 @@ function IssueComment({ user, issue, comment, setComment }) {
                 disabled={loading}
             />
             <div className={styles.btns}>
-                <button className={styles.btn} onClick={addComment} disabled={loading}>
+                <button className={styles.btnCmt} onClick={addComment} disabled={loading}>
                     {loading ? 'Submitting...' : 'Comment'}
                 </button>
             </div>
@@ -89,7 +127,7 @@ function IssueComment({ user, issue, comment, setComment }) {
                     <li key={comment.id} className={styles.commentItem}>
                         <div className={styles.commentHeader}>
                             <p className={styles.commentAuthor}>{comment.memberId}</p>
-                            <p className={styles.commentDate}>{newComment.createdAt}</p>
+                            <p className={styles.commentDate}>{comment.createdAt}</p>
                         </div>
                         <hr className={styles.commentDivider} />
                         <div className={styles.commentContent}>

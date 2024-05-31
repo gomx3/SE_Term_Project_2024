@@ -1,21 +1,25 @@
 .container {
     display: flex;
     width: 100%;
-    padding: 30px;
     justify-content: center;
-    font-size: larger;
+    font-size: small;
+}
+
+.userInfo {
+    display: flex;
+    justify-content: end;
 }
 
 /* right */
 .commentContainer {
-    width: 600px;
-    padding: 50px;
+    width: 450px;
+    padding: 20px;
 }
 
 /* left */
 .editContainer {
-    width: 900px;
-    padding: 50px;
+    width: 560px;
+    padding: 20px;
 }
 
 .pageTitleContainer {
@@ -25,6 +29,7 @@
 }
 
 .infoContainer {
+    margin-top: 5px;
     border-top: 1px solid #cfcfcf;
 }
 
@@ -50,7 +55,7 @@
 .label {
     display: block;
     margin-top: 10px;
-    margin-bottom: .5rem;
+    margin-bottom: 2px;
     font-weight: 600;
     color: #586069;
 }
@@ -61,7 +66,7 @@
 .select {
     width: 100%;
     padding: 8px 12px;
-    font-size: 20px;
+    font-size: small;
     line-height: 20px;
     color: #24292e;
     vertical-align: middle;
@@ -84,15 +89,15 @@
 }
 
 .textarea {
-    height: 100px;
+    height: 70px;
 }
 
 /* category components */
 .categoryContainer {
     display: flex; /* Flexbox를 사용하여 아이템을 수평 정렬 */
     align-items: center; /* 세로 방향 중앙 정렬 */
-    margin-bottom: 0; /* 각 항목 사이의 공간 */
-    margin-left: 20px;
+    margin-bottom: 0px; /* 각 항목 사이의 공간 */
+    margin-left: 10px;
 }
   
 .category input[type="radio"] {
@@ -107,17 +112,17 @@
 }
 
 .btn {
-    width: 150px;
-    height: 50px;
+    width: 100px;
+    height: 35px;
     cursor: pointer;
     border-radius: 20px;
     line-height: 20px;
-    margin: 10px;
-    margin-top: 30px;
-    margin-bottom: 20px;
+    margin: 5px;
+    margin-top: 20px;
+    font-size: small;
     font-weight: bold;
 }
-    
+
 .btn[type="submit"] {
     color: #FFFFFF;
     background-color: #9664cf;
@@ -154,7 +159,7 @@
     padding: 10px;
     margin-bottom: 10px;
     background-color: #f9f9f9; /* 배경색 추가 */
-    font-size: 20px;
+    font-size: small;
 }
   
 .commentHeader {

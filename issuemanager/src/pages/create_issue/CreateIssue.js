@@ -8,16 +8,16 @@ function CreateIssue() {
   const projectId = `2`;
   /* 사용자 정보 */
   const [user, setUser] = useState({
-    id: 80,
-    memberId: 'tt', // 로그인한 사용자로 설정하게
+    id: 8,
+    memberId: 'seoyeon4', // 로그인한 사용자로 설정하게
     role: 'TESTER',
   });
   /* 이슈 정보  */
   const [issue, setIssue] = useState({
-    id: 7,
+    id: 79,
     title: '',
     description: '',
-    state: 'NEW',
+    status: 'NEW',
     category: 'OTHERS',
     reporter: user.memberId, // 로그인한 사용자
     reportedDate: '',
@@ -28,7 +28,7 @@ function CreateIssue() {
   /* 코멘트 정보 */
   const [comment, setComment] = useState({
     comments: [],
-    newComment: '',
+    content: '',
   })
   
   const categories = [
@@ -39,12 +39,20 @@ function CreateIssue() {
     'OTHERS',
   ]
 
+  function getLocalDateISOString() {
+    const now = new Date();
+    const timezoneOffset = now.getTimezoneOffset() * 60000; // UTC를 KST로 (로컬 시간대의 오프셋을 분으로 계산)
+    // 현재 시간에서 시간대 오프셋을 빼서 로컬 시간을 UTC와 동일한 형식으로 맞춤
+    const localISOString = new Date(now - timezoneOffset).toISOString().split('T')[0];
+    return localISOString;
+  }
+
   useEffect(() => {
-    const currentDate = new Date().toISOString().split('T')[0]; // 컴포넌트가 처음 렌더링될 때 현재 날짜를 설정
-    setIssue((prevIssue) => ({ 
-      ...prevIssue, 
+    const currentDate = getLocalDateISOString();
+    setIssue((prevIssue) => ({
+      ...prevIssue,
       reportedDate: currentDate,
-     }));
+    }));
   }, []);
 
   return (
@@ -62,6 +70,10 @@ function CreateIssue() {
         />
       </div>
       <div className={styles.commentContainer}>
+        {/* 현재 사용자 memberId 출력 */}
+        <div className={styles.userInfo}>
+          <p>current user: {user.memberId}</p>
+        </div>
         <IssueComment
           user={user}
           issue={issue}

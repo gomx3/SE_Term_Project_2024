@@ -35,14 +35,14 @@ function IssueInfo( { projectId, user, issue, setIssue, categories } ) {
                 }),
             })
 
-            const result = await response.json(); // response.json() 호출 결과를 기다린 후 변수에 할당
+            const data = await response.json(); // response.json() 호출 결과를 기다린 후 변수에 할당
             console.log(issue);
 
-            if (result.isSuccess) {
-                console.log('Issue created: ', result.issueId);
-                alert('이슈가 성공적으로 생성되었습니다. ' + result.message);
+            if (data.isSuccess) {
+                console.log('Issue created: ', data.issueId);
+                alert('이슈가 성공적으로 생성되었습니다. ' + data.message);
             } else {
-                alert('이슈 생성에 실패했습니다: ' + result.message); // 수정: 실패 시 서버에서 받은 메시지를 출력
+                alert('이슈 생성에 실패했습니다: ' + data.message); // 수정: 실패 시 서버에서 받은 메시지를 출력
             }
         } catch (error) {
             console.error('이슈 생성 실패: ', error);
@@ -60,11 +60,11 @@ function IssueInfo( { projectId, user, issue, setIssue, categories } ) {
                     value={issue.title}
                     onChange={handleChange}
                 />
-                <label className={styles.label}>State</label>
+                <label className={styles.label}>Status</label>
                 <input className={styles.input}
                     type="text"
                     name="state"
-                    value={issue.state}
+                    value={issue.status}
                     onChange={handleChange}
                     disabled
                 />
