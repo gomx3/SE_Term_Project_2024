@@ -4,21 +4,35 @@ import IssueComment from './IssueComment';
 import styles from './EditIssue.module.css';
 
 function EditIssue() {
+  /* 프로젝트 정보 */
+  const projectId = `2`;
+  /* 사용자 정보 */
+  const [user, setUser] = useState({
+    id: 80,
+    memberId: 'tt', // 로그인한 사용자로 설정하게
+    role: 'TESTER',
+  });
+  /* 이슈 정보  */
   const [issue, setIssue] = useState({
+    id: 31,
     title: '',
     description: '',
-    state: '',
-    category: '',
-    reporter: '',
+    state: 'NEW',
+    category: 'OTHERS',
+    reporter: user.memberId, // 로그인한 사용자
     reportedDate: '',
-    priority: '',
+    priority: 'MAJOR',
     assignee: '',
     fixer:'',
+  });
+  /* 코멘트 정보 */
+  const [comment, setComment] = useState({
     comments: [],
     newComment: '',
-  });
-  const [userId, setUserId] = useState('tester'); // 현재 사용자 id (A 또는 B, ...)
+  })
+  /* 편집 모드 관리 */
   const [isEditMode, setIsEditMode] = useState(false);
+  
   const categories = [
     'MEMORY_LEAK',
     'CRASH',
@@ -61,24 +75,21 @@ function EditIssue() {
         </div>
         {/* 이슈 정보 */}
         <IssueInfo
+          projectId={projectId}
+          user={user}
           issue={issue}
           setIssue={setIssue}
-          userId={userId}
           categories={categories}
           isEditMode={isEditMode}
         />
-        <div className={styles.btns}>
-                <button className={styles.btn} onClick={() => console.log('Issue closed')}>Close Issue</button>
-                <button className={styles.btn} onClick={() => console.log('Issue resolved')}>Resolve Issue</button>
-                <button className={styles.btn} type="submit" onClick={handleSubmit}>Save</button>
-        </div>
       </div>
       {/* 이슈 코멘트 */}
       <div className={styles.commentContainer}>
         <IssueComment
+          user={user}
           issue={issue}
-          setIssue={setIssue}
-          userId={userId}
+          comment={comment}
+          setComment={setComment}
         />
       </div>
     </div>

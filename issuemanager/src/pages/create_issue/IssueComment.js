@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './CreateIssue.module.css';
 
-function IssueComment({ issue, setIssue, user }) {
+function IssueComment({ user, issue, comment, setComment }) {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -10,7 +10,7 @@ function IssueComment({ issue, setIssue, user }) {
     const newComment = {
         id: user.id,
         memberId: user.memberId,
-        content: issue.newComment, // 현재 입력 필드에 있는 코멘트 내용
+        content: comment.newComment, // 현재 입력 필드에 있는 코멘트 내용
         createdAt: formatDate(new Date().toISOString())
     };
 
@@ -27,7 +27,7 @@ function IssueComment({ issue, setIssue, user }) {
 
     function handleChange(e) {
         const { name, value } = e.target;
-        setIssue((prevIssue) => ({ ...prevIssue, [name]: value }));
+        setComment((prevIssue) => ({ ...prevIssue, [name]: value }));
     }
 
     async function addComment() {
@@ -43,7 +43,7 @@ function IssueComment({ issue, setIssue, user }) {
                 },
                 body: JSON.stringify({
                     id: user.id,
-                    content: issue.newComment,
+                    content: comment.newComment,
                 }),
             });
 
@@ -51,7 +51,7 @@ function IssueComment({ issue, setIssue, user }) {
             console.log(newComment);
 
             if (result.isSuccess) {
-                setIssue((prevIssue) => ({
+                setComment((prevIssue) => ({
                     ...prevIssue,
                     comments: [...prevIssue.comments, newComment],
                     newComment: '', // 입력 필드 초기화
@@ -72,7 +72,7 @@ function IssueComment({ issue, setIssue, user }) {
             <textarea
                 className={styles.textarea}
                 name="newComment"
-                value={issue.newComment}
+                value={comment.newComment}
                 placeholder='Add your comment here...'
                 onChange={handleChange}
                 disabled={loading}
@@ -85,7 +85,7 @@ function IssueComment({ issue, setIssue, user }) {
             <h4>Comment History</h4>
             {error && <p className={styles.error}>{error}</p>}
             <ul className={styles.commentList}>
-                {issue.comments.map((comment) => (
+                {comment.comments.map((comment) => (
                     <li key={comment.id} className={styles.commentItem}>
                         <div className={styles.commentHeader}>
                             <p className={styles.commentAuthor}>{comment.memberId}</p>

@@ -22,7 +22,7 @@ function SignIn() {
     };
 
     try {
-      const response = await fetch('http://localhost:8080/members/login', {
+      const response = await fetch('/members/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

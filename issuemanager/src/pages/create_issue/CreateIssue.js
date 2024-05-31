@@ -12,7 +12,7 @@ function CreateIssue() {
     memberId: 'tt', // 로그인한 사용자로 설정하게
     role: 'TESTER',
   });
-  /* 이슈 정보 (코멘트 포함) */
+  /* 이슈 정보  */
   const [issue, setIssue] = useState({
     id: 7,
     title: '',
@@ -24,9 +24,12 @@ function CreateIssue() {
     priority: 'MAJOR',
     assignee: '',
     fixer:'',
+  });
+  /* 코멘트 정보 */
+  const [comment, setComment] = useState({
     comments: [],
     newComment: '',
-  });
+  })
   
   const categories = [
     'MEMORY_LEAK',
@@ -60,9 +63,10 @@ function CreateIssue() {
       </div>
       <div className={styles.commentContainer}>
         <IssueComment
-          issue={issue}
-          setIssue={setIssue}
           user={user}
+          issue={issue}
+          comment={comment}
+          setComment={setComment}
         />
       </div>
     </div>

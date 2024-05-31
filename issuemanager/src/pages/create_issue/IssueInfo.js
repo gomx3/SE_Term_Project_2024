@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './CreateIssue.module.css';
 
-function IssueInfo( { projectId, user, issue, setIssue, categories} ) {   
+function IssueInfo( { projectId, user, issue, setIssue, categories } ) {   
     function handleChange(e) {
         const { name, value } = e.target;
         setIssue((prevIssue) => ({ ...prevIssue, [name]: value }));
