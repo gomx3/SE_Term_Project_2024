@@ -15,14 +15,14 @@ public class Member {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name="memberId")
+    @Column(name="memberId",nullable=false)
     private String memberId;
 
-    @Column(name="pw")
+    @Column(name="pw",nullable = false)
     private String pw;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="role")
+    @Column(name="role",nullable = false)
     @Builder.Default
     private Role role=Role.DEV;
 

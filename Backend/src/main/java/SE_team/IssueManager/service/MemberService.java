@@ -23,6 +23,8 @@ public class MemberService {
     }
 
     public Member signUp(MemberRequestDto.SignUpRequestDTO request) {     //회원가입 서비스
+        if(request.getMemberId().isEmpty() || request.getPw().isEmpty() || request.getRole()==null)
+            throw new MemberHandler(ErrorStatus.MEMBER_BAD_REQUEST);
         Member member=Member.builder()
                         .pw(request.getPw())
                         .memberId(request.getMemberId())
