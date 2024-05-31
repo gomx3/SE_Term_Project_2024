@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 public enum ErrorStatus implements BaseErrorCode {
     MEMBER_ID_EXISTS(HttpStatus.CONFLICT,"MEMBER_1000","id already exists"),
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND,"MEMBER_1001","member not found"),
+    MEMBER_BAD_REQUEST(HttpStatus.BAD_REQUEST,"MEMBER_1002","bad request"),
 
     ISSUE_NOT_FOUND(HttpStatus.NOT_FOUND,"ISSUE_1000","issue not found"),
     ISSUE_WRONG_ROLE_REQUEST(HttpStatus.BAD_REQUEST,"ISSUE_1001","the role is not allowed to do the behavior"),
