@@ -63,11 +63,11 @@ class IssueServiceTest {
     @BeforeEach
     void setUp() {
         //멤버 회원가입
-        //admin 멤버
+        //PL 멤버
         MemberRequestDto.SignUpRequestDTO memberDto = MemberRequestDto.SignUpRequestDTO.builder()
                 .memberId("name1")
                 .pw("1234")
-                .role(Role.ADMIN).build();
+                .role(Role.PL).build();
         member= memberService.signUp(memberDto);
 
         //dev 멤버
@@ -144,6 +144,14 @@ class IssueServiceTest {
     void find_by_priority(){
         issueList=issueService.findByCondition(null,null,null,null,Priority.MAJOR,null);
         assertEquals(1, issueList.size());
+    }
+
+    @Test
+    @DisplayName("PL이 이슈에 fixer를 assign")
+    void assign_fixer_test(){
+        Long plId=member.getId();
+        Issue updatedIssue=issueService.updateIssueState(plId,testIssue1.getId(),Status.ASSIGNED, dev.getMemberId());
+        assertEquals(Status.ASSIGNED,updatedIssue.getStatus());
     }
 
 
