@@ -12,7 +12,7 @@ function CreateIssue() {
   /* 사용자 정보 */
   const [user, setUser] = useState({ // 로그인한 사용자로 설정하게
     id: location.state.userId,
-    memberId: 'temp',
+    memberId: location.state.memberId,
     role: location.state.userRole,
   });
   /* 이슈 정보  */

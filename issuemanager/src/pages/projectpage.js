@@ -42,7 +42,7 @@ function Projectinfo({ project, userId, userRole, memberId }) {
 
   const handleReportNewIssue = () => {
     navigate('/createissue', { 
-      state: { projectId: project.id, userId, userRole } 
+      state: { projectId: project.id, userId, memberId, userRole } 
     });
   };
 
