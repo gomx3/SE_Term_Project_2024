@@ -1,12 +1,9 @@
 package SE_team.IssueManager.controller;
 
+import SE_team.IssueManager.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import SE_team.IssueManager.domain.Member;
 import SE_team.IssueManager.dto.MemberRequestDto;
@@ -21,10 +18,12 @@ import jakarta.validation.Valid;
 public class MemberController {
 
     private final MemberService memberService;
+    private final MemberRepository memberRepository;
 
     @Autowired
-    MemberController(MemberService memberService) {
+    MemberController(MemberService memberService, MemberRepository memberRepository) {
         this.memberService = memberService;
+        this.memberRepository = memberRepository;
     }
 
     @PostMapping("/sign-up")
@@ -44,6 +43,11 @@ public class MemberController {
     @PostMapping("/save")
     public ResponseEntity<Void> save(@RequestBody MemberResponseDto.MemberSaveDTO memberSaveDto) {
         memberService.save(memberSaveDto);
+        return ResponseEntity.ok().build();
+    }
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> deleteMember(@RequestParam(name="id") Long id) {
+        memberRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
 }
