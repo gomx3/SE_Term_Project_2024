@@ -126,7 +126,10 @@ function Catalog({ role, setSelectedProject, memberId, userId }) {
       return;
     }
 
-    const requestBody = { name: newProjectName };
+    const requestBody = {
+      name: newProjectName,
+      creatorId: memberId,  // Use memberId here
+    };
 
     try {
       const response = await fetch('/projects', {
@@ -180,6 +183,7 @@ function Catalog({ role, setSelectedProject, memberId, userId }) {
     </aside>
   );
 }
+
 
 function Content({ selectedProject, userId, userRole, memberId }) {
   return (
