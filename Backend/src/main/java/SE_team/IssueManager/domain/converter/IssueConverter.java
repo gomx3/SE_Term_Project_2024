@@ -1,21 +1,17 @@
 package SE_team.IssueManager.domain.converter;
 
-import SE_team.IssueManager.controller.IssueController;
+import java.util.List;
+
 import SE_team.IssueManager.domain.Issue;
 import SE_team.IssueManager.domain.Member;
 import SE_team.IssueManager.dto.IssueResponseDto;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 public class IssueConverter {
     public static IssueResponseDto.GetIssueDto toIssueDto(Issue issue) {
-        Member fixer=issue.getFixer();
-        String fixerId=(fixer!=null)?fixer.getMemberId():null;
-        Member assignee=issue.getAssignee();
-        String assigneeId=(assignee!=null)?assignee.getMemberId():null;
+        Member fixer = issue.getFixer();
+        String fixerId = (fixer != null) ? fixer.getMemberId() : null;
+        Member assignee = issue.getAssignee();
+        String assigneeId = (assignee != null) ? assignee.getMemberId() : null;
         return IssueResponseDto.GetIssueDto.builder()
                 .issueId(issue.getId())
                 .title(issue.getTitle())
