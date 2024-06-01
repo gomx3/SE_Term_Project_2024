@@ -61,8 +61,8 @@ function IssueInfo( { projectId, user, issue, setIssue, categories } ) {
         navigate('/', {
             state: {
                 projectId, 
-                userId: user.id, 
-                userRole: user.role, 
+                id: user.id, 
+                role: user.role,
                 memberId: user.memberId,
             }
         }); // 이슈 생성 후 홈으로 이동 

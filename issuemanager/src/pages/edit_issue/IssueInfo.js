@@ -126,10 +126,9 @@ function IssueInfo( { projectId, user, issue, setIssue, categories, isEditMode }
         navigate('/', {
             state: {
                 projectId, 
-                userId: user.id, 
-                userRole: user.role,
+                id: user.id, 
+                role: user.role,
                 memberId: user.memberId,
-                issueData: issue
             }
         }); ; // 이슈 세부 사항 확인 및 편집을 마치고 홈으로 이동
     };
