@@ -3,6 +3,7 @@ package SE_team.IssueManager.project.repository;
 import java.util.List;
 import java.util.Set;
 
+import SE_team.IssueManager.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,6 +16,9 @@ import SE_team.IssueManager.project.entity.ProjectMember;
 public interface ProjectMemberRepository extends JpaRepository<ProjectMember, Long> {
     @Query("SELECT m.member.id FROM ProjectMember m WHERE m.project.id = :projectId")
     Set<String> findMemberIdsByProjectId(@Param("projectId")Long projectId);
+
+    @Query("SELECT m.member FROM ProjectMember m WHERE m.project.id=:projectId")
+    List<Member> findMembersByProjectId(@Param("projectId")Long projectId);
 
     List<ProjectMember> findProjectIdsByMemberId(Long memberId);
 

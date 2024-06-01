@@ -1,7 +1,10 @@
 package SE_team.IssueManager.project.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
+import SE_team.IssueManager.domain.enums.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +57,16 @@ public class ProjectMemberService {
                 projectMemberDTO.setMemberIds(existingMemberIds);
 
                 return ApiResponse.onSuccess(SuccessStatus.MEMBER_ADD_OK, projectMemberDTO);
+        }
+
+        public List<String> getProjectDevList(Long projectId) {
+                List<Member> memberList=projectMemberRepository.findMembersByProjectId(projectId);
+                List<String> devList=new ArrayList<>();
+                for(Member member:memberList){
+                        if(member.getRole()== Role.DEV)
+                                devList.add(member.getMemberId());
+                }
+                return devList;
         }
 
 }
