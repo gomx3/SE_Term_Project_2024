@@ -46,9 +46,6 @@ function EditIssue() {
     'OTHERS',
   ]
 
-  useEffect(() => {
-  }, []);
-
   /* 이슈 삭제 함수 */
   const navigate = useNavigate();
   async function handleDelete() {

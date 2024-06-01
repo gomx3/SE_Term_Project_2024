@@ -21,7 +21,7 @@ function IssueInfo( { projectId, user, issue, setIssue, categories } ) {
         });
     }
 
-    async function handleSubmit(event) {
+    async function handleSubmit() {
         const url = `/issues/projects/${projectId}`;
 
         try {
