@@ -13,9 +13,6 @@ public class ProjectMemberReqeustDto {
     public static class CreateProjectMemberRequestDTO {
         private Long projectId;
         private Set<String> memberId;
-
-        public Set<String> getMemberIds() {
-            return memberId;
-        }
     }
+
 }

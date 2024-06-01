@@ -2,6 +2,7 @@ package SE_team.IssueManager.project.entity;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import SE_team.IssueManager.domain.Member;
 import jakarta.persistence.Entity;
@@ -40,4 +41,11 @@ public class ProjectMember {
         this.members.addAll(members);
     }
 
+    public Set<String> getMemberIds() {
+        // 멤버들의 ID를 저장할 Set 생성
+        return this.members.stream()
+                .map(Member::getId)
+                .map(Object::toString)
+                .collect(Collectors.toSet());
+    }
 }

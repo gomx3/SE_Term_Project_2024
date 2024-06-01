@@ -39,6 +39,11 @@ public class ProjectMemberService {
                 this.memberService = memberService;
         }
 
+        public Set<String> getMemberIds() {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'getMemberIds'");
+        }
+
         public ApiResponse<ProjectMemberDTO> addMemberToProject(Long projectId, CreateProjectMemberRequestDTO request) {
 
                 // 프로젝트가 존재하는지 확인
@@ -46,11 +51,12 @@ public class ProjectMemberService {
                                 .orElseThrow(() -> new IllegalArgumentException("프로젝트를 찾을 수 없습니다: " + projectId));
 
                 // 요청에서 전달된 멤버 ID들을 사용하여 멤버를 조회하고 유효성을 검사합니다.
-                Set<Member> membersToAdd = memberRepository.findByMemberIdIn(request.getMemberIds()).stream()
+                Set<Member> membersToAdd = memberRepository
+                                .findByMemberIdIn(((ProjectMemberRepository) request).getMemberIds()).stream()
                                 .collect(Collectors.toSet());
 
                 // 유효한 멤버만 추가하도록 필터링합니다.
-                memberService.validateMembersExist(request.getMemberIds());
+                memberService.validateMembersExist(request.getMemberId());
 
                 ProjectMember projectMember = new ProjectMember();
                 projectMember.setProjectId(projectId);

@@ -1,8 +1,10 @@
 package SE_team.IssueManager.security;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import SE_team.IssueManager.domain.Member;
@@ -15,11 +17,13 @@ public class CustomUserDetails implements UserDetails {
         this.member = member;
     }
 
+    public Member getMember() {
+        return member;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // 권한 목록 반환
-        // 예: member.getRoles();
-        return null;
+        return Collections.singletonList(new SimpleGrantedAuthority(member.getRole().name()));
     }
 
     @Override
