@@ -80,26 +80,6 @@ public class IssueService {
         return issueRepository.findAll(spec,sorting);
     }
 
-    public Issue assignIssue(IssueRequestDto.AssignIssueRequestDto request, Long issueId) {
-        Member assigner=memberRepository.findById(request.getId()).orElse(null);
-        Member assignee=memberRepository.findByMemberId(request.getAssigneeId()).orElse(null);
-
-        if(assigner==null || assignee==null){
-            throw new IssueHandler(ErrorStatus.MEMBER_NOT_FOUND);
-        }
-        else if(assigner.getRole()!=PL || assignee.getRole()!=DEV){
-            throw new IssueHandler(ErrorStatus.ISSUE_WRONG_ROLE_REQUEST);
-        }
-        else{
-            Issue issue=issueRepository.findById(issueId).orElse(null);
-            if(issue==null)throw new IssueHandler(ErrorStatus.ISSUE_NOT_FOUND);
-
-            issue.updateAssignee(assignee);
-            issue.updateStatus(Status.ASSIGNED);
-            return issue;
-        }
-    }
-
     public Issue updateIssueState(Long id,Long issueId, Status status,String assigneeId){
         Issue issue=issueRepository.findById(issueId).orElse(null);
         if(issue==null)throw new IssueHandler(ErrorStatus.ISSUE_NOT_FOUND);
