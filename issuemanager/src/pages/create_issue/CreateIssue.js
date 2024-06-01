@@ -5,7 +5,7 @@ import IssueComment from './IssueComment';
 import styles from './CreateIssue.module.css';
 
 function CreateIssue() {
-  const location = useLocation();
+  const location = useLocation(); // 프로젝트 페이지에서 정보 받아오기
   
   /* 프로젝트 정보 */
   const projectId = location.state.projectId;
