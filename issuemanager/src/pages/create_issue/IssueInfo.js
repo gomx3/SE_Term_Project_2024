@@ -1,26 +1,53 @@
 import React from 'react';
 import styles from './CreateIssue.module.css';
 
-function IssueInfo( {issue, setIssue, userId, categories} ) {    
+function IssueInfo( { projectId, user, issue, setIssue, categories } ) {   
     function handleChange(e) {
         const { name, value } = e.target;
         setIssue((prevIssue) => ({ ...prevIssue, [name]: value }));
     }
     
-    function handleCategoryChange(category) {
+    function handleCategoryChange(index) {
         setIssue((prevIssue) => {
-            if (prevIssue.category.includes(category)) {
-                return {
+            const category = categories[index];
+            return {
                 ...prevIssue,
-                category: prevIssue.category.filter((item) => item !== category),
-                };
-            } else {
-                return {
-                ...prevIssue,
-                category: [...prevIssue.category, category],
-                };
-            }
+                category: category,
+            };
         });
+    }
+
+    async function handleSubmit() {
+        const url = `/issues/projects/${projectId}`;
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    reporterId: user.id,
+                    title: issue.title,
+                    description: issue.description,
+                    priority: issue.priority,
+                    category: issue.category,
+                }),
+            })
+
+            const data = await response.json(); // response.json() 호출 결과를 기다린 후 변수에 할당
+            console.log(issue);
+
+            if (data.isSuccess) {
+                console.log('Issue created: ', data.issueId);
+                alert('이슈가 성공적으로 생성되었습니다. ' + data.message);
+            } else {
+                alert('이슈 생성에 실패했습니다: ' + data.message); // 수정: 실패 시 서버에서 받은 메시지를 출력
+            }
+        } catch (error) {
+            console.error('이슈 생성 실패: ', error);
+            alert('이슈 등록 중 오류가 발생했습니다.');
+        }
     }
     
     return (
@@ -33,13 +60,13 @@ function IssueInfo( {issue, setIssue, userId, categories} ) {
                     value={issue.title}
                     onChange={handleChange}
                 />
-                <label className={styles.label}>State</label>
+                <label className={styles.label}>Status</label>
                 <input className={styles.input}
                     type="text"
                     name="state"
-                    value={issue.state}
+                    value={issue.status}
                     onChange={handleChange}
-                    disabled={userId === 'A'} // A 사용자는 Title 수정 불가
+                    disabled
                 />
                 <label className={styles.label}>Description</label>
                 <textarea className={styles.textarea}
@@ -49,18 +76,21 @@ function IssueInfo( {issue, setIssue, userId, categories} ) {
                 />
                 <label className={styles.label}>Issue Category</label>
                 <div>
-                    {categories.map((category) => (
-                    <div key={category} className={styles.categoryContainer}>
-                        <input className={styles.input}
-                        type="radio"
-                        id={category}
-                        name="category"
-                        value={category}
-                        checked={issue.category.includes(category)}
-                        onChange={() => handleCategoryChange(category)}
-                        />
-                        <label className={styles.label} htmlFor={category}>{category}</label>
-                    </div>
+                    {categories.map((category, index) => (
+                        <div key={index} className={styles.categoryContainer}>
+                            <input
+                                className={styles.input}
+                                type="radio"
+                                id={category}
+                                name="category"
+                                value={category}
+                                checked={issue.category === category}
+                                onChange={() => handleCategoryChange(index)} // 인덱스를 인자로 전달
+                            />
+                            <label className={styles.label} htmlFor={category}>
+                                {category}
+                            </label>
+                        </div>
                     ))}
                 </div>
             </div>
@@ -70,7 +100,7 @@ function IssueInfo( {issue, setIssue, userId, categories} ) {
                     type="text"
                     name="reporter"
                     value={issue.reporter}
-                    onChange={handleChange}
+                    disabled
                 />
                 <label className={styles.label}>Reported Date</label>
                 <input className={styles.input}
@@ -85,26 +115,29 @@ function IssueInfo( {issue, setIssue, userId, categories} ) {
                     value={issue.priority}
                     onChange={handleChange}
                 >
-                    <option value="major">Major</option>
-                    <option value="blocker">Blocker</option>
-                    <option value="critical">Critical</option>
-                    <option value="minor">Minor</option>
-                    <option value="trivial">Trivial</option>
+                    <option value="MAJOR">Major</option>
+                    <option value="BLOCKER">Blocker</option>
+                    <option value="CRITICAL">Critical</option>
+                    <option value="MINOR">Minor</option>
+                    <option value="TRIVIAL">Trivial</option>
                 </select>
                 <label className={styles.label}>Assignee</label>
                 <input className={styles.input}
                     type="text"
                     name="assignee"
                     value={issue.assignee}
-                    onChange={handleChange}
+                    disabled
                 />
                 <label className={styles.label}>Fixer</label>
                 <input className={styles.input}
                     type="text"
                     name="fixer"
                     value={issue.fixer}
-                    onChange={handleChange}
+                    disabled
                 />
+            </div>
+            <div className={styles.btns}>
+                <button className={styles.btn} type="submit" onClick={handleSubmit}>Create Issue</button>
             </div>
         </div>
     );
