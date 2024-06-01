@@ -19,7 +19,9 @@ public enum ErrorStatus implements BaseErrorCode {
     ISSUE_WRONG_ROLE_REQUEST(HttpStatus.BAD_REQUEST,"ISSUE_1001","the role is not allowed to do the behavior"),
     ISSUE_ASSIGN_ASSIGNEE_ID_REQUIRED(HttpStatus.BAD_REQUEST,"ISSUE_1002","assigneeId is required"),
     ISSUE_STATUS_BAD_REQUEST(HttpStatus.BAD_REQUEST,"ISSUE_1003","bad request"),
-    ISSUE_COMMENT_NOT_CREATED(HttpStatus.NOT_FOUND,"ISSUE_1004","comment not created"),;
+    ISSUE_COMMENT_NOT_CREATED(HttpStatus.NOT_FOUND,"ISSUE_1004","comment not created"),
+
+    COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND,"COMMENT_1000","comment not found"),;
 
 
     private final HttpStatus httpStatus;

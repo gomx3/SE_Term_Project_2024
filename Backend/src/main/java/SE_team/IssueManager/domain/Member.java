@@ -4,6 +4,9 @@ import SE_team.IssueManager.domain.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Setter
 @Getter
 @Entity
@@ -25,6 +28,15 @@ public class Member {
     @Column(name="role",nullable = false)
     @Builder.Default
     private Role role=Role.DEV;
+
+    @OneToMany(mappedBy = "reporter",cascade = CascadeType.ALL)
+    private List<Issue> reportedIssueList=new ArrayList<>();
+
+    @OneToMany(mappedBy = "fixer",cascade = CascadeType.ALL)
+    private List<Issue> fixedIssueList=new ArrayList<>();
+
+    @OneToMany(mappedBy = "assignee",cascade = CascadeType.ALL)
+    private List<Issue> assignedIssueList=new ArrayList<>();
 
 
 }
