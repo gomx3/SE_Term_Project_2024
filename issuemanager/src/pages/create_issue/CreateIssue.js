@@ -10,7 +10,7 @@ function CreateIssue() {
   /* 프로젝트 정보 */
   const projectId = location.state.projectId;
   /* 사용자 정보 */
-  const [user, setUser] = useState({ // 로그인한 사용자
+  const [user, setUser] = useState({ // 로그인한 사용자로
     id: location.state.userId,
     memberId: location.state.memberId,
     role: location.state.userRole,
