@@ -13,12 +13,12 @@ import jakarta.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 public class IssueSpecification {
-    public static Specification<Issue> findByProjectId(Long projectId) {
+    public static Specification<Issue> findByProjectId(Project project) {
         return new Specification<Issue>() {
 
             @Override
             public Predicate toPredicate(Root<Issue> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                return cb.equal(root.get("projectId"), projectId);
+                return cb.equal(root.get("project"), project);
             }
         };
     }

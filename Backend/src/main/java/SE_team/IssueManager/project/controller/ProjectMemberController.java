@@ -25,7 +25,7 @@ public class ProjectMemberController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<ProjectMemberDTO>> addProjectMember(@PathVariable Long projectId,
+    public ResponseEntity<ApiResponse<ProjectMemberDTO>> addProjectMember(@PathVariable(name="projectId") Long projectId,
             @RequestBody CreateProjectMemberRequestDTO request) {
         String memberId = request.getMemberId();
         ApiResponse<ProjectMemberDTO> response = projectMemberService.addMemberToProject(projectId, memberId);

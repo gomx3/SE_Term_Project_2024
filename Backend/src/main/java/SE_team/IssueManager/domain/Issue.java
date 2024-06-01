@@ -3,6 +3,7 @@ package SE_team.IssueManager.domain;
 import SE_team.IssueManager.domain.enums.Category;
 import SE_team.IssueManager.domain.enums.Priority;
 import SE_team.IssueManager.domain.enums.Status;
+import SE_team.IssueManager.project.entity.Project;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
@@ -45,10 +46,10 @@ public class Issue extends BaseTimeEntity{
     @Builder.Default
     private Status status=Status.NEW;
 
-//    @ManyToOne(fetch =FetchType.LAZY)
-//    private Project project;
-    @Column(name="projectId")
-    private Long projectId;
+    @ManyToOne(fetch =FetchType.LAZY)
+    private Project project;
+//    @Column(name="projectId")
+//    private Long projectId;
 
     @OneToMany(mappedBy = "issue",cascade = CascadeType.ALL)
     private List<Comment> commentList=new ArrayList<>();
