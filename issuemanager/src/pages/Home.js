@@ -7,7 +7,7 @@ function Home() {
   const navigate = useNavigate();
   const [id, setId] = useState(1); // Hardcoded user ID
   const [memberId, setMemberId] = useState('admin'); // Hardcoded member ID
-  const [role, setRole] = useState('TESTER'); // Hardcoded role
+  const [role, setRole] = useState('PL'); // Hardcoded role
   const [error, setError] = useState('');
 
   const handleLogout = async () => {
@@ -147,10 +147,10 @@ function Catalog({ role, setSelectedProject }) {
   );
 }
 
-function Content({ selectedProject, userId, userRole }) {
+function Content({ selectedProject, userId, userRole, memberId }) {
   return (
     <section className="home-content">
-      <Projectinfo project={selectedProject} userId={userId} userRole={userRole} />
+      <Projectinfo project={selectedProject} userId={userId} userRole={userRole} memberId={memberId} />
     </section>
   );
 }

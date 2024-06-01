@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './projectpage.css'; // Import the CSS file
 import Statistics from './Statistics'; // Import the Statistics component
 
-function Projectinfo({ project, userId, userRole }) {
+function Projectinfo({ project, userId, userRole, memberId }) {
   const [showAccountInput, setShowAccountInput] = useState(false);
   const [selectedRole, setSelectedRole] = useState('');
   const [accountId, setAccountId] = useState('');
@@ -52,6 +52,7 @@ function Projectinfo({ project, userId, userRole }) {
         projectId: project.id, 
         userId, 
         userRole, 
+        memberId,
         issueData: issue 
       } 
     });
@@ -90,23 +91,28 @@ function Projectinfo({ project, userId, userRole }) {
 
   const handleMyIssues = async () => {
     try {
-      let filteredIssues = [];
+      if (isStatisticsVisible) {
+        setIsStatisticsVisible(false); // 통계 화면이 활성화되어 있다면 비활성화
+      } else {
+        let filteredIssues = [];
   
-      if (userRole === 'ADMIN') {
-        filteredIssues = issues;
-      } else if (userRole === 'TESTER') {
-        filteredIssues = issues.filter(issue => issue.reporter === userId);
-      } else if (userRole === 'PL') {
-        filteredIssues = issues.filter(issue => issue.status === 'NEW' || issue.status === 'RESOLVED');
-      } else if (userRole === 'Developer') {
-        filteredIssues = issues.filter(issue => issue.assignee === userId && issue.status === 'ASSIGNED');
+        if (userRole === 'ADMIN') {
+          filteredIssues = issues;
+        } else if (userRole === 'TESTER') {
+          filteredIssues = issues.filter(issue => issue.reporter === userId);
+        } else if (userRole === 'PL') {
+          filteredIssues = issues.filter(issue => issue.status === 'NEW' || issue.status === 'RESOLVED');
+        } else if (userRole === 'Developer') {
+          filteredIssues = issues.filter(issue => issue.assignee === userId && issue.status === 'ASSIGNED');
+        }
+  
+        setIssues(filteredIssues);
       }
-  
-      setIssues(filteredIssues);
     } catch (error) {
       console.error('Error fetching my issues:', error);
     }
   };
+  
 
   const handleStatisticsClick = () => {
     setIsStatisticsVisible(true);

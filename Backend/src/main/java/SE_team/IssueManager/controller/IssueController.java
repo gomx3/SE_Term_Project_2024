@@ -51,7 +51,7 @@ public class IssueController {
             @RequestParam(required = false,name = "priority") Priority priority,
             @RequestParam(required = false,name = "category") Category category
     ) {
-        List<Issue> issueList=issueService.findByCondition(reporterId,fixerId,assigneeId,status,priority,category);
+        List<Issue> issueList=issueService.findByCondition(projectId,reporterId,fixerId,assigneeId,status,priority,category);
 
         return ApiResponse.onSuccess(SuccessStatus.ISSUE_OK,
                 IssueConverter.toIssueDtoList(issueList));

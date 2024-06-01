@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './statistics.css';
 
-function Statistics() {
+function Statistics({ projectId }) {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState('');
   const [issueStatistics, setIssueStatistics] = useState({ totalIssues: 0, categories: {} });
@@ -14,25 +14,29 @@ function Statistics() {
     'Others'
   ];
 
+  useEffect(() => {
+    if (projectId && selectedMonth !== '') {
+      fetchStatistics();
+    }
+  }, [projectId, selectedMonth]);
+
   const handleYearChange = (event) => {
     setSelectedYear(parseInt(event.target.value));
     setSelectedMonth('');
     setIssueStatistics({ totalIssues: 0, categories: {} });
   };
 
-  const handleMonthClick = async (month) => {
+  const handleMonthClick = (month) => {
     setSelectedMonth(month);
+  };
 
+  const fetchStatistics = async () => {
     try {
-      const response = await fetch('URL', {
-        method: 'POST',
+      const response = await fetch(`/issues/projects/${projectId}/statistics?year=${selectedYear}&month=${selectedMonth}`, {
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          year: selectedYear,
-          month: month
-        })
+        }
       });
 
       const data = await response.json();
