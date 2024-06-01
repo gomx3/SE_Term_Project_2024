@@ -20,7 +20,8 @@ public enum SuccessStatus implements BaseCode {
 
     PROJECT_OK(HttpStatus.OK, "PROJECT_1000", "project success"),
 
-    MEMBER_ADD_OK(HttpStatus.OK, "PROJECT_1001", "add members success");
+    MEMBER_ADD_OK(HttpStatus.OK, "PROJECT_1001", "add members success"),
+    PROJECT_FIND_OK(HttpStatus.OK, "PROJECT_1002", "find my project success");
 
     // 로그아웃 석세스 만들기
 
