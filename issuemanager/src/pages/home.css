@@ -77,6 +77,14 @@ body, html, #root {
   margin-top: 10px;
 }
 
+.logout-link{
+  width: 80px;
+  height: 40px;
+  margin-left: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
 .project-item {
   cursor: pointer; /* 프로젝트 항목에 포인터 커서를 설정합니다 */
 }
