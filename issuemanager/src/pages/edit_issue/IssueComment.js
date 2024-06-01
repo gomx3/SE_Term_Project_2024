@@ -20,13 +20,14 @@ function IssueComment({ user, issue, comment, setComment }) {
 
             if (data.isSuccess) {
                 // 기존의 코멘트 상태를 업데이트합니다.
-                setComment(prevIssue => ({
-                    ...prevIssue,
+                setComment(prevComment => ({
+                    ...prevComment,
                     comments: data.result.commentList.map(comment => ({
                         id: comment.commentId,
                         memberId: comment.writer.memberId,
                         content: comment.content,
-                        createdAt: formatDate(comment.createdAt)
+                        createdAt: formatDate(comment.createdAt),
+                        commentId: comment.commentId,
                     }))
                 }));
             } else {
@@ -130,13 +131,8 @@ function IssueComment({ user, issue, comment, setComment }) {
                             <p className={styles.commentDate}>{comment.createdAt}</p>
                         </div>
                         <hr className={styles.commentDivider} />
-                        <div className={styles.pageTitleContainer}>
-                            <div className={styles.commentContent}>
-                                <p>{comment.content}</p>
-                            </div>
-                            <button className={styles.cmtDelBtn}>
-                                DEL
-                            </button>
+                        <div className={styles.commentContent}>
+                            <p>{comment.content}</p>
                         </div>
                     </li>
                 ))}

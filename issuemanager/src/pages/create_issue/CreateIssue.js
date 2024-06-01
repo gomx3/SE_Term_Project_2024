@@ -75,7 +75,7 @@ function CreateIssue() {
       <div className={styles.commentContainer}>
         {/* 현재 사용자 memberId 출력 */}
         <div className={styles.userInfo}>
-          <p>current user: {user.memberId}</p>
+          <p>current user: {user.memberId}/{user.role}</p>
         </div>
         <IssueComment
           user={user}

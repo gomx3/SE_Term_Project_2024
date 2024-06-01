@@ -6,7 +6,6 @@ import styles from './EditIssue.module.css';
 
 function EditIssue() {
   const location = useLocation(); // 프로젝트 페이지에서 정보 받아오기
-  console.log(location.state.issueData);
 
   /* 프로젝트 정보 */
   const projectId = location.state.projectId;
@@ -112,7 +111,7 @@ function EditIssue() {
       <div className={styles.commentContainer}>
         {/* 현재 사용자 memberId 출력 */}
         <div className={styles.userInfo}>
-          <p>current user: {user.memberId}</p>
+          <p>current user: {user.memberId}/{user.role}</p>
         </div>
         <IssueComment
           user={user}
