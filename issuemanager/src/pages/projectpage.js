@@ -86,13 +86,13 @@ function Projectinfo({ project, userId, userRole, memberId }) {
 
   const handleStatusChange = (event) => {
     setSelectedStatus(event.target.value);
-    setIsStatisticsVisible(false); // Hide statistics when issue list is active
+    setIsStatisticsVisible(false); 
   };
 
   const handleMyIssues = async () => {
     try {
       if (isStatisticsVisible) {
-        setIsStatisticsVisible(false); // 통계 화면이 활성화되어 있다면 비활성화
+        setIsStatisticsVisible(false); 
       } else {
         let filteredIssues = [];
   
