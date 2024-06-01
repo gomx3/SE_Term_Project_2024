@@ -56,7 +56,7 @@ public class IssueService {
     }
 
 
-    public List<Issue> findByCondition(String reporterId, String fixerId, String assigneeId, Status status, Priority priority, Category category ){
+    public List<Issue> findByCondition(Long projectId,String reporterId, String fixerId, String assigneeId, Status status, Priority priority, Category category ){
         Sort sorting=Sort.by(Sort.Order.desc("createdAt"));
         Specification<Issue> spec = (root,query,criticalBuilder)->null;
         Member reporter, fixer, assignee;
@@ -65,12 +65,15 @@ public class IssueService {
         fixer= memberRepository.findByMemberId(fixerId).orElse(null);
         assignee= memberRepository.findByMemberId(assigneeId).orElse(null);
 
+        spec=spec.and(IssueSpecification.findByProjectId(projectId));
+
         if(reporter!=null)
             spec=spec.and(IssueSpecification.findByReporter(reporter));
         if(fixer!=null)
             spec=spec.and(IssueSpecification.findByFixer(fixer));
         if(assignee!=null)
             spec=spec.and(IssueSpecification.findByAssignee(assignee));
+
         if(status!=null)
             spec=spec.and(IssueSpecification.findByStatus(status));
         if(priority!=null)
