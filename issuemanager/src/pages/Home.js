@@ -1,84 +1,156 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import './home.css';  // CSS 파일을 임포트합니다
-import Project from './project';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import './home.css';
+import Projectinfo from './projectpage';
 
 function Home() {
+  const navigate = useNavigate();
+  const [id, setId] = useState(53); // Hardcoded user ID
+  const [memberId, setMemberId] = useState('soyeon'); // Hardcoded member ID
+  const [role, setRole] = useState('ADMIN'); // Hardcoded role
+  const [error, setError] = useState('');
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('/members/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({})
+      });
+
+      const data = await response.json();
+
+      console.log('Logout Response:', data);
+
+      if (data.isSuccess) {
+        alert('Logout successful!');
+        setId(null);
+        setMemberId(null);
+        setRole(null);
+        navigate('/signin');
+      } else {
+        setError(data.message || 'Logout failed.');
+      }
+    } catch (error) {
+      console.error('Logout Error:', error);
+      setError('An error occurred during logout.');
+    }
+  };
+
+  const [selectedProject, setSelectedProject] = useState(null);
+
   return (
     <div className="home-container">
       <header className="home-header">
         <h2>IssueManager</h2>
-        <Link to="/signin">Sign In</Link>
+        {memberId ? (
+          <div>
+            Welcome, {memberId} ({role})! <button onClick={handleLogout} className="logout-link">Logout</button>
+            {error && <div className="error-message">{error}</div>}
+          </div>
+        ) : (
+          <Link to="/signin">Sign In</Link>
+        )}
       </header>
       <main className="home-main">
-        <Catalog />
-        <Content />
+        <Catalog role={role} setSelectedProject={setSelectedProject} memberId={memberId} />
+          <Content selectedProject={selectedProject} userId={id} userRole={role} memberId={memberId} />
       </main>
     </div>
   );
 }
 
-function Catalog() {
-  const [showInput, setShowInput] = useState(false); // 입력 상자를 보여줄지 여부 상태
-  const [projects, setProjects] = useState([]); // 프로젝트 리스트와 setter 선언
-  const [newProjectName, setNewProjectName] = useState(''); // 새로운 프로젝트 이름 상태
+function Catalog({ role, setSelectedProject, memberId }) {
+  const [showInput, setShowInput] = useState(false);
+  const [projects, setProjects] = useState([
+    { id: 1, name: 'Project Alpha' },
+    { id: 2, name: 'Project Beta' },
+    { id: 3, name: 'Project Gamma' }
+  ]);
+  const [newProjectName, setNewProjectName] = useState('');
 
   const toggleInput = () => {
-    setShowInput(!showInput); // 입력 상자를 토글합니다.
+    setShowInput(!showInput);
     if (!showInput) {
-      setNewProjectName(''); // 입력 상자가 나타날 때 새로운 프로젝트 이름 초기화
+      setNewProjectName('');
     }
   };
 
   const handleInputChange = (event) => {
-    setNewProjectName(event.target.value); // 입력 상자의 내용을 업데이트합니다.
+    setNewProjectName(event.target.value);
   };
 
   const cancelInput = () => {
-    toggleInput(); // 입력 상자를 닫습니다.
+    toggleInput();
   };
 
-  const addProject = () => {
+  const addProject = async () => {
     if (newProjectName.trim() === '') {
-      alert('Please enter a project name.'); // 프로젝트 이름이 비어 있으면 알림 표시
+      alert('Please enter a project name.');
       return;
     }
-    setProjects([...projects, newProjectName]); // 새로운 프로젝트를 기존 프로젝트 리스트에 추가
-    toggleInput(); // 입력 상자를 닫습니다.
+
+    const requestBody = { name: newProjectName };
+
+    try {
+      const response = await fetch('/projects', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody)
+      });
+
+      const data = await response.json();
+
+      if (data.isSuccess) {
+        setProjects([...projects, { id: data.result.id, name: data.result.name }]);
+        toggleInput();
+      } else {
+        alert(data.message || 'Project addition failed.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred while adding the project.');
+    }
   };
 
   return (
     <aside className="home-catalog">
       <h3>Projects</h3>
       <ul>
-        {projects.map((project, index) => (
-          <li key={index}><Link to={`/project/${index}`}>{project}</Link></li>
+        {projects.map((project) => (
+          <li key={project.id} className="project-item" onClick={() => setSelectedProject(project)}>
+            {project.name}
+          </li>
         ))}
       </ul>
-      {showInput && (
-        <div className="input-container">
-          <div className="input-wrapper">
-            <input type="text" value={newProjectName} onChange={handleInputChange} />
-            <div>
-              <button className="proj-cancel" onClick={cancelInput}>Cancel</button>
-              <button className="proj-add" onClick={addProject}>Add</button>
+      {role === 'ADMIN' && (
+        <>
+          {showInput && (
+            <div className="input-container">
+              <div className="input-wrapper">
+                <input type="text" value={newProjectName} onChange={handleInputChange} />
+                <button className="proj-cancel" onClick={cancelInput}>Cancel</button>
+                <button className="proj-add" onClick={addProject}>Add</button>
+              </div>
             </div>
-          </div>
-        </div>
-      )}
-      {!showInput && (
-        <button className="add-button" onClick={toggleInput}>Add new Project</button>
+          )}
+          {!showInput && (
+            <button className="add-button" onClick={toggleInput}>Add new Project</button>
+          )}
+        </>
       )}
     </aside>
   );
 }
 
-function Content() {
+function Content({ selectedProject, userId, userRole, memberId }) {
   return (
     <section className="home-content">
-      {/* <Project/> */}
-      <h3>Content</h3>
-      <p>Welcome to the content area. Select an item from the catalog to view more details.</p>
+      <Projectinfo project={selectedProject} userId={userId} userRole={userRole} memberId={memberId} />
     </section>
   );
 }

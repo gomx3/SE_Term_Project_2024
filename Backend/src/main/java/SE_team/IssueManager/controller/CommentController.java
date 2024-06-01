@@ -51,4 +51,13 @@ public class CommentController {
 
         return ApiResponse.onSuccess(SuccessStatus.COMMENT_OK, CommentConverter.toCommentList(commentList));
     }
+
+    @DeleteMapping("/{commentId}")
+    public ApiResponse<?> deleteComment(
+            @PathVariable(name="commentId")Long commentId,
+            @RequestParam(name="memberId")Long id
+    ){
+        commentService.deleteComment(commentId,id);
+        return ApiResponse.onSuccess(SuccessStatus.COMMENT_OK,null);
+    }
 }

@@ -1,0 +1,135 @@
+.project-info-container {
+    padding: 20px;
+  }
+  
+  .project-info{
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+  
+  .project-info-container h1 {
+    font-size: 25px;
+    margin : 0;
+  }
+  
+  .project-info-container p {
+    margin: 0;
+  }
+  
+  .add-account-container {
+    margin-top: 0;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .add-account-button {
+    width: 420px;
+    height: 40px;
+    margin-right: 10px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    font-size: 15px;
+    background-color: #d7c3de;
+    border-color: #d7c3de;
+    color: white;
+  }
+  
+  .account-input-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .account-input-container select,
+  .account-input-container input {
+    margin-right: 10px;
+    padding: 5px;
+    font-size: 14px;
+  }
+  
+  .account-cancel,
+  .account-add {
+    width: 80px;
+    height: 30px;
+    cursor: pointer;
+    margin-bottom:30px;
+    margin-right: 5px;
+  }
+
+  .issue-item,
+  .issue-header {
+    display: grid;
+    grid-template-columns: 160px 160px 320px 160px 160px 160px 160px;
+    grid-gap: 10px;
+    align-items: center;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+  }
+
+  .issue-header {
+    font-weight: bold;
+    background-color: #f5f4f5;
+  }
+
+  .issue-item > div {
+  margin-right: 20px;
+}
+  
+  .issue-btn-container{
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    margin-top: 10px;
+  }
+
+  .issue-button{
+    font-size: 15px;
+    margin-top: 0;
+    width: 120px;
+    height: 30px;
+    margin-right: 40px;
+    margin-bottom: 10px;
+    color: rgb(0, 0, 0);
+    border-color: rgb(121, 110, 129);
+    background-color: #ffffff;
+    cursor: pointer;
+  }
+
+  .issue-create-button{
+    background-color: #d7c3de;
+    border-color: #d7c3de;
+    color: white;
+    margin-top: 5px;
+    width: 200px;
+    height: 40px;
+    margin-left: 750px;
+    cursor: pointer;
+  }
+
+  .issue-detail-button{
+    margin-top: 0;
+    width: 180px;
+    height: 35px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .issue-button:hover,.issue-detail-button:hover {
+    background-color: #ddd;
+  }
+  
+  .issue-list {
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .status-select {
+    font-size: 15px;
+    width: 120px;
+    height: 30px;
+    margin-right: 40px;
+    margin-bottom: 10px;
+    color: rgb(0, 0, 0);
+    border-color: rgb(121, 110, 129);
+    background-color: #ffffff;
+    cursor: pointer;
+  }
