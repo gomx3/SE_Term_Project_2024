@@ -5,7 +5,7 @@ import styles from './CreateIssue.module.css';
 
 function CreateIssue() {
   /* 프로젝트 정보 */
-  const projectId = `2`;
+  const projectId = `3`;
   /* 사용자 정보 */
   const [user, setUser] = useState({
     id: 8,
@@ -14,7 +14,7 @@ function CreateIssue() {
   });
   /* 이슈 정보  */
   const [issue, setIssue] = useState({
-    id: 79,
+    id: 174,
     title: '',
     description: '',
     status: 'NEW',

@@ -35,7 +35,7 @@ function IssueInfo( { projectId, user, issue, setIssue, categories, isEditMode }
                 console.error('개발자 목록을 불러오는 중 에러가 발생했습니다:', error);
             }
         };
-    
+
         fetchDevelopers();
     }, [projectId, issue.category]); // projectId나 issue.category가 바뀌면 이 effect를 다시 실행
 
@@ -93,10 +93,10 @@ function IssueInfo( { projectId, user, issue, setIssue, categories, isEditMode }
     async function onResolveIssueClick() { await updateIssueStatus(null, 'RESOLVED'); }
     async function onCodeModifyClick() { await updateIssueStatus(null, 'FIXED'); }
     
-    const onSaveClick = async (event) => {
+    const onHomeClick = async (event) => {
         event.preventDefault(); // 폼 제출 시 새로고침 방지
         navigate('/'); // 이슈 세부 사항 확인 및 편집을 마치고 홈으로 이동
-      };
+    };
     
 
     return (
@@ -217,8 +217,8 @@ function IssueInfo( { projectId, user, issue, setIssue, categories, isEditMode }
                 <button 
                     className={styles.btn} 
                     type="submit" 
-                    onClick={onSaveClick}
-                >SAVE</button>
+                    onClick={onHomeClick}
+                >HOME</button>
             </div>
             <div className={styles.btns}>
             </div>

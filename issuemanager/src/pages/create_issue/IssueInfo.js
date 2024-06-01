@@ -1,7 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './CreateIssue.module.css';
 
 function IssueInfo( { projectId, user, issue, setIssue, categories } ) {   
+
+    const navigate = useNavigate();
+    
     function handleChange(e) {
         const { name, value } = e.target;
         setIssue((prevIssue) => ({ ...prevIssue, [name]: value }));
@@ -17,7 +21,7 @@ function IssueInfo( { projectId, user, issue, setIssue, categories } ) {
         });
     }
 
-    async function handleSubmit() {
+    async function handleSubmit(event) {
         const url = `/issues/projects/${projectId}`;
 
         try {
@@ -49,6 +53,11 @@ function IssueInfo( { projectId, user, issue, setIssue, categories } ) {
             alert('이슈 등록 중 오류가 발생했습니다.');
         }
     }
+
+    const onHomeClick = async (event) => {
+        event.preventDefault(); // 폼 제출 시 새로고침 방지
+        navigate('/'); // 이슈 생성 후 홈으로 이동 
+    };
     
     return (
         <div>
@@ -137,7 +146,15 @@ function IssueInfo( { projectId, user, issue, setIssue, categories } ) {
                 />
             </div>
             <div className={styles.btns}>
-                <button className={styles.btn} type="submit" onClick={handleSubmit}>Create Issue</button>
+                <button 
+                    className={styles.btn} 
+                    onClick={handleSubmit}>
+                Create Issue</button>
+                <button 
+                    className={styles.btn} 
+                    type="submit" 
+                    onClick={onHomeClick}
+                >HOME</button>
             </div>
         </div>
     );

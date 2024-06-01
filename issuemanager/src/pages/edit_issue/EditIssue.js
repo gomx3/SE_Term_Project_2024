@@ -6,7 +6,7 @@ import styles from './EditIssue.module.css';
 
 function EditIssue() {
   /* 프로젝트 정보 */
-  const projectId = '2';
+  const projectId = '3';
   /* 사용자 정보 */
   const [user, setUser] = useState({ // 로그인한 사용자
     id: 6,
@@ -15,11 +15,11 @@ function EditIssue() {
   });
   /* 이슈 정보  */
   const [issue, setIssue] = useState({
-    id: 79,
+    id: 172,
     title: 'mytitle',
     description: 'nononono',
     status: 'NEW',
-    category: 'OTHERS',
+    category: 'MEMORY_LEAK',
     reporter: 'tt',
     reportedDate: '2024-05-31 04:14:37.409805',
     priority: 'BLOCKER',
@@ -71,7 +71,6 @@ function EditIssue() {
 
   function handleEditClick() {
     setIsEditMode((prevMode) => !prevMode);
-    console.log('Issue Edit Mode Toggled', isEditMode);
   };
 
   return (
