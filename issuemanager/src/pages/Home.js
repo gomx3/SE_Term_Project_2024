@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import './home.css';
 import Projectinfo from './projectpage';
 
 function Home() {
   const navigate = useNavigate();
-  const [id, setId] = useState(); 
-  const [memberId, setMemberId] = useState(''); 
-  const [role, setRole] = useState(''); 
+  const location = useLocation();
+  const [id, setId] = useState(null);
+  const [memberId, setMemberId] = useState('');
+  const [role, setRole] = useState('');
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (location.state) {
+      setId(location.state.id);
+      setMemberId(location.state.memberId);
+      setRole(location.state.role);
+    }
+  }, [location.state]);
 
   const handleLogout = async () => {
     try {
