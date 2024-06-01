@@ -45,6 +45,8 @@ function IssueInfo( { projectId, user, issue, setIssue, categories } ) {
             if (data.isSuccess) {
                 console.log('Issue created: ', data.issueId);
                 alert('이슈가 성공적으로 생성되었습니다. ' + data.message);
+
+                issue.id = data.result.issueId;
             } else {
                 alert('이슈 생성에 실패했습니다: ' + data.message); // 수정: 실패 시 서버에서 받은 메시지를 출력
             }

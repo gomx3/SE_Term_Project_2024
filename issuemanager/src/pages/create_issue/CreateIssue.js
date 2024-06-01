@@ -14,7 +14,7 @@ function CreateIssue() {
   });
   /* 이슈 정보  */
   const [issue, setIssue] = useState({
-    id: 174,
+    id: '',
     title: '',
     description: '',
     status: 'NEW',
