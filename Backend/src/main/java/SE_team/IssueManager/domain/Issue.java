@@ -47,6 +47,7 @@ public class Issue extends BaseTimeEntity{
 
 //    @ManyToOne(fetch =FetchType.LAZY)
 //    private Project project;
+    @Column(name="projectId")
     private Long projectId;
 
     @OneToMany(mappedBy = "issue",cascade = CascadeType.ALL)

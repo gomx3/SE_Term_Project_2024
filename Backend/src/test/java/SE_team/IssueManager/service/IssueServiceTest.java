@@ -133,7 +133,7 @@ class IssueServiceTest {
     @DisplayName("reporter id로 이슈 조회")
     void find_by_reporter_id(){
         //findByCondition 메소드는 조건에 맞는 이슈를 생성시점을 기준으로 내림차순으로 정렬하여 반환한다.
-        issueList=issueService.findByCondition("name1",null,null,null,null,null);
+        issueList=issueService.findByCondition(projectId,member.getMemberId(),null,null,null,null,null);
         assertEquals(2,issueList.size());
         assertEquals(testIssue2.getTitle(),issueList.get(0).getTitle());
         assertEquals(testIssue1.getTitle(),issueList.get(1).getTitle());
@@ -142,7 +142,7 @@ class IssueServiceTest {
     @Test
     @DisplayName("priority 로 이슈 조회")
     void find_by_priority(){
-        issueList=issueService.findByCondition(null,null,null,null,Priority.MAJOR,null);
+        issueList=issueService.findByCondition(projectId,null,null,null,null,Priority.MAJOR,null);
         assertEquals(1, issueList.size());
     }
 
@@ -176,7 +176,7 @@ class IssueServiceTest {
         @DisplayName("fixerId로 이슈 조회")
         void find_issue_by_fixer_id(){
             fix_issue();
-            issueList=issueService.findByCondition(null,dev.getMemberId(),null,null,null,null);
+            issueList=issueService.findByCondition(projectId,null,dev.getMemberId(),null,null,null,null);
             assertEquals(1,issueList.size());
             assertEquals(testIssue1.getTitle(),issueList.get(0).getTitle());
         }
@@ -192,7 +192,7 @@ class IssueServiceTest {
     @Test
     @DisplayName("월별 이슈 통계")
     void monthly_issue_statistics(){
-        IssueResponseDto.GetStatisticsResponseDto statistics=issueService.getIssueStatistics(2024,5,projectId);
+        IssueResponseDto.GetStatisticsResponseDto statistics=issueService.getIssueStatistics(2024,6,projectId);
         assertEquals(2,statistics.getIssueCount());
         assertEquals(2,statistics.getIssueCountByCategory()[0]);
     }
