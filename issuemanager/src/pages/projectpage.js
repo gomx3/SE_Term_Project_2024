@@ -132,11 +132,11 @@ function Projectinfo({ project, userId, userRole, memberId }) {
         if (userRole === 'ADMIN') {
           filteredIssues = issues;
         } else if (userRole === 'TESTER') {
-          filteredIssues = issues.filter(issue => issue.reporter === userId);
+          filteredIssues = issues.filter(issue => issue.reporter === memberId);
         } else if (userRole === 'PL') {
           filteredIssues = issues.filter(issue => issue.status === 'NEW' || issue.status === 'RESOLVED');
         } else if (userRole === 'Developer') {
-          filteredIssues = issues.filter(issue => issue.assignee === userId && issue.status === 'ASSIGNED');
+          filteredIssues = issues.filter(issue => issue.assignee === memberId && issue.status === 'ASSIGNED');
         }
 
         setIssues(filteredIssues);
