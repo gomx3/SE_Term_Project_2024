@@ -13,6 +13,7 @@ import SE_team.IssueManager.project.entity.ProjectMember;
 @Repository
 public interface ProjectMemberRepository extends JpaRepository<ProjectMember, Long> {
     @Query("SELECT m.member.id FROM ProjectMember m WHERE m.project.id = :projectId")
+
     Set<String> findMemberIdsByProjectId(Long projectId);
 
     @Query("SELECT m.project.id FROM ProjectMember m WHERE m.member.id = :id")
@@ -23,4 +24,5 @@ public interface ProjectMemberRepository extends JpaRepository<ProjectMember, Lo
 
     @Query("SELECT p FROM Project p WHERE p.id = :projectId")
     Project findProjectById(Long projectId);
+
 }

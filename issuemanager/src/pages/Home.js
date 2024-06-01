@@ -53,10 +53,10 @@ function Home() {
   return (
     <div className="home-container">
       <header className="home-header">
-        <h2>IssueManager</h2>
+        <h1>IssueManager</h1>
         {memberId ? (
           <div>
-            Welcome, {memberId} ({role})! <button onClick={handleLogout} className="logout-link">Logout</button>
+            Welcome, <b>{memberId}</b> ({role})! <button onClick={handleLogout} className="logout-link">Logout</button>
             {error && <div className="error-message">{error}</div>}
           </div>
         ) : (
@@ -126,7 +126,10 @@ function Catalog({ role, setSelectedProject, memberId, userId }) {
       return;
     }
 
-    const requestBody = { name: newProjectName };
+    const requestBody = {
+      name: newProjectName,
+      creatorId: memberId,  // Use memberId here
+    };
 
     try {
       const response = await fetch('/projects', {
@@ -180,6 +183,7 @@ function Catalog({ role, setSelectedProject, memberId, userId }) {
     </aside>
   );
 }
+
 
 function Content({ selectedProject, userId, userRole, memberId }) {
   return (

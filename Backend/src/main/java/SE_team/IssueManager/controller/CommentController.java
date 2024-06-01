@@ -3,15 +3,7 @@ package SE_team.IssueManager.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import SE_team.IssueManager.domain.Comment;
 import SE_team.IssueManager.domain.converter.CommentConverter;
 import SE_team.IssueManager.dto.CommentRequestDto;
@@ -56,9 +48,10 @@ public class CommentController {
 
     @DeleteMapping("/{commentId}")
     public ApiResponse<?> deleteComment(
-            @PathVariable(name = "commentId") Long commentId,
-            @RequestParam(name = "memberId") Long id) {
-        commentService.deleteComment(commentId, id);
-        return ApiResponse.onSuccess(SuccessStatus.COMMENT_OK, null);
+            @PathVariable(name="commentId")Long commentId,
+            @RequestParam(name="memberId")Long id
+    ){
+        commentService.deleteComment(commentId,id);
+        return ApiResponse.onSuccess(SuccessStatus.COMMENT_OK,null);
     }
 }
