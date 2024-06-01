@@ -25,7 +25,9 @@ public enum ErrorStatus implements BaseErrorCode {
     ISSUE_COMMENT_NOT_CREATED(HttpStatus.NOT_FOUND, "ISSUE_1004", "comment not created"),
     ISSUE_PROJECT_NOT_FOUND(HttpStatus.NOT_FOUND, "ISSUE_1005", "project not found"),
 
-    COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "COMMENT_1000", "comment not found"),;
+    COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "COMMENT_1000", "comment not found"),
+
+    PROJECT_NOT_FOUND(HttpStatus.NOT_FOUND, "PROJECT_1000", "project not found"),;
 
     private final HttpStatus httpStatus;
     private final String code;
