@@ -5,8 +5,9 @@ import styles from './EditIssue.module.css';
 function IssueInfo( { projectId, user, issue, setIssue, categories, isEditMode } ) {  
     
     const navigate = useNavigate();
-    const [devList, setDevList] = useState([]);
-    const assigneeString = devList.join(', '); // devList를 문자열로 변환
+    const [recommendDevList, setRecommendDevList] = useState([]);
+    const [devList, setDevList] = useState(['dev1', 'dev2', 'dev3', 'dev999']);
+    const assigneeString = recommendDevList.join(', '); // recommendDevList를 문자열로 변환
 
     function handleChange(e) {
         const { name, value } = e.target;
@@ -27,7 +28,7 @@ function IssueInfo( { projectId, user, issue, setIssue, categories, isEditMode }
                 const data = await response.json();
         
                 if (data.isSuccess) {
-                    setDevList(data.result.devList);
+                    setRecommendDevList(data.result.devList);
                 } else {
                     throw new Error(data.message || '데이터를 가져오는데 실패했습니다.');
                 }
@@ -98,6 +99,27 @@ function IssueInfo( { projectId, user, issue, setIssue, categories, isEditMode }
         navigate('/'); // 이슈 세부 사항 확인 및 편집을 마치고 홈으로 이동
     };
     
+    /* 현재 프로젝트에 포함된 DEV 목록을 저장하는 함수 -> assignee 지정에 활용 */
+    async function fetchDevelopers() {
+        try {
+            const response = await fetch(`/issues/projects/${projectId}`, { // URL 수정 필요
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            
+            const data = await response.json();
+    
+            if (data.isSuccess) {
+                setDevList(data.result.devList); // 수정 필요 response 보고 설정
+            } else {
+                throw new Error(data.message || '데이터를 가져오는데 실패했습니다.');
+            }
+        } catch (error) {
+            console.error('DEV 목록을 불러오는 중 에러가 발생했습니다:', error);
+        }
+    };
 
     return (
         <div>
@@ -171,13 +193,19 @@ function IssueInfo( { projectId, user, issue, setIssue, categories, isEditMode }
                     <option value="TRIVIAL">Trivial</option>
                 </select>
                 <label className={styles.label}>Assignee</label>
-                <input className={styles.input}
-                    type="text"
+                <select
+                    className={styles.select}
                     name="assignee"
                     value={issue.assignee}
                     disabled={isEditMode === false || user.role !== 'PL'}
                     onChange={handleChange}
-                />
+                >
+                    {devList.map(dev => (
+                        <option key={dev} value={dev}>
+                            {dev}
+                        </option>
+                    ))}
+                </select>
                 <div className={styles.recommendContainer}>
                     <label className={styles.recommendlabel} >best candidate: {assigneeString}</label>
                 </div>
@@ -190,10 +218,6 @@ function IssueInfo( { projectId, user, issue, setIssue, categories, isEditMode }
                 />
             </div>
             <div className={styles.btns}>
-                <button 
-                    className={styles.btn}
-                    onClick={onReopenClick}
-                >Reopen</button>
                 <button 
                     className={styles.btn}
                     onClick={onAssignClick}
@@ -214,6 +238,10 @@ function IssueInfo( { projectId, user, issue, setIssue, categories, isEditMode }
                     onClick={onCloseIssueClick}
                     disabled={user.role !== 'PL'}
                 >Close</button>
+                <button 
+                    className={styles.btn}
+                    onClick={onReopenClick}
+                >Reopen</button>
                 <button 
                     className={styles.btn} 
                     type="submit" 
