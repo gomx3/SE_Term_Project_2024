@@ -40,7 +40,7 @@ public class ProjectService {
                 Project savedProject = projectRepository.save(project);
 
                 // 생성자를 프로젝트 멤버로 추가
-                Member creator = memberRepository.findById(request.getCreatorId())
+                Member creator = memberRepository.findByMemberId(request.getCreatorId())
                                 .orElseThrow(() -> new RuntimeException("멤버를 찾을 수 없습니다."));
 
                 ProjectMember projectMember = ProjectMember.builder()
