@@ -127,7 +127,7 @@ function IssueInfo( { projectId, user, issue, setIssue, categories, isEditMode }
             state: {
                 projectId, 
                 userId: user.id, 
-                userRole: user.role, 
+                userRole: user.role,
                 memberId: user.memberId,
                 issueData: issue
             }
@@ -236,25 +236,26 @@ function IssueInfo( { projectId, user, issue, setIssue, categories, isEditMode }
                 <button 
                     className={styles.btn}
                     onClick={onAssignClick}
-                    disabled={user.role !== 'PL'}
+                    disabled={user.role !== 'PL' || issue.status !== 'NEW'}
                 >Assign</button>
                 <button 
                     className={styles.btn} 
                     onClick={onCodeModifyClick}
-                    disabled={user.role !== 'DEV' || user.memberId !== issue.assignee}
+                    disabled={user.role !== 'DEV' || user.memberId !== issue.assignee || issue.status !== 'ASSIGNED'}
                 >Fix</button>
                 <button 
                     className={styles.btn} 
                     onClick={onResolveIssueClick}
-                    disabled={user.role !== 'TESTER'}
+                    disabled={user.role !== 'TESTER' || issue.status !== 'FIXED'}
                 >Resolve</button>
                 <button 
                     className={styles.btn} 
                     onClick={onCloseIssueClick}
-                    disabled={user.role !== 'PL'}
+                    disabled={user.role !== 'PL' || issue.status !== 'RESOLVED'}
                 >Close</button>
                 <button 
                     className={styles.btn}
+                    disabled={issue.status !== 'CLOSED'}
                     onClick={onReopenClick}
                 >Reopen</button>
                 <button 
