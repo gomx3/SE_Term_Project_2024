@@ -147,10 +147,10 @@ function Catalog({ role, setSelectedProject }) {
   );
 }
 
-function Content({ selectedProject, userId, userRole }) {
+function Content({ selectedProject, userId, userRole, memberId }) {
   return (
     <section className="home-content">
-      <Projectinfo project={selectedProject} userId={userId} userRole={userRole} />
+      <Projectinfo project={selectedProject} userId={userId} userRole={userRole} memberId={memberId} />
     </section>
   );
 }
