@@ -36,7 +36,7 @@ function SignIn() {
 
       if (data.isSuccess) {
         alert('Sign in successful!');
-        navigate('/', { state: { memberId: data.result.id, role: data.result.role } });
+        navigate('/', { state: { id: data.result.id, memberId: data.result.memberId, role: data.result.role } });
       } else {
         setError(data.message || 'Sign in failed.');
       }

@@ -78,6 +78,7 @@
   .issue-btn-container{
     margin-bottom: 10px;
     border-bottom: 1px solid #ccc;
+    margin-top: 10px;
   }
 
   .issue-button{
