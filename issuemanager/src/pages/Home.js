@@ -5,9 +5,9 @@ import Projectinfo from './projectpage';
 
 function Home() {
   const navigate = useNavigate();
-  const [id, setId] = useState(1); // Hardcoded user ID
-  const [memberId, setMemberId] = useState('admin'); // Hardcoded member ID
-  const [role, setRole] = useState('PL'); // Hardcoded role
+  const [id, setId] = useState(53); // Hardcoded user ID
+  const [memberId, setMemberId] = useState('soyeon'); // Hardcoded member ID
+  const [role, setRole] = useState('ADMIN'); // Hardcoded role
   const [error, setError] = useState('');
 
   const handleLogout = async () => {
@@ -55,14 +55,14 @@ function Home() {
         )}
       </header>
       <main className="home-main">
-        <Catalog role={role} setSelectedProject={setSelectedProject} />
-        <Content selectedProject={selectedProject} userId={id} userRole={role} />
+        <Catalog role={role} setSelectedProject={setSelectedProject} memberId={memberId} />
+          <Content selectedProject={selectedProject} userId={id} userRole={role} memberId={memberId} />
       </main>
     </div>
   );
 }
 
-function Catalog({ role, setSelectedProject }) {
+function Catalog({ role, setSelectedProject, memberId }) {
   const [showInput, setShowInput] = useState(false);
   const [projects, setProjects] = useState([
     { id: 1, name: 'Project Alpha' },
