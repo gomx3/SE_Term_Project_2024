@@ -42,7 +42,7 @@ function Projectinfo({ project, userId, userRole, memberId }) {
 
   const handleReportNewIssue = () => {
     navigate('/createissue', { 
-      state: { projectId: project.id, userId, userRole } 
+      state: { projectId: project.id, userId, memberId, userRole } 
     });
   };
 
@@ -134,7 +134,7 @@ function Projectinfo({ project, userId, userRole, memberId }) {
                     <select value={selectedRole} onChange={handleRoleChange}>
                       <option value="">Select Role</option>
                       <option value="PL">PL</option>
-                      <option value="Developer">Developer</option>
+                      <option value="Developer">Developer </option>
                       <option value="Tester">Tester</option>
                     </select>
                     <input 
