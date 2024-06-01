@@ -27,13 +27,15 @@ public class FindMyProjectService {
     public ApiResponse<FindMyProjectRespDTO> findMyProjects(String memberId) {
         Long projectMemberId = projectMemberRepository.findIdByMemberId(memberId);
 
-        List<Long> projects = projectMemberRepository.findProjectsByMemberId(projectMemberId);
+        List<Long> projectIds = projectMemberRepository.findProjectsByMemberId(projectMemberId);
 
         List<ProjectIds> projectList = new ArrayList<>();
-        for (Long projectId : projects) {
+
+        for (Long projectId : projectIds) {
             Project project = projectMemberRepository.findProjectById(projectId);
             if (project != null) {
-                projectList.add(new ProjectIds(project.getId(), project.getName()));
+                ProjectIds projectIdsDto = new ProjectIds(project.getId(), project.getName());
+                projectList.add(projectIdsDto);
             }
         }
 
