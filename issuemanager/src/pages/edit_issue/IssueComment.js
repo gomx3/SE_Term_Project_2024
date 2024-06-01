@@ -130,8 +130,13 @@ function IssueComment({ user, issue, comment, setComment }) {
                             <p className={styles.commentDate}>{comment.createdAt}</p>
                         </div>
                         <hr className={styles.commentDivider} />
-                        <div className={styles.commentContent}>
-                            <p>{comment.content}</p>
+                        <div className={styles.pageTitleContainer}>
+                            <div className={styles.commentContent}>
+                                <p>{comment.content}</p>
+                            </div>
+                            <button className={styles.cmtDelBtn}>
+                                DEL
+                            </button>
                         </div>
                     </li>
                 ))}

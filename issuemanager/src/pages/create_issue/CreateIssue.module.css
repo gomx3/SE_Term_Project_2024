@@ -124,6 +124,7 @@
 }
 
 .btn[type="submit"] {
+    width: 70px;
     color: #FFFFFF;
     background-color: #9664cf;
 }

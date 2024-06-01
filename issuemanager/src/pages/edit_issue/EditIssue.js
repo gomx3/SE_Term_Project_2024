@@ -1,30 +1,34 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import IssueInfo from './IssueInfo';
 import IssueComment from './IssueComment';
 import styles from './EditIssue.module.css';
 
 function EditIssue() {
+  const location = useLocation(); // 프로젝트 페이지에서 정보 받아오기
+  console.log(location.state.issueData);
+
   /* 프로젝트 정보 */
-  const projectId = '2';
+  const projectId = location.state.projectId;
   /* 사용자 정보 */
   const [user, setUser] = useState({ // 로그인한 사용자
-    id: 6,
-    memberId: 'seoyeon3',
-    role: 'PL',
+    id: location.state.userId,
+    memberId: location.state.memberId,
+    role: location.state.userRole,
   });
+
   /* 이슈 정보  */
   const [issue, setIssue] = useState({
-    id: 79,
-    title: 'mytitle',
-    description: 'nononono',
-    status: 'NEW',
-    category: 'OTHERS',
-    reporter: 'tt',
-    reportedDate: '2024-05-31 04:14:37.409805',
-    priority: 'BLOCKER',
-    assignee: '',
-    fixer: '',
+    id: location.state.issueData.issueId,
+    title: location.state.issueData.title,
+    description: location.state.issueData.description,
+    status: location.state.issueData.status,
+    category: location.state.issueData.category,
+    reporter: location.state.issueData.reporter,
+    reportedDate: location.state.issueData.createdAt,
+    priority: location.state.issueData.priority,
+    assignee: location.state.issueData.assignee,
+    fixer: location.state.issueData.fixer,
   });
   /* 코멘트 정보 */
   const [comment, setComment] = useState({
@@ -41,6 +45,9 @@ function EditIssue() {
     'SECURITY',
     'OTHERS',
   ]
+
+  useEffect(() => {
+  }, []);
 
   /* 이슈 삭제 함수 */
   const navigate = useNavigate();
@@ -71,7 +78,6 @@ function EditIssue() {
 
   function handleEditClick() {
     setIsEditMode((prevMode) => !prevMode);
-    console.log('Issue Edit Mode Toggled', isEditMode);
   };
 
   return (
