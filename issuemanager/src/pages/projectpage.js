@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './projectpage.css'; // Import the CSS file
 import Statistics from './Statistics'; // Import the Statistics component
 
-function Projectinfo({ project, userId, userRole }) {
+function Projectinfo({ project, userId, userRole, memberId }) {
   const [showAccountInput, setShowAccountInput] = useState(false);
   const [selectedRole, setSelectedRole] = useState('');
   const [accountId, setAccountId] = useState('');
@@ -52,6 +52,7 @@ function Projectinfo({ project, userId, userRole }) {
         projectId: project.id, 
         userId, 
         userRole, 
+        memberId,
         issueData: issue 
       } 
     });
