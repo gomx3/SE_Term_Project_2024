@@ -6,11 +6,11 @@ import styles from './CreateIssue.module.css';
 
 function CreateIssue() {
   const location = useLocation(); // 프로젝트 페이지에서 정보 받아오기
-  
+
   /* 프로젝트 정보 */
   const projectId = location.state.projectId;
   /* 사용자 정보 */
-  const [user, setUser] = useState({ // 로그인한 사용자로 설정하게
+  const [user, setUser] = useState({ // 로그인한 사용자
     id: location.state.userId,
     memberId: location.state.memberId,
     role: location.state.userRole,
