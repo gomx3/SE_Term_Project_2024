@@ -23,7 +23,7 @@ public class FindMyProjectController {
 
     @GetMapping("/{memberId}/check")
     public ResponseEntity<ApiResponse<FindMyProjectRespDTO>> findMyProjects(
-            @PathVariable String memberId) {
+            @PathVariable(name="memberId") String memberId) {
 
         ApiResponse<FindMyProjectRespDTO> response = myProjectService.findMyProjects(memberId);
         return ResponseEntity.ok(response);

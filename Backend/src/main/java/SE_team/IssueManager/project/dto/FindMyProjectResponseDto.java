@@ -12,12 +12,12 @@ public class FindMyProjectResponseDto {
     @AllArgsConstructor
     public static class FindMyProjectRespDTO {
         private String memberId;
-        private List<ProjectIds> projectIds;
+        private List<ProjectInfo> projectIds;
 
         @Data
         @AllArgsConstructor
         @NoArgsConstructor
-        public static class ProjectIds {
+        public static class ProjectInfo {
             private Long projectId;
             private String projectName;
         }
