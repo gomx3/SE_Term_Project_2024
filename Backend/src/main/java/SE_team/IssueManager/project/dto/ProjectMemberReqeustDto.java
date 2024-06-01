@@ -11,7 +11,6 @@ public class ProjectMemberReqeustDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class CreateProjectMemberRequestDTO {
-        private Long projectId;
         private Set<String> memberId;
     }
 
