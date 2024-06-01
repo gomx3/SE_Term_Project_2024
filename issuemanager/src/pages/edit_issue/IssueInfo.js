@@ -6,7 +6,7 @@ function IssueInfo( { projectId, user, issue, setIssue, categories, isEditMode }
     
     const navigate = useNavigate();
     const [recommendDevList, setRecommendDevList] = useState([]);
-    const [devList, setDevList] = useState(['dev1', 'dev2', 'dev3', 'dev999']);
+    const [devList, setDevList] = useState([]);
     const assigneeString = recommendDevList.join(', '); // recommendDevList를 문자열로 변환
 
     function handleChange(e) {
@@ -15,29 +15,52 @@ function IssueInfo( { projectId, user, issue, setIssue, categories, isEditMode }
     }
 
     /* 현재 이슈의 카테고리에 대해서 추천하는 개발자를 fetch */
-    useEffect(() => {
-        async function fetchDevelopers() {
-            try {
-                const response = await fetch(`/issues/projects/${projectId}/recommend?category=${issue.category}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
-                
-                const data = await response.json();
-        
-                if (data.isSuccess) {
-                    setRecommendDevList(data.result.devList);
-                } else {
-                    throw new Error(data.message || '데이터를 가져오는데 실패했습니다.');
-                }
-            } catch (error) {
-                console.error('개발자 목록을 불러오는 중 에러가 발생했습니다:', error);
+    async function fetchRecommendedDevelopers() {
+        try {
+            const response = await fetch(`/issues/projects/${projectId}/recommend?category=${issue.category}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            
+            const data = await response.json();
+    
+            if (data.isSuccess) {
+                setRecommendDevList(data.result.devList);
+            } else {
+                throw new Error(data.message || '데이터를 가져오는데 실패했습니다.');
             }
-        };
+        } catch (error) {
+            console.error('개발자 목록을 불러오는 중 에러가 발생했습니다:', error);
+        }
+    };
 
+    /* 현재 프로젝트에 포함된 DEV 목록을 저장하는 함수 -> assignee 지정에 활용 */
+    async function fetchDevelopers() {
+        try {
+            const response = await fetch(`/projects/${projectId}/members/dev`, { // URL 수정 필요
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            
+            const data = await response.json();
+
+            if (data.isSuccess) {
+                setDevList(data.result.devList); // 수정 필요 response 보고 설정
+            } else {
+                throw new Error(data.message || '데이터를 가져오는데 실패했습니다.');
+            }
+        } catch (error) {
+            console.error('DEV 목록을 불러오는 중 에러가 발생했습니다:', error);
+        }
+    };
+
+    useEffect(() => {
         fetchDevelopers();
+        fetchRecommendedDevelopers();
     }, [projectId, issue.category]); // projectId나 issue.category가 바뀌면 이 effect를 다시 실행
 
     /* 날짜 출력 형식 지정 함수 */
@@ -70,7 +93,11 @@ function IssueInfo( { projectId, user, issue, setIssue, categories, isEditMode }
             const data = await response.json(); // response.json() 호출 결과를 기다린 후 변수에 할당
     
             if (data.isSuccess) {
-                issue.assingee = assigneeId;
+                setIssue(prevIssue => ({
+                    ...prevIssue,
+                    status: newStatus,
+                    assignee: assigneeId,
+                }));
                 console.log('Issue updated: ', data.result.issueId, ' Status: ', data.result.status);
                 alert('이슈가 성공적으로 업데이트되었습니다. ' + data.message);
             } else {
@@ -96,29 +123,15 @@ function IssueInfo( { projectId, user, issue, setIssue, categories, isEditMode }
     
     const onHomeClick = async (event) => {
         event.preventDefault(); // 폼 제출 시 새로고침 방지
-        navigate('/'); // 이슈 세부 사항 확인 및 편집을 마치고 홈으로 이동
-    };
-    
-    /* 현재 프로젝트에 포함된 DEV 목록을 저장하는 함수 -> assignee 지정에 활용 */
-    async function fetchDevelopers() {
-        try {
-            const response = await fetch(`/issues/projects/${projectId}`, { // URL 수정 필요
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            
-            const data = await response.json();
-    
-            if (data.isSuccess) {
-                setDevList(data.result.devList); // 수정 필요 response 보고 설정
-            } else {
-                throw new Error(data.message || '데이터를 가져오는데 실패했습니다.');
+        navigate('/', {
+            state: {
+                projectId, 
+                userId: user.id, 
+                userRole: user.role, 
+                memberId: user.memberId,
+                issueData: issue
             }
-        } catch (error) {
-            console.error('DEV 목록을 불러오는 중 에러가 발생했습니다:', error);
-        }
+        }); ; // 이슈 세부 사항 확인 및 편집을 마치고 홈으로 이동
     };
 
     return (
@@ -197,9 +210,10 @@ function IssueInfo( { projectId, user, issue, setIssue, categories, isEditMode }
                     className={styles.select}
                     name="assignee"
                     value={issue.assignee}
-                    disabled={isEditMode === false || user.role !== 'PL'}
                     onChange={handleChange}
+                    disabled={isEditMode === false || user.role !== 'PL'}
                 >
+                    <option value=''>choose assignee for this issue ...</option>
                     {devList.map(dev => (
                         <option key={dev} value={dev}>
                             {dev}
@@ -214,6 +228,7 @@ function IssueInfo( { projectId, user, issue, setIssue, categories, isEditMode }
                     type="text"
                     name="fixer"
                     value={issue.fixer}
+                    onChange={handleChange}
                     disabled
                 />
             </div>
@@ -226,7 +241,7 @@ function IssueInfo( { projectId, user, issue, setIssue, categories, isEditMode }
                 <button 
                     className={styles.btn} 
                     onClick={onCodeModifyClick}
-                    disabled={user.role !== 'DEV'}
+                    disabled={user.role !== 'DEV' || user.memberId !== issue.assignee}
                 >Fix</button>
                 <button 
                     className={styles.btn} 

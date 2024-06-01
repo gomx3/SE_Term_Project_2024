@@ -58,7 +58,14 @@ function IssueInfo( { projectId, user, issue, setIssue, categories } ) {
 
     const onHomeClick = async (event) => {
         event.preventDefault(); // 폼 제출 시 새로고침 방지
-        navigate('/'); // 이슈 생성 후 홈으로 이동 
+        navigate('/', {
+            state: {
+                projectId, 
+                userId: user.id, 
+                userRole: user.role, 
+                memberId: user.memberId,
+            }
+        }); // 이슈 생성 후 홈으로 이동 
     };
     
     return (
