@@ -1,17 +1,12 @@
 package SE_team.IssueManager.project.entity;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import SE_team.IssueManager.domain.Member;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,27 +20,19 @@ import lombok.NoArgsConstructor;
 public class ProjectMember {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long projectId;
+    private Long id;
 
-    @ManyToMany
-    @JoinTable(name = "project_members", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name = "member_id"))
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
 
-    private Set<Member> members = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @Builder
-    public ProjectMember(Set<Member> members) {
-        this.members = new HashSet<>(members);
-    }
-
-    public void addMembers(Set<Member> members) {
-        this.members.addAll(members);
-    }
-
-    public Set<String> getMemberIds() {
-        // 멤버들의 ID를 저장할 Set 생성
-        return this.members.stream()
-                .map(Member::getId)
-                .map(Object::toString)
-                .collect(Collectors.toSet());
+    public ProjectMember(Project project, Member member) {
+        this.project = project;
+        this.member = member;
     }
 }

@@ -10,6 +10,8 @@ import SE_team.IssueManager.dto.IssueResponseDto;
 import SE_team.IssueManager.payload.code.status.ErrorStatus;
 import SE_team.IssueManager.payload.exception.handler.IssueHandler;
 import SE_team.IssueManager.payload.exception.handler.MemberHandler;
+import SE_team.IssueManager.project.entity.Project;
+import SE_team.IssueManager.project.repository.ProjectRepository;
 import SE_team.IssueManager.repository.IssueRepository;
 import SE_team.IssueManager.repository.MemberRepository;
 import SE_team.IssueManager.specification.IssueSpecification;
@@ -35,18 +37,21 @@ public class IssueService {
     private final IssueRepository issueRepository;
     @Autowired
     private final MemberRepository memberRepository;
-
+    @Autowired
+    private ProjectRepository projectRepository;
 
 
     public Issue createIssue(Long projectId,IssueRequestDto.CreateIssueRequestDto request) {
         Member reporter=memberRepository.findById(request.getReporterId()).orElse(null);
         if(reporter==null) throw new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND);
+        Project project=projectRepository.findById(projectId).orElse(null);
+        if(project==null) throw new IssueHandler(ErrorStatus.ISSUE_PROJECT_NOT_FOUND);
 
         Issue issue=Issue.builder()
                 .title(request.getTitle())
                 .description(request.getDescription())
                 .reporter(reporter)
-                .projectId(projectId)
+                .project(project)
                 .priority(request.getPriority())
                 .category(request.getCategory())
                 .build();
@@ -65,7 +70,9 @@ public class IssueService {
         fixer= memberRepository.findByMemberId(fixerId).orElse(null);
         assignee= memberRepository.findByMemberId(assigneeId).orElse(null);
 
-        spec=spec.and(IssueSpecification.findByProjectId(projectId));
+        Project project=projectRepository.findById(projectId).orElse(null);
+        if(project!=null)
+            spec=spec.and(IssueSpecification.findByProjectId(project));
 
         if(reporter!=null)
             spec=spec.and(IssueSpecification.findByReporter(reporter));

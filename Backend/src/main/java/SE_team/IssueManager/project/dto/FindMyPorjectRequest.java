@@ -4,13 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-public class ProjectRequestDto {
+public class FindMyPorjectRequest {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class CreateProjectRequestDTO {
-        private String name;
-        private String creatorId; // 생성자 ID 추가
-
+    public static class FineMyProjectReqDTO {
+        private String memberId;
     }
 }
