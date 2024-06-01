@@ -6,6 +6,7 @@ import styles from './EditIssue.module.css';
 
 function EditIssue() {
   const location = useLocation(); // 프로젝트 페이지에서 정보 받아오기
+  console.log(location.state.issueData);
 
   /* 프로젝트 정보 */
   const projectId = location.state.projectId;
@@ -23,7 +24,7 @@ function EditIssue() {
     description: location.state.issueData.description,
     status: location.state.issueData.status,
     category: location.state.issueData.category,
-    reporter: user.memberId, // 로그인한 사용자
+    reporter: location.state.issueData.reporter,
     reportedDate: location.state.issueData.createdAt,
     priority: location.state.issueData.priority,
     assignee: location.state.issueData.assignee,

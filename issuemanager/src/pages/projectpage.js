@@ -134,7 +134,7 @@ function Projectinfo({ project, userId, userRole, memberId }) {
                     <select value={selectedRole} onChange={handleRoleChange}>
                       <option value="">Select Role</option>
                       <option value="PL">PL</option>
-                      <option value="Developer">Developer</option>
+                      <option value="Developer">Developer </option>
                       <option value="Tester">Tester</option>
                     </select>
                     <input 
