@@ -79,7 +79,7 @@ function Catalog({ role, setSelectedProject, memberId, userId }) {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch(`/projects/${userId}/check`, {
+        const response = await fetch(`/projects/${memberId}/check`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'
