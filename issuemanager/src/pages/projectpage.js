@@ -135,7 +135,7 @@ function Projectinfo({ project, userId, userRole, memberId }) {
           filteredIssues = issues.filter(issue => issue.reporter === memberId);
         } else if (userRole === 'PL') {
           filteredIssues = issues.filter(issue => issue.status === 'NEW' || issue.status === 'RESOLVED');
-        } else if (userRole === 'Developer') {
+        } else if (userRole === 'DEV') {
           filteredIssues = issues.filter(issue => issue.assignee === memberId && issue.status === 'ASSIGNED');
         }
 
