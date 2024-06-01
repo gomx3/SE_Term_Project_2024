@@ -1,21 +1,18 @@
-import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './home.css';
 import Projectinfo from './projectpage';
 
 function Home() {
-  const location = useLocation();
   const navigate = useNavigate();
-  const { state } = location;
-  const initialMemberId = state ? state.memberId : null;
-  const initialRole = state ? state.role : null;
-  const [memberId, setMemberId] = useState(initialMemberId);
-  const [role, setRole] = useState(initialRole);
+  const [id, setId] = useState(1); // Hardcoded user ID
+  const [memberId, setMemberId] = useState('admin'); // Hardcoded member ID
+  const [role, setRole] = useState('TESTER'); // Hardcoded role
   const [error, setError] = useState('');
 
   const handleLogout = async () => {
     try {
-      const response = await fetch('http://localhost:8080/members/logout', {
+      const response = await fetch('/members/logout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -29,6 +26,7 @@ function Home() {
 
       if (data.isSuccess) {
         alert('Logout successful!');
+        setId(null);
         setMemberId(null);
         setRole(null);
         navigate('/signin');
@@ -57,16 +55,20 @@ function Home() {
         )}
       </header>
       <main className="home-main">
-        <Catalog setSelectedProject={setSelectedProject} />
-        <Content selectedProject={selectedProject} />
+        <Catalog role={role} setSelectedProject={setSelectedProject} />
+        <Content selectedProject={selectedProject} userId={id} userRole={role} />
       </main>
     </div>
   );
 }
 
-function Catalog({ setSelectedProject }) {
+function Catalog({ role, setSelectedProject }) {
   const [showInput, setShowInput] = useState(false);
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState([
+    { id: 1, name: 'Project Alpha' },
+    { id: 2, name: 'Project Beta' },
+    { id: 3, name: 'Project Gamma' }
+  ]);
   const [newProjectName, setNewProjectName] = useState('');
 
   const toggleInput = () => {
@@ -84,45 +86,71 @@ function Catalog({ setSelectedProject }) {
     toggleInput();
   };
 
-  const addProject = () => {
+  const addProject = async () => {
     if (newProjectName.trim() === '') {
       alert('Please enter a project name.');
       return;
     }
-    setProjects([...projects, newProjectName]);
-    toggleInput();
+
+    const requestBody = { name: newProjectName };
+
+    try {
+      const response = await fetch('/projects', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody)
+      });
+
+      const data = await response.json();
+
+      if (data.isSuccess) {
+        setProjects([...projects, { id: data.result.id, name: data.result.name }]);
+        toggleInput();
+      } else {
+        alert(data.message || 'Project addition failed.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred while adding the project.');
+    }
   };
 
   return (
     <aside className="home-catalog">
       <h3>Projects</h3>
       <ul>
-        {projects.map((project, index) => (
-          <li key={index} className="project-item" onClick={() => setSelectedProject(project)}>
-            {project}
+        {projects.map((project) => (
+          <li key={project.id} className="project-item" onClick={() => setSelectedProject(project)}>
+            {project.name}
           </li>
         ))}
       </ul>
-      {showInput && (
-        <div className="input-container">
-          <div className="input-wrapper">
-            <input type="text" value={newProjectName} onChange={handleInputChange} />
-            <button className="proj-cancel" onClick={cancelInput}>Cancel</button>
-            <button className="proj-add" onClick={addProject}>Add</button>
-          </div>
-        </div>
-      )}
-      {!showInput && (
-        <button className="add-button" onClick={toggleInput}>Add new Project</button>
+      {role === 'ADMIN' && (
+        <>
+          {showInput && (
+            <div className="input-container">
+              <div className="input-wrapper">
+                <input type="text" value={newProjectName} onChange={handleInputChange} />
+                <button className="proj-cancel" onClick={cancelInput}>Cancel</button>
+                <button className="proj-add" onClick={addProject}>Add</button>
+              </div>
+            </div>
+          )}
+          {!showInput && (
+            <button className="add-button" onClick={toggleInput}>Add new Project</button>
+          )}
+        </>
       )}
     </aside>
   );
 }
 
-function Content({ selectedProject }) {
+function Content({ selectedProject, userId, userRole }) {
   return (
     <section className="home-content">
-      <Projectinfo project={selectedProject} />
+      <Projectinfo project={selectedProject} userId={userId} userRole={userRole} />
     </section>
   );
 }

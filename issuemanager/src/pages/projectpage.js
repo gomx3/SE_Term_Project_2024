@@ -1,33 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './projectpage.css'; // CSS 파일을 임포트합니다
-import Statistics from './Statistics'; // Statistics.js 파일에서 Statistics 컴포넌트를 임포트
+import './projectpage.css'; // Import the CSS file
+import Statistics from './Statistics'; // Import the Statistics component
 
-const admin = "admin1";
-
-const mockIssues = [
-  {
-    id: 1,
-    reporterId: "reporter1",
-    fixerId: "",
-    assigneeId: "",
-    status: "NEW",
-    priority: "MAJOR",
-    title: "Issue title 1"
-  },
-  {
-    id: 2,
-    reporterId: "reporter2",
-    fixerId: "fixer1",
-    assigneeId: "assignee1",
-    status: "CLOSED",
-    priority: "MINOR",
-    title: "Issue title 2"
-  },
-  // 추가 이슈 데이터...
-];
-
-function Projectinfo({ project }) {
+function Projectinfo({ project, userId, userRole }) {
   const [showAccountInput, setShowAccountInput] = useState(false);
   const [selectedRole, setSelectedRole] = useState('');
   const [accountId, setAccountId] = useState('');
@@ -35,22 +11,52 @@ function Projectinfo({ project }) {
   const [selectedStatus, setSelectedStatus] = useState('');
   const [isStatisticsVisible, setIsStatisticsVisible] = useState(false);
 
-  useEffect(() => {
-    // 실제 API 호출이 있다면 이곳에서 수행합니다.
-    // 임시로 하드코딩된 데이터를 사용합니다.
-    setIssues(mockIssues);
-  }, []);
-
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (project) {
+      fetchIssues();
+    }
+  }, [project, selectedStatus]);
+
+  const fetchIssues = async () => {
+    try {
+      const response = await fetch(`/issues/projects/${project.id}`, {
+        method: 'GET',
+      });
+
+      const data = await response.json();
+
+      if (data.isSuccess) {
+        const filteredIssues = selectedStatus
+          ? data.result.issueList.filter(issue => issue.status === selectedStatus)
+          : data.result.issueList;
+        setIssues(filteredIssues);
+      } else {
+        console.error('Failed to fetch issues:', data.message);
+      }
+    } catch (error) {
+      console.error('Error fetching issues:', error);
+    }
+  };
+
   const handleReportNewIssue = () => {
-    navigate('/createissue'); // 이슈 생성 페이지로 이동
+    navigate('/createissue', { 
+      state: { projectId: project.id, userId, userRole } 
+    });
   };
 
-  const handleShowDetail = () => {
-    navigate('/editissue'); // 이슈 디테일 확인(+편집) 페이지로 이동
+  const handleShowDetail = (issue) => {
+    navigate('/editissue', { 
+      state: { 
+        projectId: project.id, 
+        userId, 
+        userRole, 
+        issueData: issue 
+      } 
+    });
   };
-
+  
   const handleRoleChange = (event) => {
     setSelectedRole(event.target.value);
   };
@@ -79,12 +85,28 @@ function Projectinfo({ project }) {
 
   const handleStatusChange = (event) => {
     setSelectedStatus(event.target.value);
-    setIsStatisticsVisible(false); // 이슈 리스트가 다시 활성화되면 통계를 숨깁니다.
+    setIsStatisticsVisible(false); // Hide statistics when issue list is active
   };
 
-  const filteredIssues = selectedStatus
-    ? issues.filter(issue => issue.status === selectedStatus)
-    : issues;
+  const handleMyIssues = async () => {
+    try {
+      let filteredIssues = [];
+  
+      if (userRole === 'ADMIN') {
+        filteredIssues = issues;
+      } else if (userRole === 'TESTER') {
+        filteredIssues = issues.filter(issue => issue.reporter === userId);
+      } else if (userRole === 'PL') {
+        filteredIssues = issues.filter(issue => issue.status === 'NEW' || issue.status === 'RESOLVED');
+      } else if (userRole === 'Developer') {
+        filteredIssues = issues.filter(issue => issue.assignee === userId && issue.status === 'ASSIGNED');
+      }
+  
+      setIssues(filteredIssues);
+    } catch (error) {
+      console.error('Error fetching my issues:', error);
+    }
+  };
 
   const handleStatisticsClick = () => {
     setIsStatisticsVisible(true);
@@ -95,31 +117,32 @@ function Projectinfo({ project }) {
       <div className="project-info">
         {project ? (
           <>
-            <h1>{project}</h1>
-            <p>Created by: {admin}</p>
-            <div className="add-account-container">
-              {!showAccountInput && (
-                <button className="add-account-button" onClick={() => setShowAccountInput(true)}>Add New Account</button>
-              )}
-              {showAccountInput && (
-                <div className="account-input-container">
-                  <select value={selectedRole} onChange={handleRoleChange}>
-                    <option value="">Select Role</option>
-                    <option value="PL">PL</option>
-                    <option value="Developer">Developer</option>
-                    <option value="Tester">Tester</option>
-                  </select>
-                  <input 
-                    type="text" 
-                    value={accountId} 
-                    onChange={handleAccountIdChange} 
-                    placeholder="Enter ID"
-                  />
-                  <button className="account-cancel" onClick={handleCancel}>Cancel</button>
-                  <button className="account-add" onClick={handleAddAccount}>Add</button>
-                </div>
-              )}
-            </div>
+            <h1>{project.name}</h1>
+            {userRole === 'ADMIN' && (
+              <div className="add-account-container">
+                {!showAccountInput && (
+                  <button className="add-account-button" onClick={() => setShowAccountInput(true)}>Add New Account</button>
+                )}
+                {showAccountInput && (
+                  <div className="account-input-container">
+                    <select value={selectedRole} onChange={handleRoleChange}>
+                      <option value="">Select Role</option>
+                      <option value="PL">PL</option>
+                      <option value="Developer">Developer</option>
+                      <option value="Tester">Tester</option>
+                    </select>
+                    <input 
+                      type="text" 
+                      value={accountId} 
+                      onChange={handleAccountIdChange} 
+                      placeholder="Enter ID"
+                    />
+                    <button className="account-cancel" onClick={handleCancel}>Cancel</button>
+                    <button className="account-add" onClick={handleAddAccount}>Add</button>
+                  </div>
+                )}
+              </div>
+            )}
             <div className="issue-btn-container">
               <select className="status-select" value={selectedStatus} onChange={handleStatusChange}>
                 <option value="">All Issues</option>
@@ -130,12 +153,14 @@ function Projectinfo({ project }) {
                 <option value="CLOSED">CLOSED</option>
                 <option value="REOPENED">REOPENED</option>
               </select>
-              <button className="issue-button">My Issues</button>
+              <button className="issue-button" onClick={handleMyIssues}>My Issues</button>
               <button className="issue-button" onClick={handleStatisticsClick}>Statistics</button>
-              <button className="issue-create-button" onClick={handleReportNewIssue}>Report New Issue</button>
+              {userRole === 'TESTER' && (
+              <button className="issue-create-button" onClick={handleReportNewIssue}>Report New Issue</button>)
+              }
             </div>
             {isStatisticsVisible ? (
-              <Statistics />
+              <Statistics projectId={project.id} />
             ) : (
               <div className="issue-list">
                 <div className="issue-header">
@@ -146,16 +171,16 @@ function Projectinfo({ project }) {
                   <div>Assignee</div>
                   <div>Fixer</div>
                 </div>
-                {filteredIssues.length > 0 ? (
-                  filteredIssues.map(issue => (
-                    <div key={issue.id} className="issue-item">
+                {issues.length > 0 ? (
+                  issues.map(issue => (
+                    <div key={issue.issueId} className="issue-item" onClick={() => handleShowDetail(issue)}>
                       <div>[{issue.status}]</div>
                       <div>{issue.priority}</div>
                       <div>{issue.title}</div>
-                      <div>{issue.reporterId}</div>
-                      <div>{issue.assigneeId}</div>
-                      <div>{issue.fixerId}</div>
-                      <button className="issue-detail-button" onClick={handleShowDetail}>Show Detail</button>
+                      <div>{issue.reporter}</div>
+                      <div>{issue.assignee}</div>
+                      <div>{issue.fixer}</div>
+                      <button className="issue-detail-button">Show Detail</button>
                     </div>
                   ))
                 ) : (
