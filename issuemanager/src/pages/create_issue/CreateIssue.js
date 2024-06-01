@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from "react-router-dom";
 import IssueInfo from './IssueInfo';
 import IssueComment from './IssueComment';
 import styles from './CreateIssue.module.css';
 
 function CreateIssue() {
+  const location = useLocation();
+  
   /* 프로젝트 정보 */
-  const projectId = `3`;
+  const projectId = location.state.projectId;
   /* 사용자 정보 */
-  const [user, setUser] = useState({
-    id: 8,
-    memberId: 'seoyeon4', // 로그인한 사용자로 설정하게
-    role: 'TESTER',
+  const [user, setUser] = useState({ // 로그인한 사용자로 설정하게
+    id: location.state.userId,
+    memberId: 'temp',
+    role: location.state.userRole,
   });
   /* 이슈 정보  */
   const [issue, setIssue] = useState({
