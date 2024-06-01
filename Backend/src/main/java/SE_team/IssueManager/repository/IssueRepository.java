@@ -27,7 +27,11 @@ public interface IssueRepository extends JpaRepository<Issue, Long>, JpaSpecific
 
     @Query(value = "select fixer_id "
             + "from issue "
-            + "where category=:category and project_id=:projectId and fixer_id is not null "
+            + "where category=:category and project_id=:projectId and fixer_id is not null and "
+            + "fixer_id in "
+                + "(select pm.member_id "
+                + "from project_member pm "
+                + "where pm.project_id=:projectId) "
             + "group by fixer_id "
             + "order by count(*) desc", nativeQuery = true)
     long[] findDevByCategory(@Param("projectId") long projectId, @Param("category") String category);
