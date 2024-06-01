@@ -12,7 +12,9 @@ public class ProjectMemberResponseDto {
     @AllArgsConstructor
     public static class ProjectMemberDTO {
         private Long id;
+        private Long projectId;
         private String name;
-        private Set<String> initialMembers;
+        private Set<String> memberIds;
     }
+
 }
