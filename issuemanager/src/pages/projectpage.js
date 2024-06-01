@@ -57,7 +57,7 @@ function Projectinfo({ project, userId, userRole, memberId }) {
       } 
     });
   };
-  
+
   const handleRoleChange = (event) => {
     setSelectedRole(event.target.value);
   };
@@ -66,17 +66,50 @@ function Projectinfo({ project, userId, userRole, memberId }) {
     setAccountId(event.target.value);
   };
 
-  const handleAddAccount = () => {
-    if (!accountId.trim() || !selectedRole.trim()) {
-      alert("Please enter ID and select a role.");
+  const handleAddAccount = async () => {
+    if (!accountId.trim()) {
+      alert("Please enter ID.");
       return;
     }
-
-    // Add account logic here
-    setShowAccountInput(false);
-    setSelectedRole('');
-    setAccountId('');
+  
+    const requestBody = {
+      memberId: accountId  // Use array for memberId
+    };
+  
+    console.log('Sending request:', JSON.stringify(requestBody));
+  
+    try {
+      const response = await fetch(`/projects/${project.id}/members`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody)
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Error adding account:', errorData);
+        alert(errorData.message || 'Failed to add account.');
+        return;
+      }
+  
+      const data = await response.json();
+  
+      if (data.isSuccess) {
+        alert('Account added successfully!');
+        setShowAccountInput(false);
+        setSelectedRole('');
+        setAccountId('');
+      } else {
+        alert(data.message || 'Failed to add account.');
+      }
+    } catch (error) {
+      console.error('Error adding account:', error);
+      alert('An error occurred while adding the account.');
+    }
   };
+  
 
   const handleCancel = () => {
     setShowAccountInput(false);
@@ -95,7 +128,7 @@ function Projectinfo({ project, userId, userRole, memberId }) {
         setIsStatisticsVisible(false); 
       } else {
         let filteredIssues = [];
-  
+
         if (userRole === 'ADMIN') {
           filteredIssues = issues;
         } else if (userRole === 'TESTER') {
@@ -105,14 +138,13 @@ function Projectinfo({ project, userId, userRole, memberId }) {
         } else if (userRole === 'Developer') {
           filteredIssues = issues.filter(issue => issue.assignee === userId && issue.status === 'ASSIGNED');
         }
-  
+
         setIssues(filteredIssues);
       }
     } catch (error) {
       console.error('Error fetching my issues:', error);
     }
   };
-  
 
   const handleStatisticsClick = () => {
     setIsStatisticsVisible(true);
@@ -134,7 +166,7 @@ function Projectinfo({ project, userId, userRole, memberId }) {
                     <select value={selectedRole} onChange={handleRoleChange}>
                       <option value="">Select Role</option>
                       <option value="PL">PL</option>
-                      <option value="Developer">Developer </option>
+                      <option value="Developer">Developer</option>
                       <option value="Tester">Tester</option>
                     </select>
                     <input 
@@ -162,8 +194,8 @@ function Projectinfo({ project, userId, userRole, memberId }) {
               <button className="issue-button" onClick={handleMyIssues}>My Issues</button>
               <button className="issue-button" onClick={handleStatisticsClick}>Statistics</button>
               {userRole === 'TESTER' && (
-              <button className="issue-create-button" onClick={handleReportNewIssue}>Report New Issue</button>)
-              }
+                <button className="issue-create-button" onClick={handleReportNewIssue}>Report New Issue</button>
+              )}
             </div>
             {isStatisticsVisible ? (
               <Statistics projectId={project.id} />
