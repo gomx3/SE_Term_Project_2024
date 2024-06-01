@@ -7,6 +7,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Builder
@@ -44,6 +47,10 @@ public class Issue extends BaseTimeEntity{
 
 //    @ManyToOne(fetch =FetchType.LAZY)
 //    private Project project;
+    private Long projectId;
+
+    @OneToMany(mappedBy = "issue",cascade = CascadeType.ALL)
+    private List<Comment> commentList=new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     @Column(name="category")

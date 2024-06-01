@@ -4,39 +4,56 @@ import IssueComment from './IssueComment';
 import styles from './CreateIssue.module.css';
 
 function CreateIssue() {
+  /* 프로젝트 정보 */
+  const projectId = `2`;
+  /* 사용자 정보 */
+  const [user, setUser] = useState({
+    id: 8,
+    memberId: 'seoyeon4', // 로그인한 사용자로 설정하게
+    role: 'TESTER',
+  });
+  /* 이슈 정보  */
   const [issue, setIssue] = useState({
+    id: 79,
     title: '',
     description: '',
-    state: '',
-    category: '',
-    reporter: '',
+    status: 'NEW',
+    category: 'OTHERS',
+    reporter: user.memberId, // 로그인한 사용자
     reportedDate: '',
-    priority: '',
+    priority: 'MAJOR',
     assignee: '',
     fixer:'',
-    comments: [],
-    newComment: '',
   });
-  const [userId, setUserId] = useState('tester'); // 현재 사용자 id (A 또는 B, ...)
+  /* 코멘트 정보 */
+  const [comment, setComment] = useState({
+    comments: [],
+    content: '',
+  })
+  
   const categories = [
-    'Memory Leak',
-    'Crash Occurrence',
-    'User Feedback',
-    'Security Vulnerability',
-    'Others',
+    'MEMORY_LEAK',
+    'CRASH',
+    'USER_FEEDBACK',
+    'SECURITY',
+    'OTHERS',
   ]
 
-  useEffect(() => {
-    const currentDate = new Date().toISOString().split('T')[0]; // 컴포넌트가 처음 렌더링될 때 현재 날짜를 설정
-    setIssue((prevIssue) => ({ 
-      ...prevIssue, 
-      reportedDate: currentDate,
-     }));
-  }, []);
-
-  function handleSubmit() {
-    console.log('Issue edited: ', issue);
+  function getLocalDateISOString() {
+    const now = new Date();
+    const timezoneOffset = now.getTimezoneOffset() * 60000; // UTC를 KST로 (로컬 시간대의 오프셋을 분으로 계산)
+    // 현재 시간에서 시간대 오프셋을 빼서 로컬 시간을 UTC와 동일한 형식으로 맞춤
+    const localISOString = new Date(now - timezoneOffset).toISOString().split('T')[0];
+    return localISOString;
   }
+
+  useEffect(() => {
+    const currentDate = getLocalDateISOString();
+    setIssue((prevIssue) => ({
+      ...prevIssue,
+      reportedDate: currentDate,
+    }));
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -45,22 +62,23 @@ function CreateIssue() {
           <h1 className={styles.h1}>CREATE ISSUE</h1>
         </div>
         <IssueInfo
+          projectId={projectId}
+          user={user}
           issue={issue}
           setIssue={setIssue}
-          userId={userId}
           categories={categories}
         />
-        <div className={styles.btns}>
-                <button className={styles.btn} onClick={() => console.log('Issue closed')}>Close Issue</button>
-                <button className={styles.btn} onClick={() => console.log('Issue resolved')}>Resolve Issue</button>
-                <button className={styles.btn} type="submit" onClick={handleSubmit}>Create Issue</button>
-        </div>
       </div>
       <div className={styles.commentContainer}>
+        {/* 현재 사용자 memberId 출력 */}
+        <div className={styles.userInfo}>
+          <p>current user: {user.memberId}</p>
+        </div>
         <IssueComment
+          user={user}
           issue={issue}
-          setIssue={setIssue}
-          userId={userId}
+          comment={comment}
+          setComment={setComment}
         />
       </div>
     </div>

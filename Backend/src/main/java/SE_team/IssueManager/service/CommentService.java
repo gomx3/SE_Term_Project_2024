@@ -5,6 +5,7 @@ import SE_team.IssueManager.domain.Issue;
 import SE_team.IssueManager.domain.Member;
 import SE_team.IssueManager.dto.CommentRequestDto;
 import SE_team.IssueManager.payload.code.status.ErrorStatus;
+import SE_team.IssueManager.payload.exception.handler.CommentHandler;
 import SE_team.IssueManager.payload.exception.handler.IssueHandler;
 import SE_team.IssueManager.payload.exception.handler.MemberHandler;
 import SE_team.IssueManager.repository.CommentRepository;
@@ -44,5 +45,9 @@ public class CommentService {
         if(issue==null) throw new IssueHandler(ErrorStatus.ISSUE_NOT_FOUND);
 
         return commentRepository.findByIssue(issue);
+    }
+    public void deleteComment(Long commentId, Long id) {
+        Comment comment=commentRepository.findById(commentId).orElseThrow(()->new CommentHandler(ErrorStatus.COMMENT_NOT_FOUND));
+        if(comment!=null) commentRepository.delete(comment);
     }
 }
