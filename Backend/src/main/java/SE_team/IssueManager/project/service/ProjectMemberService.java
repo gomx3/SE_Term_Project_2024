@@ -28,11 +28,11 @@ public class ProjectMemberService {
         @Autowired
         private ProjectMemberRepository projectMemberRepository;
 
-        public ApiResponse<ProjectMemberDTO> addMemberToProject(Long projectId, Long memberId) {
+        public ApiResponse<ProjectMemberDTO> addMemberToProject(Long projectId, String memberId) {
                 Project project = projectRepository.findById(projectId)
                                 .orElseThrow(() -> new RuntimeException("Project not found"));
 
-                Member member = memberRepository.findById(memberId)
+                Member member = memberRepository.findByMemberId(memberId)
                                 .orElseThrow(() -> new RuntimeException("Member not found"));
 
                 ProjectMember projectMember = ProjectMember.builder()

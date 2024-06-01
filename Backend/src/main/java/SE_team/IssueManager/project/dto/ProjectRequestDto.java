@@ -10,7 +10,7 @@ public class ProjectRequestDto {
     @AllArgsConstructor
     public static class CreateProjectRequestDTO {
         private String name;
-        private Long creatorId; // 생성자 ID 추가
+        private String creatorId; // 생성자 ID 추가
 
     }
 }
