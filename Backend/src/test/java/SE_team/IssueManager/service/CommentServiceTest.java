@@ -1,15 +1,15 @@
 package SE_team.IssueManager.service;
 
-import SE_team.IssueManager.controller.CommentController;
+import SE_team.IssueManager.web.controller.CommentController;
 import SE_team.IssueManager.domain.Comment;
 import SE_team.IssueManager.domain.Issue;
 import SE_team.IssueManager.domain.Member;
 import SE_team.IssueManager.domain.enums.Category;
 import SE_team.IssueManager.domain.enums.Priority;
 import SE_team.IssueManager.domain.enums.Role;
-import SE_team.IssueManager.dto.CommentRequestDto;
-import SE_team.IssueManager.dto.IssueRequestDto;
-import SE_team.IssueManager.dto.MemberRequestDto;
+import SE_team.IssueManager.web.dto.CommentRequestDto;
+import SE_team.IssueManager.web.dto.IssueRequestDto;
+import SE_team.IssueManager.web.dto.MemberRequestDto;
 import SE_team.IssueManager.repository.CommentRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;

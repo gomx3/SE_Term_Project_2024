@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import SE_team.IssueManager.domain.Member;
-import SE_team.IssueManager.dto.MemberRequestDto;
-import SE_team.IssueManager.dto.MemberResponseDto;
+import SE_team.IssueManager.web.dto.MemberRequestDto;
+import SE_team.IssueManager.web.dto.MemberResponseDto;
 import SE_team.IssueManager.payload.code.status.ErrorStatus;
 import SE_team.IssueManager.payload.exception.handler.MemberHandler;
 import SE_team.IssueManager.repository.MemberRepository;

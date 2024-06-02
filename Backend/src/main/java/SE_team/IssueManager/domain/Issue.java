@@ -3,7 +3,6 @@ package SE_team.IssueManager.domain;
 import SE_team.IssueManager.domain.enums.Category;
 import SE_team.IssueManager.domain.enums.Priority;
 import SE_team.IssueManager.domain.enums.Status;
-import SE_team.IssueManager.project.entity.Project;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;

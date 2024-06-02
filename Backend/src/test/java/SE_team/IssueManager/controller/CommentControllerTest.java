@@ -6,12 +6,13 @@ import SE_team.IssueManager.domain.Member;
 import SE_team.IssueManager.domain.enums.Category;
 import SE_team.IssueManager.domain.enums.Priority;
 import SE_team.IssueManager.domain.enums.Role;
-import SE_team.IssueManager.dto.CommentRequestDto;
-import SE_team.IssueManager.dto.IssueRequestDto;
-import SE_team.IssueManager.dto.MemberRequestDto;
+import SE_team.IssueManager.web.dto.CommentRequestDto;
+import SE_team.IssueManager.web.dto.IssueRequestDto;
+import SE_team.IssueManager.web.dto.MemberRequestDto;
 import SE_team.IssueManager.service.CommentService;
 import SE_team.IssueManager.service.IssueService;
 import SE_team.IssueManager.service.MemberService;
+import SE_team.IssueManager.web.controller.CommentController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
@@ -24,7 +25,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 

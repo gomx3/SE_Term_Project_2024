@@ -2,6 +2,7 @@ package SE_team.IssueManager.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import SE_team.IssueManager.web.controller.IssueController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,8 +21,8 @@ import SE_team.IssueManager.domain.enums.Category;
 import SE_team.IssueManager.domain.enums.Priority;
 import SE_team.IssueManager.domain.enums.Role;
 import SE_team.IssueManager.domain.enums.Status;
-import SE_team.IssueManager.dto.IssueRequestDto;
-import SE_team.IssueManager.dto.MemberRequestDto;
+import SE_team.IssueManager.web.dto.IssueRequestDto;
+import SE_team.IssueManager.web.dto.MemberRequestDto;
 import SE_team.IssueManager.service.IssueService;
 import SE_team.IssueManager.service.MemberService;
 import jakarta.transaction.Transactional;
