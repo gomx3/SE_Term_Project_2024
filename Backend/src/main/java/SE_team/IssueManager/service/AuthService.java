@@ -12,8 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import SE_team.IssueManager.domain.Member;
-import SE_team.IssueManager.dto.LoginRequestDto;
-import SE_team.IssueManager.dto.LoginResponseDto.LoginRespDTO;
+import SE_team.IssueManager.web.dto.LoginRequestDto;
+import SE_team.IssueManager.web.dto.LoginResponseDto.LoginRespDTO;
 import SE_team.IssueManager.payload.ApiResponse;
 import SE_team.IssueManager.payload.code.status.ErrorStatus;
 import SE_team.IssueManager.payload.code.status.SuccessStatus;

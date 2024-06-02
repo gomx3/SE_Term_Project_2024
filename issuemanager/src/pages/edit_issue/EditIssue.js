@@ -63,7 +63,14 @@ function EditIssue() {
   
       if (data.isSuccess) {
         alert('이슈가 성공적으로 삭제되었습니다. ' + data.message);
-        navigate('/'); // 삭제 성공하면 홈으로 이동
+        navigate('/', {
+          state: {
+              projectId, 
+              id: user.id, 
+              role: user.role,
+              memberId: user.memberId,
+          }
+        }); // 삭제 성공하면 홈으로 이동
       } else {
         throw new Error(data.message || 'Failed to delete the issue.');
       }

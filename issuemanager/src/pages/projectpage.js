@@ -152,7 +152,7 @@ function Projectinfo({ project, userId, userRole, memberId }) {
 
   return (
     <div className="project-info-container">
-      <div className="project-info">
+      <div className="project-info">  
         {project ? (
           <>
             <h1>{project.name}</h1>

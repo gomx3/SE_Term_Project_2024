@@ -15,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import SE_team.IssueManager.filter.JsonUsernamePasswordAuthenticationFilter;
+import SE_team.IssueManager.web.filter.JsonUsernamePasswordAuthenticationFilter;
 import SE_team.IssueManager.service.MemberDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 

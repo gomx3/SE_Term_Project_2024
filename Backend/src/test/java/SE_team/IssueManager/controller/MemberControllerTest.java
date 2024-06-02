@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import SE_team.IssueManager.domain.enums.Role;
-import SE_team.IssueManager.dto.MemberRequestDto;
+import SE_team.IssueManager.web.dto.MemberRequestDto;
 import SE_team.IssueManager.service.MemberService;
 import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
@@ -33,6 +33,7 @@ class MemberControllerTest {
         private ObjectMapper mapper = new ObjectMapper();
 
         @Test
+        @DisplayName("회원가입")
         void sign_up() throws Exception {
 
                 String pw = "1234";

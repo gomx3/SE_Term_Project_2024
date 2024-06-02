@@ -4,7 +4,7 @@ import java.util.List;
 
 import SE_team.IssueManager.domain.Issue;
 import SE_team.IssueManager.domain.Member;
-import SE_team.IssueManager.dto.IssueResponseDto;
+import SE_team.IssueManager.web.dto.IssueResponseDto;
 
 public class IssueConverter {
     public static IssueResponseDto.GetIssueDto toIssueDto(Issue issue) {

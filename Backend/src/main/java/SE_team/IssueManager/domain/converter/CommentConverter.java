@@ -4,8 +4,8 @@ import java.util.List;
 
 import SE_team.IssueManager.domain.Comment;
 import SE_team.IssueManager.domain.Member;
-import SE_team.IssueManager.dto.CommentResponseDto;
-import SE_team.IssueManager.dto.MemberResponseDto;
+import SE_team.IssueManager.web.dto.CommentResponseDto;
+import SE_team.IssueManager.web.dto.MemberResponseDto;
 
 public class CommentConverter {
     public static CommentResponseDto.GetCommentDto toCommentDto(Comment comment) {

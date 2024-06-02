@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import SE_team.IssueManager.domain.Comment;
 import SE_team.IssueManager.domain.Issue;
 import SE_team.IssueManager.domain.Member;
-import SE_team.IssueManager.dto.CommentRequestDto;
+import SE_team.IssueManager.web.dto.CommentRequestDto;
 import SE_team.IssueManager.payload.code.status.ErrorStatus;
 import SE_team.IssueManager.payload.exception.handler.CommentHandler;
 import SE_team.IssueManager.payload.exception.handler.IssueHandler;
