@@ -18,11 +18,11 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import SE_team.IssueManager.dto.LoginRequestDto;
-import SE_team.IssueManager.dto.LoginResponseDto.LoginRespDTO;
 import SE_team.IssueManager.payload.ApiResponse;
 import SE_team.IssueManager.payload.code.status.SuccessStatus;
 import SE_team.IssueManager.service.AuthService;
+import SE_team.IssueManager.web.dto.LoginRequestDto;
+import SE_team.IssueManager.web.dto.LoginResponseDto.LoginRespDTO;
 import jakarta.transaction.Transactional;
 
 @AutoConfigureMockMvc

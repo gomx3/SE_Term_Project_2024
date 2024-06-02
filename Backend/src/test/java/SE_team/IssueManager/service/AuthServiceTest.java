@@ -21,13 +21,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import SE_team.IssueManager.domain.Member;
 import SE_team.IssueManager.domain.enums.Role;
-import SE_team.IssueManager.dto.LoginRequestDto;
-import SE_team.IssueManager.dto.LoginResponseDto.LoginRespDTO;
 import SE_team.IssueManager.payload.ApiResponse;
 import SE_team.IssueManager.payload.code.status.ErrorStatus;
 import SE_team.IssueManager.payload.code.status.SuccessStatus;
 import SE_team.IssueManager.payload.exception.LoginCheckFailException;
 import SE_team.IssueManager.repository.MemberRepository;
+import SE_team.IssueManager.web.dto.LoginRequestDto;
+import SE_team.IssueManager.web.dto.LoginResponseDto.LoginRespDTO;
 import jakarta.transaction.Transactional;
 
 @AutoConfigureMockMvc

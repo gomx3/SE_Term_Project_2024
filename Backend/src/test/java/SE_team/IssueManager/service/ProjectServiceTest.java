@@ -15,16 +15,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import SE_team.IssueManager.domain.Member;
+import SE_team.IssueManager.domain.Project;
+import SE_team.IssueManager.domain.ProjectMember;
 import SE_team.IssueManager.domain.enums.Role;
 import SE_team.IssueManager.payload.ApiResponse;
-import SE_team.IssueManager.project.dto.ProjectRequestDto.CreateProjectRequestDTO;
-import SE_team.IssueManager.project.dto.ProjectResponseDto.ProjectDTO;
-import SE_team.IssueManager.project.entity.Project;
-import SE_team.IssueManager.project.entity.ProjectMember;
-import SE_team.IssueManager.project.repository.ProjectMemberRepository;
-import SE_team.IssueManager.project.repository.ProjectRepository;
-import SE_team.IssueManager.project.service.ProjectService;
 import SE_team.IssueManager.repository.MemberRepository;
+import SE_team.IssueManager.repository.ProjectMemberRepository;
+import SE_team.IssueManager.repository.ProjectRepository;
+import SE_team.IssueManager.web.dto.ProjectRequestDto.CreateProjectRequestDTO;
+import SE_team.IssueManager.web.dto.ProjectResponseDto.ProjectDTO;
 import jakarta.transaction.Transactional;
 
 @AutoConfigureMockMvc

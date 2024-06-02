@@ -21,9 +21,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import SE_team.IssueManager.payload.ApiResponse;
 import SE_team.IssueManager.payload.code.status.SuccessStatus;
-import SE_team.IssueManager.project.dto.FindMyProjectResponseDto.FindMyProjectRespDTO;
-import SE_team.IssueManager.project.dto.FindMyProjectResponseDto.FindMyProjectRespDTO.ProjectInfo;
-import SE_team.IssueManager.project.service.FindMyProjectService;
+import SE_team.IssueManager.service.FindMyProjectService;
+import SE_team.IssueManager.web.dto.FindMyProjectResponseDto.FindMyProjectRespDTO;
+import SE_team.IssueManager.web.dto.FindMyProjectResponseDto.FindMyProjectRespDTO.ProjectInfo;
 import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 
@@ -33,41 +33,41 @@ import lombok.NoArgsConstructor;
 @Transactional
 @TestPropertySource(locations = "classpath:application-data.properties")
 class FindMyProjectControllerTest {
-    @Autowired
-    private MockMvc mockMvc;
+        @Autowired
+        private MockMvc mockMvc;
 
-    @MockBean
-    private FindMyProjectService findMyProjectService;
+        @MockBean
+        private FindMyProjectService findMyProjectService;
 
-    @Autowired
-    private ObjectMapper mapper;
+        @Autowired
+        private ObjectMapper mapper;
 
-    @Test
-    @DisplayName("내 프로젝트 조회")
-    void findMyProjects() throws Exception {
-        // Given
-        String memberId = "user123";
-        List<ProjectInfo> projectInfoList = Arrays.asList(
-                new ProjectInfo(1L, "Project A"),
-                new ProjectInfo(2L, "Project B"),
-                new ProjectInfo(3L, "Project C"));
-        FindMyProjectRespDTO projectRespDTO = new FindMyProjectRespDTO(memberId, projectInfoList);
+        @Test
+        @DisplayName("내 프로젝트 조회")
+        void findMyProjects() throws Exception {
+                // Given
+                String memberId = "user123";
+                List<ProjectInfo> projectInfoList = Arrays.asList(
+                                new ProjectInfo(1L, "Project A"),
+                                new ProjectInfo(2L, "Project B"),
+                                new ProjectInfo(3L, "Project C"));
+                FindMyProjectRespDTO projectRespDTO = new FindMyProjectRespDTO(memberId, projectInfoList);
 
-        ApiResponse<FindMyProjectRespDTO> response = ApiResponse.onSuccess(SuccessStatus.PROJECT_FIND_OK,
-                projectRespDTO);
+                ApiResponse<FindMyProjectRespDTO> response = ApiResponse.onSuccess(SuccessStatus.PROJECT_FIND_OK,
+                                projectRespDTO);
 
-        when(findMyProjectService.findMyProjects(memberId)).thenReturn(response);
+                when(findMyProjectService.findMyProjects(memberId)).thenReturn(response);
 
-        // When & Then
-        mockMvc.perform(get("/projects/{memberId}/check", memberId)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.result.memberId").value(memberId))
-                .andExpect(jsonPath("$.result.projectIds[0].projectId").value(1))
-                .andExpect(jsonPath("$.result.projectIds[0].projectName").value("Project A"))
-                .andExpect(jsonPath("$.result.projectIds[1].projectId").value(2))
-                .andExpect(jsonPath("$.result.projectIds[1].projectName").value("Project B"))
-                .andExpect(jsonPath("$.result.projectIds[2].projectId").value(3))
-                .andExpect(jsonPath("$.result.projectIds[2].projectName").value("Project C"));
-    }
+                // When & Then
+                mockMvc.perform(get("/projects/{memberId}/check", memberId)
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.result.memberId").value(memberId))
+                                .andExpect(jsonPath("$.result.projectIds[0].projectId").value(1))
+                                .andExpect(jsonPath("$.result.projectIds[0].projectName").value("Project A"))
+                                .andExpect(jsonPath("$.result.projectIds[1].projectId").value(2))
+                                .andExpect(jsonPath("$.result.projectIds[1].projectName").value("Project B"))
+                                .andExpect(jsonPath("$.result.projectIds[2].projectId").value(3))
+                                .andExpect(jsonPath("$.result.projectIds[2].projectName").value("Project C"));
+        }
 }

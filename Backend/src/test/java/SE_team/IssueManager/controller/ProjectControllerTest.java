@@ -19,9 +19,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import SE_team.IssueManager.payload.ApiResponse;
 import SE_team.IssueManager.payload.code.status.SuccessStatus;
-import SE_team.IssueManager.project.dto.ProjectRequestDto.CreateProjectRequestDTO;
-import SE_team.IssueManager.project.dto.ProjectResponseDto.ProjectDTO;
-import SE_team.IssueManager.project.service.ProjectService;
+import SE_team.IssueManager.service.ProjectService;
+import SE_team.IssueManager.web.dto.ProjectRequestDto.CreateProjectRequestDTO;
+import SE_team.IssueManager.web.dto.ProjectResponseDto.ProjectDTO;
 import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 
