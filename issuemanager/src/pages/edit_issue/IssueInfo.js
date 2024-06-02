@@ -130,7 +130,7 @@ function IssueInfo( { projectId, user, issue, setIssue, categories, isEditMode }
                 role: user.role,
                 memberId: user.memberId,
             }
-        }); ; // 이슈 세부 사항 확인 및 편집을 마치고 홈으로 이동
+        }); // 이슈 세부 사항 확인 및 편집을 마치고 홈으로 이동
     };
 
     return (
