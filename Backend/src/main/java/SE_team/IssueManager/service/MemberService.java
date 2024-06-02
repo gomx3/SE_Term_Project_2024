@@ -1,6 +1,7 @@
 package SE_team.IssueManager.service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -42,6 +43,10 @@ public class MemberService implements UserDetailsService {
 
     public Member signUp(MemberRequestDto.SignUpRequestDTO request) { // 회원가입 서비스
         String encryptedPassword = passwordEncoder.encode(request.getPw());
+        //빈 문자열인지 검사
+        if(Objects.equals(request.getMemberId(), "") ||request.getMemberId()==null|| Objects.equals(request.getPw(), "") ||request.getPw()==null){
+            throw new MemberHandler(ErrorStatus.MEMBER_BAD_REQUEST);
+        }
         Member member = Member.builder()
                 .pw(encryptedPassword)
                 .memberId(request.getMemberId())

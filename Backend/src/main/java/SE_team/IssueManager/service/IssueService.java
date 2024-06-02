@@ -40,7 +40,7 @@ public class IssueService {
     @Autowired
     private ProjectRepository projectRepository;
 
-
+    //이슈 생성
     public Issue createIssue(Long projectId,IssueRequestDto.CreateIssueRequestDto request) {
         Member reporter=memberRepository.findById(request.getReporterId()).orElse(null);
         if(reporter==null) throw new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND);

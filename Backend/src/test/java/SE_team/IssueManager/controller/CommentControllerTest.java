@@ -3,16 +3,17 @@ package SE_team.IssueManager.controller;
 import SE_team.IssueManager.domain.Comment;
 import SE_team.IssueManager.domain.Issue;
 import SE_team.IssueManager.domain.Member;
+import SE_team.IssueManager.domain.Project;
 import SE_team.IssueManager.domain.enums.Category;
 import SE_team.IssueManager.domain.enums.Priority;
 import SE_team.IssueManager.domain.enums.Role;
+import SE_team.IssueManager.repository.ProjectRepository;
+import SE_team.IssueManager.service.*;
 import SE_team.IssueManager.web.dto.CommentRequestDto;
 import SE_team.IssueManager.web.dto.IssueRequestDto;
 import SE_team.IssueManager.web.dto.MemberRequestDto;
-import SE_team.IssueManager.service.CommentService;
-import SE_team.IssueManager.service.IssueService;
-import SE_team.IssueManager.service.MemberService;
 import SE_team.IssueManager.web.controller.CommentController;
+import SE_team.IssueManager.web.dto.ProjectRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
@@ -43,6 +44,8 @@ class CommentControllerTest {
     private IssueService issueService;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private ProjectService projectService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -62,6 +65,8 @@ class CommentControllerTest {
     //코멘트 생성 정보
     String content1 ="content1";
     String content2 ="content2";
+    @Autowired
+    private ProjectMemberService projectMemberService;
 
 
     @BeforeEach
@@ -75,6 +80,16 @@ class CommentControllerTest {
 
 
         Long reporterId=member.getId();
+
+
+        //테스트 프로젝트 생성
+        ProjectRequestDto.CreateProjectRequestDTO createProjectRequestDTO=ProjectRequestDto.CreateProjectRequestDTO.builder()
+                .creatorId("seoyeon2")
+                .name("project1").build();
+        projectId=projectService.createProject(createProjectRequestDTO).getResult().getId();
+
+        //프로젝트에 멤버 추가
+        projectMemberService.addMemberToProject(projectId,"seoyeon2");
 
         //테스트 이슈 생성
         IssueRequestDto.CreateIssueRequestDto issueRequestDto1=IssueRequestDto.CreateIssueRequestDto.builder()

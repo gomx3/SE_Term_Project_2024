@@ -2,7 +2,13 @@ package SE_team.IssueManager.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import SE_team.IssueManager.domain.Project;
+import SE_team.IssueManager.repository.ProjectRepository;
+import SE_team.IssueManager.service.ProjectMemberService;
+import SE_team.IssueManager.service.ProjectService;
 import SE_team.IssueManager.web.controller.IssueController;
+import SE_team.IssueManager.web.dto.ProjectRequestDto;
+import SE_team.IssueManager.web.dto.ProjectResponseDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -57,8 +63,12 @@ class IssueControllerTest {
         Category category = Category.MEMORY_LEAK;
 
         Issue testIssue1;
+    @Autowired
+    private ProjectService projectService;
+    @Autowired
+    private ProjectMemberService projectMemberService;
 
-        @BeforeEach
+    @BeforeEach
         void setUp() {
                 // 멤버 회원가입
                 MemberRequestDto.SignUpRequestDTO memberDto = MemberRequestDto.SignUpRequestDTO.builder()
@@ -73,6 +83,16 @@ class IssueControllerTest {
                 dev = memberService.signUp(memberDto2);
 
                 Long reporterId = member.getId();
+
+                //테스트 프로젝트 생성
+                ProjectRequestDto.CreateProjectRequestDTO createProjectRequestDTO=ProjectRequestDto.CreateProjectRequestDTO.builder()
+                        .creatorId("seoyeon2")
+                        .name("project1").build();
+                projectId=projectService.createProject(createProjectRequestDTO).getResult().getId();
+
+            //프로젝트에 멤버 추가
+            projectMemberService.addMemberToProject(projectId,"seoyeon2");
+
 
                 // 테스트 이슈 생성
                 IssueRequestDto.CreateIssueRequestDto issueRequestDto1 = IssueRequestDto.CreateIssueRequestDto.builder()
@@ -105,7 +125,7 @@ class IssueControllerTest {
                 String body = mapper.writeValueAsString(request);
 
                 // 이슈 post
-                mockMvc.perform(MockMvcRequestBuilders.post("/issues/projects/{projectId}", 1)
+                mockMvc.perform(MockMvcRequestBuilders.post("/issues/projects/{projectId}", projectId)
                                 .content(body)
                                 .contentType("application/json"))
                                 .andExpect(status().isOk());
@@ -203,7 +223,7 @@ class IssueControllerTest {
         @DisplayName("월별 이슈 통계")
         void monthly_issue_statistics() throws Exception {
                 mockMvc.perform(MockMvcRequestBuilders.get("/issues/projects/{projectId}/statistics", projectId)
-                                .param("month", "5")
+                                .param("month", "6")
                                 .param("year", "2024"))
                                 .andExpect(status().isOk())
                                 .andExpect(jsonPath("$.result.issueCount").value("1"))

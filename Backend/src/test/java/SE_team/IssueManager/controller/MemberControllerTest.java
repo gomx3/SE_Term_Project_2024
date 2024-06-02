@@ -33,6 +33,7 @@ class MemberControllerTest {
         private ObjectMapper mapper = new ObjectMapper();
 
         @Test
+        @DisplayName("회원가입")
         void sign_up() throws Exception {
 
                 String pw = "1234";

@@ -68,4 +68,6 @@ public class Issue extends BaseTimeEntity{
     public void updateStatus(Status status) {
         this.status = status;
     }
+
+    public void setProject(Project project){this.project = project;}
 }

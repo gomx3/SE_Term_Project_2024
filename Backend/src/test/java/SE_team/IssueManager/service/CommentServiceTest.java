@@ -1,5 +1,7 @@
 package SE_team.IssueManager.service;
 
+import SE_team.IssueManager.domain.Project;
+import SE_team.IssueManager.repository.ProjectRepository;
 import SE_team.IssueManager.web.controller.CommentController;
 import SE_team.IssueManager.domain.Comment;
 import SE_team.IssueManager.domain.Issue;
@@ -11,6 +13,7 @@ import SE_team.IssueManager.web.dto.CommentRequestDto;
 import SE_team.IssueManager.web.dto.IssueRequestDto;
 import SE_team.IssueManager.web.dto.MemberRequestDto;
 import SE_team.IssueManager.repository.CommentRepository;
+import SE_team.IssueManager.web.dto.ProjectRequestDto;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -33,6 +36,8 @@ class CommentServiceTest {
     private MemberService memberService;
     @Autowired
     private IssueService issueService;
+    @Autowired
+    private ProjectService projectService;
 
     Member member;
     Issue testIssue1;
@@ -54,6 +59,8 @@ class CommentServiceTest {
     private CommentRepository commentRepository;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private ProjectMemberService projectMemberService;
 
     @BeforeEach
     void setUp() {
@@ -66,6 +73,15 @@ class CommentServiceTest {
 
 
         Long reporterId=member.getId();
+
+        //테스트 프로젝트 생성
+        ProjectRequestDto.CreateProjectRequestDTO createProjectRequestDTO=ProjectRequestDto.CreateProjectRequestDTO.builder()
+                .creatorId("seoyeon2")
+                .name("project1").build();
+        projectId=projectService.createProject(createProjectRequestDTO).getResult().getId();
+
+        //프로젝트에 멤버 추가
+        projectMemberService.addMemberToProject(projectId,"seoyeon2");
 
         //테스트 이슈 생성
         IssueRequestDto.CreateIssueRequestDto issueRequestDto1=IssueRequestDto.CreateIssueRequestDto.builder()
