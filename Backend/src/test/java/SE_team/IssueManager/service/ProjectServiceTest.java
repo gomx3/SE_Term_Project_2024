@@ -33,57 +33,57 @@ import jakarta.transaction.Transactional;
 @TestPropertySource(locations = "classpath:application-data.properties")
 class ProjectServiceTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+        @Autowired
+        private MockMvc mockMvc;
 
-    @Autowired
-    private ProjectService projectService;
+        @Autowired
+        private ProjectService projectService;
 
-    @Autowired
-    private ProjectRepository projectRepository;
+        @Autowired
+        private ProjectRepository projectRepository;
 
-    @Autowired
-    private MemberRepository memberRepository;
+        @Autowired
+        private MemberRepository memberRepository;
 
-    @Autowired
-    private ProjectMemberRepository projectMemberRepository;
+        @Autowired
+        private ProjectMemberRepository projectMemberRepository;
 
-    @Test
-    @DisplayName("프로젝트 생성 - 성공")
-    void createProject_Success() throws Exception {
-        // Given
-        CreateProjectRequestDTO request = CreateProjectRequestDTO.builder()
-                .name("Test Project")
-                .creatorId("user123")
-                .build();
+        @Test
+        @DisplayName("프로젝트 생성 - 성공")
+        void createProject_Success() throws Exception {
+                // Given
+                CreateProjectRequestDTO request = CreateProjectRequestDTO.builder()
+                                .name("Test Project")
+                                .creatorId("user123")
+                                .build();
 
-        // 프로젝트 생성
-        Project project = Project.builder()
-                .name(request.getName())
-                .build();
-        projectRepository.save(project);
+                // 프로젝트 생성
+                Project project = Project.builder()
+                                .name(request.getName())
+                                .build();
+                projectRepository.save(project);
 
-        // 멤버 생성
-        Member creator = Member.builder()
-                .memberId(request.getCreatorId())
-                .pw("password")
-                .role(Role.DEV)
-                .build();
-        memberRepository.save(creator);
+                // 멤버 생성
+                Member creator = Member.builder()
+                                .memberId(request.getCreatorId())
+                                .pw("password")
+                                .role(Role.DEV)
+                                .build();
+                memberRepository.save(creator);
 
-        // 프로젝트 멤버 생성
-        ProjectMember projectMember = ProjectMember.builder()
-                .project(project)
-                .member(creator)
-                .build();
-        projectMemberRepository.save(projectMember);
+                // 프로젝트 멤버 생성
+                ProjectMember projectMember = ProjectMember.builder()
+                                .project(project)
+                                .member(creator)
+                                .build();
+                projectMemberRepository.save(projectMember);
 
-        ApiResponse<ProjectDTO> response = projectService.createProject(request);
+                ApiResponse<ProjectDTO> response = projectService.createProject(request);
 
-        // Then
-        mockMvc.perform(post("/projects")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(request)))
-                .andExpect(status().isOk());
-    }
+                // Then
+                mockMvc.perform(post("/projects")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(new ObjectMapper().writeValueAsString(request)))
+                                .andExpect(status().isOk());
+        }
 }

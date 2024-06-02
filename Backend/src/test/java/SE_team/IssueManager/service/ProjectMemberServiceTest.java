@@ -6,10 +6,8 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,92 +41,92 @@ import lombok.NoArgsConstructor;
 @TestPropertySource(locations = "classpath:application-data.properties")
 class ProjectMemberServiceTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+        @Autowired
+        private MockMvc mockMvc;
 
-    @Mock
-    private ProjectRepository projectRepository;
+        @Mock
+        private ProjectRepository projectRepository;
 
-    @Mock
-    private MemberRepository memberRepository;
+        @Mock
+        private MemberRepository memberRepository;
 
-    @Mock
-    private ProjectMemberRepository projectMemberRepository;
+        @Mock
+        private ProjectMemberRepository projectMemberRepository;
 
-    @InjectMocks
-    private ProjectMemberService projectMemberService;
+        @InjectMocks
+        private ProjectMemberService projectMemberService;
 
-    @Test
-    @DisplayName("프로젝트에 멤버 추가 - 성공")
-    void addMemberToProject_Success() throws Exception {
-        // Given
-        Long projectId = 1L;
-        String memberId = "user123";
+        @Test
+        @DisplayName("프로젝트에 멤버 추가 - 성공")
+        void addMemberToProject_Success() throws Exception {
+                // Given
+                Long projectId = 1L;
+                String memberId = "user123";
 
-        Project project = Project.builder()
-                .id(projectId)
-                .name("Test Project")
-                .build();
+                Project project = Project.builder()
+                                .id(projectId)
+                                .name("Test Project")
+                                .build();
 
-        Member member = Member.builder()
-                .id(1L)
-                .memberId(memberId)
-                .build();
+                Member member = Member.builder()
+                                .id(1L)
+                                .memberId(memberId)
+                                .pw("password")
+                                .role(Role.DEV)
+                                .build();
 
-        when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
-        when(memberRepository.findByMemberId(memberId)).thenReturn(Optional.of(member));
+                ProjectMember savedProjectMember = ProjectMember.builder()
+                                .id(1L)
+                                .project(project)
+                                .member(member)
+                                .build();
 
-        ProjectMember savedProjectMember = ProjectMember.builder()
-                .id(1L)
-                .project(project)
-                .member(member)
-                .build();
+                when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
+                when(memberRepository.findByMemberId(memberId)).thenReturn(Optional.of(member));
+                when(projectMemberRepository.save(any(ProjectMember.class))).thenReturn(savedProjectMember);
 
-        when(projectMemberRepository.save(any(ProjectMember.class))).thenReturn(savedProjectMember);
+                // When
+                ApiResponse<ProjectMemberDTO> response = projectMemberService.addMemberToProject(projectId, memberId);
 
-        Set<String> existingMemberIds = new HashSet<>();
-        existingMemberIds.add(memberId);
+                // Then
+                mockMvc.perform(MockMvcRequestBuilders.post("/projects/{projectId}/members", projectId)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .param("projectId", String.valueOf(projectId))
+                                .content("{\"memberId\": \"" + memberId + "\"}"))
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.result.memberId").value(memberId))
+                                .andExpect(jsonPath("$.result.projectIds[0].projectId").value(1))
+                                .andExpect(jsonPath("$.result.projectIds[0].projectName").value("Test Project"));
 
-        // When
-        ApiResponse<ProjectMemberDTO> response = projectMemberService.addMemberToProject(projectId, memberId);
+        }
 
-        // Then
-        mockMvc.perform(MockMvcRequestBuilders.post("/projects/{projectId}/members", projectId)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.result.memberId").value(memberId))
-                .andExpect(jsonPath("$.result.projectIds[0].projectId").value(1))
-                .andExpect(jsonPath("$.result.projectIds[0].projectName").value("Test Project"));
+        @Test
+        @DisplayName("프로젝트에 속한 개발자 목록 조회")
+        void getProjectDevList_Success() {
+                // Given
+                Long projectId = 1L;
+                Member devMember1 = new Member();
+                devMember1.setId(1L);
+                devMember1.setMemberId("dev1");
+                devMember1.setRole(Role.DEV);
 
-    }
+                Member devMember2 = new Member();
+                devMember2.setId(2L);
+                devMember2.setMemberId("dev2");
+                devMember2.setRole(Role.DEV);
 
-    @Test
-    @DisplayName("프로젝트에 속한 개발자 목록 조회")
-    void getProjectDevList_Success() {
-        // Given
-        Long projectId = 1L;
-        Member devMember1 = new Member();
-        devMember1.setId(1L);
-        devMember1.setMemberId("dev1");
-        devMember1.setRole(Role.DEV);
+                List<Member> memberList = new ArrayList<>();
+                memberList.add(devMember1);
+                memberList.add(devMember2);
 
-        Member devMember2 = new Member();
-        devMember2.setId(2L);
-        devMember2.setMemberId("dev2");
-        devMember2.setRole(Role.DEV);
+                when(projectMemberRepository.findMembersByProjectId(projectId)).thenReturn(memberList);
 
-        List<Member> memberList = new ArrayList<>();
-        memberList.add(devMember1);
-        memberList.add(devMember2);
+                // When
+                List<String> devList = projectMemberService.getProjectDevList(projectId);
 
-        when(projectMemberRepository.findMembersByProjectId(projectId)).thenReturn(memberList);
-
-        // When
-        List<String> devList = projectMemberService.getProjectDevList(projectId);
-
-        // Then
-        assertEquals(2, devList.size());
-        assertEquals("dev1", devList.get(0));
-        assertEquals("dev2", devList.get(1));
-    }
+                // Then
+                assertEquals(2, devList.size());
+                assertEquals("dev1", devList.get(0));
+                assertEquals("dev2", devList.get(1));
+        }
 }
