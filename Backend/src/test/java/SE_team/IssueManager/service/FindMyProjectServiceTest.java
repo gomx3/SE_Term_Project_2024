@@ -8,11 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,20 +17,17 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import SE_team.IssueManager.domain.Member;
 import SE_team.IssueManager.payload.code.status.ErrorStatus;
 import SE_team.IssueManager.payload.code.status.SuccessStatus;
-import SE_team.IssueManager.project.controller.FindMyProjectController;
 import SE_team.IssueManager.project.dto.FindMyProjectResponseDto.FindMyProjectRespDTO.ProjectInfo;
 import SE_team.IssueManager.project.entity.Project;
 import SE_team.IssueManager.project.entity.ProjectMember;
 import SE_team.IssueManager.project.repository.ProjectMemberRepository;
 import SE_team.IssueManager.project.repository.ProjectRepository;
-import SE_team.IssueManager.project.service.FindMyProjectService;
 import SE_team.IssueManager.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 
@@ -56,15 +50,6 @@ class FindMyProjectServiceTest {
 
     @Autowired
     private ObjectMapper mapper;
-
-    @InjectMocks
-    private FindMyProjectService findMyProjectService;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(new FindMyProjectController(findMyProjectService)).build();
-    }
 
     @Test
     @DisplayName("내 프로젝트 찾기 - 성공")

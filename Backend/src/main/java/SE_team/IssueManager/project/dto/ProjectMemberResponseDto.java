@@ -6,10 +6,13 @@ import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 public class ProjectMemberResponseDto {
     @Data
+    @Getter
+    @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class ProjectMemberDTO {
@@ -23,7 +26,8 @@ public class ProjectMemberResponseDto {
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
-    public static class ProjectDevDto{
+    @Getter
+    public static class ProjectDevDto {
         private List<String> devList;
     }
 
