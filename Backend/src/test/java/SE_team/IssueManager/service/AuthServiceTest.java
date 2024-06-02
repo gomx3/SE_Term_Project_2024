@@ -35,99 +35,98 @@ import jakarta.transaction.Transactional;
 @Transactional
 @TestPropertySource(locations = "classpath:application-data.properties")
 class AuthServiceTest {
-    @Autowired
-    private MockMvc mockMvc;
+        @Autowired
+        private MockMvc mockMvc;
 
-    @MockBean
-    private AuthService authService;
+        @MockBean
+        private AuthService authService;
 
-    @MockBean
-    private MemberRepository memberRepository;
+        @MockBean
+        private MemberRepository memberRepository;
 
-    @Autowired
-    private ObjectMapper mapper;
+        @Autowired
+        private ObjectMapper mapper;
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+        @Autowired
+        private BCryptPasswordEncoder passwordEncoder;
 
-    @BeforeEach
-    void setUp() {
-        // Create a test user in the database
-        Member member = Member.builder()
-                .memberId("user123")
-                .pw(passwordEncoder.encode("password"))
-                .role(Role.DEV)
-                .build();
-        memberRepository.save(member);
-    }
+        @BeforeEach
+        void setUp() {
+                Member member = Member.builder()
+                                .memberId("user123")
+                                .pw(passwordEncoder.encode("password"))
+                                .role(Role.DEV)
+                                .build();
+                memberRepository.save(member);
+        }
 
-    @Test
-    @DisplayName("로그인 - 성공")
-    void login_Success() throws Exception {
-        // Given
-        LoginRequestDto loginRequest = new LoginRequestDto("user123", "password");
-        ApiResponse<LoginRespDTO> response = ApiResponse.onSuccess(SuccessStatus.MEMBER_OK, new LoginRespDTO());
-        when(authService.login(any(LoginRequestDto.class))).thenReturn(response);
+        @Test
+        @DisplayName("로그인 - 성공")
+        void login_Success() throws Exception {
+                // Given
+                LoginRequestDto loginRequest = new LoginRequestDto("user123", "password");
+                ApiResponse<LoginRespDTO> response = ApiResponse.onSuccess(SuccessStatus.MEMBER_OK, new LoginRespDTO());
 
-        // When & Then
-        mockMvc.perform(post("/members/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(loginRequest)))
-                .andExpect(status().isOk());
-    }
+                when(authService.login(any(LoginRequestDto.class))).thenReturn(response);
 
-    @Test
-    @DisplayName("로그인 - 실패 (아이디 없음)")
-    void login_Fail_NoUsername() throws Exception {
-        // Given
-        LoginRequestDto loginRequest = new LoginRequestDto("", "password");
-        when(authService.login(any(LoginRequestDto.class)))
-                .thenThrow(new LoginCheckFailException(ErrorStatus.INVALID_USERNAME));
+                mockMvc.perform(post("/members/login")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(mapper.writeValueAsString(loginRequest)))
+                                .andExpect(status().isOk());
+        }
 
-        // When & Then
-        mockMvc.perform(post("/members/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(loginRequest)))
-                .andExpect(status().isInternalServerError());
-    }
+        @Test
+        @DisplayName("로그인 - 실패 (아이디 없음)")
+        void login_Fail_NoUsername() throws Exception {
+                // Given
+                LoginRequestDto loginRequest = new LoginRequestDto("", "password");
 
-    @Test
-    @DisplayName("로그인 - 실패 (비밀번호 오류)")
-    void login_Fail_WrongPassword() throws Exception {
-        // Given
-        LoginRequestDto loginRequest = new LoginRequestDto("user123", "wrongpassword");
-        when(authService.login(any(LoginRequestDto.class)))
-                .thenThrow(new LoginCheckFailException(ErrorStatus.INVALID_PASSWORD));
+                when(authService.login(any(LoginRequestDto.class)))
+                                .thenThrow(new LoginCheckFailException(ErrorStatus.INVALID_USERNAME));
 
-        // When & Then
-        mockMvc.perform(post("/members/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(loginRequest)))
-                .andExpect(status().isInternalServerError());
-    }
+                mockMvc.perform(post("/members/login")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(mapper.writeValueAsString(loginRequest)))
+                                .andExpect(status().isInternalServerError());
+        }
 
-    @Test
-    @DisplayName("로그인 - 실패 (인증 실패)")
-    void login_Fail_AuthenticationError() throws Exception {
-        // Given
-        LoginRequestDto loginRequest = new LoginRequestDto("user123", "password");
-        when(authService.login(any(LoginRequestDto.class)))
-                .thenThrow(new LoginCheckFailException(ErrorStatus.INVALID_CREDENTIALS));
+        @Test
+        @DisplayName("로그인 - 실패 (비밀번호 오류)")
+        void login_Fail_WrongPassword() throws Exception {
+                // Given
+                LoginRequestDto loginRequest = new LoginRequestDto("user123", "wrongpassword");
 
-        // When & Then
-        mockMvc.perform(post("/members/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(loginRequest)))
-                .andExpect(status().isInternalServerError());
-    }
+                when(authService.login(any(LoginRequestDto.class)))
+                                .thenThrow(new LoginCheckFailException(ErrorStatus.INVALID_PASSWORD));
 
-    @Test
-    @DisplayName("로그아웃 - 성공")
-    void logout_Success() throws Exception {
+                mockMvc.perform(post("/members/login")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(mapper.writeValueAsString(loginRequest)))
+                                .andExpect(status().isInternalServerError());
+        }
 
-        // When & Then
-        mockMvc.perform(post("/members/logout")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
+        @Test
+        @DisplayName("로그인 - 실패 (인증 실패)")
+        void login_Fail_AuthenticationError() throws Exception {
+                // Given
+                LoginRequestDto loginRequest = new LoginRequestDto("user123", "password");
+
+                when(authService.login(any(LoginRequestDto.class)))
+                                .thenThrow(new LoginCheckFailException(ErrorStatus.INVALID_CREDENTIALS));
+
+                mockMvc.perform(post("/members/login")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(mapper.writeValueAsString(loginRequest)))
+                                .andExpect(status().isInternalServerError());
+        }
+
+        @Test
+        @DisplayName("로그아웃 - 성공")
+        void logout_Success() throws Exception {
+
+                // When & Then
+                mockMvc.perform(post("/members/logout")
+                                .contentType(MediaType.APPLICATION_JSON))
+                                .andExpect(status().isOk());
+        }
 }
