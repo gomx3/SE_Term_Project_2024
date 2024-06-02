@@ -19,11 +19,12 @@ import SE_team.IssueManager.project.dto.ProjectResponseDto.ProjectDTO;
 import SE_team.IssueManager.project.entity.Project;
 import SE_team.IssueManager.project.repository.ProjectMemberRepository;
 import SE_team.IssueManager.project.repository.ProjectRepository;
+import SE_team.IssueManager.project.service.ProjectService;
 import SE_team.IssueManager.repository.MemberRepository;
 
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-data.properties")
-class ProjectService {
+class ProjectServiceTest {
     @Autowired
     private ProjectService projectService;
     @Autowired
@@ -72,10 +73,5 @@ class ProjectService {
         assertTrue(savedMember.isPresent());
 
         assertNotNull(projectMemberRepository.findByProjectAndMember(savedProject.get(), savedMember.get()));
-    }
-
-    private ApiResponse<ProjectDTO> createProject(CreateProjectRequestDTO createProjectRequestDTO2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createProject'");
     }
 }
