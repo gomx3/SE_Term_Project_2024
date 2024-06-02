@@ -1,7 +1,6 @@
 package SE_team.IssueManager.domain;
 
 import SE_team.IssueManager.domain.enums.Role;
-import SE_team.IssueManager.project.entity.ProjectMember;
 import jakarta.persistence.*;
 import lombok.*;
 

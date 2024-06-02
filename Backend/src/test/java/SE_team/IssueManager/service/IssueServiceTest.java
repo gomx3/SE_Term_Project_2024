@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import SE_team.IssueManager.repository.ProjectRepository;
+import SE_team.IssueManager.web.dto.ProjectRequestDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -19,9 +21,9 @@ import SE_team.IssueManager.domain.enums.Category;
 import SE_team.IssueManager.domain.enums.Priority;
 import SE_team.IssueManager.domain.enums.Role;
 import SE_team.IssueManager.domain.enums.Status;
-import SE_team.IssueManager.dto.IssueRequestDto;
-import SE_team.IssueManager.dto.IssueResponseDto;
-import SE_team.IssueManager.dto.MemberRequestDto;
+import SE_team.IssueManager.web.dto.IssueRequestDto;
+import SE_team.IssueManager.web.dto.IssueResponseDto;
+import SE_team.IssueManager.web.dto.MemberRequestDto;
 import SE_team.IssueManager.payload.exception.handler.IssueHandler;
 import SE_team.IssueManager.repository.IssueRepository;
 import jakarta.transaction.Transactional;
@@ -37,6 +39,8 @@ class IssueServiceTest {
     MemberService memberService;
     @Autowired
     IssueRepository issueRepository;
+    @Autowired
+    ProjectService projectService;
 
     Member member;
     Member dev;
@@ -59,6 +63,8 @@ class IssueServiceTest {
 
     Issue testIssue1;
     Issue testIssue2;
+    @Autowired
+    private ProjectMemberService projectMemberService;
 
     @BeforeEach
     void setUp() {
@@ -76,6 +82,16 @@ class IssueServiceTest {
                 .pw("1234")
                 .role(Role.DEV).build();
         dev = memberService.signUp(memberDto2);
+
+        //테스트 프로젝트 생성
+        ProjectRequestDto.CreateProjectRequestDTO createProjectRequestDTO=ProjectRequestDto.CreateProjectRequestDTO.builder()
+                .creatorId("name1")
+                .name("project1").build();
+        projectId=projectService.createProject(createProjectRequestDTO).getResult().getId();
+
+        //프로젝트에 멤버 추가
+        projectMemberService.addMemberToProject(projectId,"name1");
+        projectMemberService.addMemberToProject(projectId,"name2");
 
         // 이슈 생성
         Long reporterId = member.getId();
@@ -100,6 +116,7 @@ class IssueServiceTest {
     }
 
     @Test
+    @DisplayName("이슈 생성")
     void createIssue() {
         // Given
         Long reporterId = member.getId();

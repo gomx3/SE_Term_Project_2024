@@ -11,7 +11,7 @@ import org.springframework.test.context.TestPropertySource;
 
 import SE_team.IssueManager.domain.Member;
 import SE_team.IssueManager.domain.enums.Role;
-import SE_team.IssueManager.dto.MemberRequestDto;
+import SE_team.IssueManager.web.dto.MemberRequestDto;
 import SE_team.IssueManager.payload.exception.handler.MemberHandler;
 import jakarta.transaction.Transactional;
 
