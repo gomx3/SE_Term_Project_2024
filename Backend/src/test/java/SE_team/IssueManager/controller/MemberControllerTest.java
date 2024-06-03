@@ -56,7 +56,6 @@ class MemberControllerTest {
         @Test
         @DisplayName("중복된 memberId 설정")
         void sign_up_duplicated_memberId() throws Exception { // 아직 미완성 (예외처리 작업중)..
-
                 String pw = "1234";
                 String memberId = "spring";
                 Role role = Role.ADMIN;
