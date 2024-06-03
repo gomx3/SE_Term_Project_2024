@@ -1,29 +1,21 @@
 package SE_team.IssueManager.service;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import SE_team.IssueManager.domain.Member;
 import SE_team.IssueManager.domain.Project;
-import SE_team.IssueManager.domain.ProjectMember;
 import SE_team.IssueManager.domain.enums.Role;
 import SE_team.IssueManager.payload.ApiResponse;
 import SE_team.IssueManager.repository.MemberRepository;
@@ -41,62 +33,52 @@ import lombok.NoArgsConstructor;
 class ProjectMemberServiceTest {
 
         @Autowired
-        private MockMvc mockMvc;
-
-        @Mock
         private ProjectRepository projectRepository;
 
-        @Mock
+        @Autowired
         private MemberRepository memberRepository;
 
-        @Mock
+        @Autowired
         private ProjectMemberRepository projectMemberRepository;
 
-        @InjectMocks
+        @Autowired
         private ProjectMemberService projectMemberService;
 
-        @Test
-        @DisplayName("프로젝트에 멤버 추가 - 성공")
-        void addMemberToProject_Success() throws Exception {
-                // Given
-                Long projectId = 1L;
-                String memberId = "user123";
+        private Project project;
+        private Member member;
 
-                Project project = Project.builder()
-                                .id(projectId)
+        @BeforeEach
+        void setUp() {
+                // Create a project
+                project = Project.builder()
                                 .name("Test Project")
                                 .build();
+                projectRepository.save(project);
 
-                Member member = Member.builder()
-                                .id(1L)
-                                .memberId(memberId)
+                // Create a member
+                member = Member.builder()
+                                .memberId("user123")
                                 .pw("password")
                                 .role(Role.DEV)
                                 .build();
+                memberRepository.save(member);
+        }
 
-                ProjectMember savedProjectMember = ProjectMember.builder()
-                                .id(1L)
-                                .project(project)
-                                .member(member)
-                                .build();
-
-                when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
-                when(memberRepository.findByMemberId(memberId)).thenReturn(Optional.of(member));
-                when(projectMemberRepository.save(any(ProjectMember.class))).thenReturn(savedProjectMember);
+        @Test
+        @DisplayName("프로젝트에 멤버 추가 - 성공")
+        void addMemberToProject_Success() {
+                // Given
+                Long projectId = project.getId();
+                String memberId = member.getMemberId();
 
                 // When
                 ApiResponse<ProjectMemberDTO> response = projectMemberService.addMemberToProject(projectId, memberId);
 
                 // Then
-                mockMvc.perform(MockMvcRequestBuilders.post("/projects/{projectId}/members", projectId)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .param("projectId", String.valueOf(projectId))
-                                .content("{\"memberId\": \"" + memberId + "\"}"))
-                                .andExpect(status().isOk())
-                                .andExpect(jsonPath("$.result.memberId").value(memberId))
-                                .andExpect(jsonPath("$.result.projectIds[0].projectId").value(1))
-                                .andExpect(jsonPath("$.result.projectIds[0].projectName").value("Test Project"));
-
+                ProjectMemberDTO projectMemberDTO = response.getResult();
+                assertEquals(projectId, projectMemberDTO.getProjectId());
+                assertEquals("Test Project", projectMemberDTO.getName());
+                assertTrue(projectMemberDTO.getMemberIds().contains(memberId));
         }
 
         @Test
