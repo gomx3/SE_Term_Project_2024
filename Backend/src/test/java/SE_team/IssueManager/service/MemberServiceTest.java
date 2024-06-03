@@ -17,7 +17,7 @@ import jakarta.transaction.Transactional;
 
 @SpringBootTest
 @Transactional
-@TestPropertySource(locations = "classpath:application-data.properties")
+@TestPropertySource(locations = "classpath:application-test.yml")
 class MemberServiceTest {
     @Autowired
     MemberService memberService;

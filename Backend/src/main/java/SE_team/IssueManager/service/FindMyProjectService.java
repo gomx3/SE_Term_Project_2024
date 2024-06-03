@@ -3,22 +3,22 @@ package SE_team.IssueManager.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import SE_team.IssueManager.domain.Member;
-import SE_team.IssueManager.payload.code.status.ErrorStatus;
-import SE_team.IssueManager.payload.exception.handler.MemberHandler;
-import SE_team.IssueManager.payload.exception.handler.ProjectHandler;
-import SE_team.IssueManager.domain.ProjectMember;
-import SE_team.IssueManager.repository.ProjectRepository;
-import SE_team.IssueManager.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import SE_team.IssueManager.domain.Member;
+import SE_team.IssueManager.domain.Project;
+import SE_team.IssueManager.domain.ProjectMember;
 import SE_team.IssueManager.payload.ApiResponse;
+import SE_team.IssueManager.payload.code.status.ErrorStatus;
 import SE_team.IssueManager.payload.code.status.SuccessStatus;
+import SE_team.IssueManager.payload.exception.handler.MemberHandler;
+import SE_team.IssueManager.payload.exception.handler.ProjectHandler;
+import SE_team.IssueManager.repository.MemberRepository;
+import SE_team.IssueManager.repository.ProjectMemberRepository;
+import SE_team.IssueManager.repository.ProjectRepository;
 import SE_team.IssueManager.web.dto.FindMyProjectResponseDto.FindMyProjectRespDTO;
 import SE_team.IssueManager.web.dto.FindMyProjectResponseDto.FindMyProjectRespDTO.ProjectInfo;
-import SE_team.IssueManager.domain.Project;
-import SE_team.IssueManager.repository.ProjectMemberRepository;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -29,7 +29,8 @@ public class FindMyProjectService {
     private final ProjectRepository projectRepository;
 
     @Autowired
-    public FindMyProjectService(ProjectMemberRepository projectMemberRepository, MemberRepository memberRepository, ProjectRepository projectRepository) {
+    public FindMyProjectService(ProjectMemberRepository projectMemberRepository, MemberRepository memberRepository,
+            ProjectRepository projectRepository) {
         this.projectMemberRepository = projectMemberRepository;
         this.memberRepository = memberRepository;
         this.projectRepository = projectRepository;
@@ -37,16 +38,18 @@ public class FindMyProjectService {
 
     public ApiResponse<FindMyProjectRespDTO> findMyProjects(String memberId) {
 
-        Member member=memberRepository.findByMemberId(memberId).orElse(null);
-        if(member==null) throw new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND);
-        List<ProjectMember> projectMembers=projectMemberRepository.findProjectIdsByMemberId(member.getId());
+        Member member = memberRepository.findByMemberId(memberId).orElse(null);
+        if (member == null)
+            throw new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND);
+        List<ProjectMember> projectMembers = projectMemberRepository.findProjectIdsByMemberId(member.getId());
 
         List<ProjectInfo> projectInfoList = new ArrayList<>();
 
-        for(ProjectMember projectMember : projectMembers){
-            Project project=projectRepository.findById(projectMember.getProject().getId()).orElse(null);
-            if(project==null) throw new ProjectHandler(ErrorStatus.PROJECT_NOT_FOUND);
-            projectInfoList.add(new ProjectInfo(project.getId(),project.getName()));
+        for (ProjectMember projectMember : projectMembers) {
+            Project project = projectRepository.findById(projectMember.getProject().getId()).orElse(null);
+            if (project == null)
+                throw new ProjectHandler(ErrorStatus.PROJECT_NOT_FOUND);
+            projectInfoList.add(new ProjectInfo(project.getId(), project.getName()));
         }
         FindMyProjectRespDTO result = new FindMyProjectRespDTO(memberId, projectInfoList);
 

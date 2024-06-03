@@ -38,7 +38,7 @@ import lombok.NoArgsConstructor;
 @SpringBootTest
 @NoArgsConstructor
 @Transactional
-@TestPropertySource(locations = "classpath:application-data.properties")
+@TestPropertySource(locations = "classpath:application-test.yml")
 class IssueControllerTest {
         @Autowired
         private IssueService issueService;
@@ -195,7 +195,7 @@ class IssueControllerTest {
 
         @Test
         @DisplayName("dev가 아닌 멤버가 이슈 fixed로 수정 시도")
-        void issue_delete() throws Exception {
+        void fix_issue_not_dev() throws Exception {
                 Long id = member.getId();
                 IssueRequestDto.UpdateIssueStatusRequestDto request = IssueRequestDto.UpdateIssueStatusRequestDto
                                 .builder()
