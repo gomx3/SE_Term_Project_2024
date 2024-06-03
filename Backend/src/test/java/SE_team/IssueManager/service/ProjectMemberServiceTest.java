@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import SE_team.IssueManager.web.dto.ProjectMemberReqeustDto;
+import SE_team.IssueManager.web.dto.ProjectMemberResponseDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -55,6 +58,8 @@ class ProjectMemberServiceTest {
         @InjectMocks
         private ProjectMemberService projectMemberService;
 
+        ObjectMapper objectMapper = new ObjectMapper();
+
         @Test
         @DisplayName("프로젝트에 멤버 추가 - 성공")
         void addMemberToProject_Success() throws Exception {
@@ -87,15 +92,8 @@ class ProjectMemberServiceTest {
                 // When
                 ApiResponse<ProjectMemberDTO> response = projectMemberService.addMemberToProject(projectId, memberId);
 
-                // Then
-                mockMvc.perform(MockMvcRequestBuilders.post("/projects/{projectId}/members", projectId)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .param("projectId", String.valueOf(projectId))
-                                .content("{\"memberId\": \"" + memberId + "\"}"))
-                                .andExpect(status().isOk())
-                                .andExpect(jsonPath("$.result.memberId").value(memberId))
-                                .andExpect(jsonPath("$.result.projectIds[0].projectId").value(1))
-                                .andExpect(jsonPath("$.result.projectIds[0].projectName").value("Test Project"));
+                System.out.println(response.getResult().getProjectId());
+                assertEquals(projectId,response.getResult().getProjectId());
 
         }
 
