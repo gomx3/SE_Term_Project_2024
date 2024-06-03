@@ -101,10 +101,10 @@ body {
   content:'✔';
   background-repeat: no-repeat;
   background-position: center;
-  content: "\2713"; /* 체크 표시 */
-  color: white; /* 체크 표시 색상 */
-  text-align: center; /* 체크 표시 정렬 */
-  line-height: 17px; /* 체크 표시 세로 정렬 */
+  content: "\2713"; 
+  color: white; 
+  text-align: center; 
+  line-height: 17px; 
 }
 
 

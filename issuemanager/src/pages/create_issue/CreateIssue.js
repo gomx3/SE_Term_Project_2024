@@ -5,30 +5,30 @@ import IssueComment from './IssueComment';
 import styles from './CreateIssue.module.css';
 
 function CreateIssue() {
-  const location = useLocation(); // 프로젝트 페이지에서 정보 받아오기
+  const location = useLocation(); 
 
-  /* 프로젝트 정보 */
+
   const projectId = location.state.projectId;
-  /* 사용자 정보 */
-  const [user, setUser] = useState({ // 로그인한 사용자로
+
+  const [user, setUser] = useState({ 
     id: location.state.userId,
     memberId: location.state.memberId,
     role: location.state.userRole,
   });
-  /* 이슈 정보  */
+
   const [issue, setIssue] = useState({
     id: '',
     title: '',
     description: '',
     status: 'NEW',
     category: 'OTHERS',
-    reporter: user.memberId, // 로그인한 사용자
+    reporter: user.memberId, 
     reportedDate: '',
     priority: 'MAJOR',
     assignee: '',
     fixer:'',
   });
-  /* 코멘트 정보 */
+
   const [comment, setComment] = useState({
     comments: [],
     content: '',
@@ -44,8 +44,7 @@ function CreateIssue() {
 
   function getLocalDateISOString() {
     const now = new Date();
-    const timezoneOffset = now.getTimezoneOffset() * 60000; // UTC를 KST로 (로컬 시간대의 오프셋을 분으로 계산)
-    // 현재 시간에서 시간대 오프셋을 빼서 로컬 시간을 UTC와 동일한 형식으로 맞춤
+    const timezoneOffset = now.getTimezoneOffset() * 60000;
     const localISOString = new Date(now - timezoneOffset).toISOString().split('T')[0];
     return localISOString;
   }
@@ -73,7 +72,6 @@ function CreateIssue() {
         />
       </div>
       <div className={styles.commentContainer}>
-        {/* 현재 사용자 memberId 출력 */}
         <div className={styles.userInfo}>
           <p>current user: {user.memberId}/{user.role}</p>
         </div>

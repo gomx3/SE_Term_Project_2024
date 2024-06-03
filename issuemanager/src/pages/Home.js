@@ -128,7 +128,7 @@ function Catalog({ role, setSelectedProject, memberId, userId }) {
 
     const requestBody = {
       name: newProjectName,
-      creatorId: memberId,  // Use memberId here
+      creatorId: memberId, 
     };
 
     try {

@@ -39,7 +39,7 @@ function IssueInfo( { projectId, user, issue, setIssue, categories } ) {
                 }),
             })
 
-            const data = await response.json(); // response.json() 호출 결과를 기다린 후 변수에 할당
+            const data = await response.json();
             console.log(issue);
 
             if (data.isSuccess) {
@@ -48,7 +48,7 @@ function IssueInfo( { projectId, user, issue, setIssue, categories } ) {
 
                 issue.id = data.result.issueId;
             } else {
-                alert('이슈 생성에 실패했습니다: ' + data.message); // 수정: 실패 시 서버에서 받은 메시지를 출력
+                alert('이슈 생성에 실패했습니다: ' + data.message); 
             }
         } catch (error) {
             console.error('이슈 생성 실패: ', error);
@@ -57,7 +57,7 @@ function IssueInfo( { projectId, user, issue, setIssue, categories } ) {
     }
 
     const onHomeClick = async (event) => {
-        event.preventDefault(); // 폼 제출 시 새로고침 방지
+        event.preventDefault(); 
         navigate('/', {
             state: {
                 projectId, 
@@ -65,7 +65,7 @@ function IssueInfo( { projectId, user, issue, setIssue, categories } ) {
                 role: user.role,
                 memberId: user.memberId,
             }
-        }); // 이슈 생성 후 홈으로 이동 
+        });
     };
     
     return (
@@ -103,7 +103,7 @@ function IssueInfo( { projectId, user, issue, setIssue, categories } ) {
                                 name="category"
                                 value={category}
                                 checked={issue.category === category}
-                                onChange={() => handleCategoryChange(index)} // 인덱스를 인자로 전달
+                                onChange={() => handleCategoryChange(index)} 
                             />
                             <label className={styles.label} htmlFor={category}>
                                 {category}
@@ -125,7 +125,7 @@ function IssueInfo( { projectId, user, issue, setIssue, categories } ) {
                     type="text"
                     name="reportedDate"
                     value={issue.reportedDate}
-                    disabled // 날짜는 수정 불가능
+                    disabled 
                 />
                 <label className={styles.label}>Priority</label>
                 <select className={styles.select}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './projectpage.css'; // Import the CSS file
-import Statistics from './Statistics'; // Import the Statistics component
+import './projectpage.css'; 
+import Statistics from './Statistics'; 
 
 function Projectinfo({ project, userId, userRole, memberId }) {
   const [showAccountInput, setShowAccountInput] = useState(false);
@@ -73,7 +73,7 @@ function Projectinfo({ project, userId, userRole, memberId }) {
     }
   
     const requestBody = {
-      memberId: accountId  // Use array for memberId
+      memberId: accountId 
     };
   
     console.log('Sending request:', JSON.stringify(requestBody));
