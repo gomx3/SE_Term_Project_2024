@@ -18,6 +18,7 @@ import org.springframework.test.context.TestPropertySource;
 import SE_team.IssueManager.domain.Member;
 import SE_team.IssueManager.domain.Project;
 import SE_team.IssueManager.domain.ProjectMember;
+import SE_team.IssueManager.domain.enums.Role;
 import SE_team.IssueManager.payload.ApiResponse;
 import SE_team.IssueManager.payload.code.status.SuccessStatus;
 import SE_team.IssueManager.payload.exception.handler.MemberHandler;
@@ -53,6 +54,7 @@ class FindMyProjectServiceTest {
                                 .id(1L)
                                 .memberId(memberId)
                                 .pw("password")
+                                .role(Role.DEV)
                                 .build();
                 when(memberRepository.findByMemberId(memberId)).thenReturn(Optional.of(member));
 
