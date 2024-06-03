@@ -69,12 +69,27 @@ class FindMyProjectServiceTest {
                 memberRepository.save(member);
 
                 // 프로젝트 저장
-                Project project1 = Project.builder().id(1L).name("Project A").build();
+                Project project1 = Project.builder()
+                                .id(1L)
+                                .name("Project A")
+                                .build();
                 projectRepository.save(project1);
 
+                Project project2 = Project.builder()
+                                .id(2L)
+                                .name("Project B")
+                                .build();
+                projectRepository.save(project2);
+
                 List<ProjectInfo> projectInfoList = new ArrayList<>();
-                projectInfoList.add(ProjectInfo.builder().projectId(1L).projectName("Project A").build());
-                projectInfoList.add(ProjectInfo.builder().projectId(2L).projectName("Project B").build());
+                projectInfoList.add(ProjectInfo.builder()
+                                .projectId(1L)
+                                .projectName("Project A")
+                                .build());
+                projectInfoList.add(ProjectInfo.builder()
+                                .projectId(2L)
+                                .projectName("Project B")
+                                .build());
 
                 List<ProjectMember> projectMembers = new ArrayList<>();
                 ProjectMember projectMember1 = ProjectMember.builder()
@@ -82,9 +97,6 @@ class FindMyProjectServiceTest {
                                 .member(member)
                                 .build();
                 projectMemberRepository.save(projectMember1);
-
-                Project project2 = Project.builder().id(2L).name("Project B").build();
-                projectRepository.save(project2);
 
                 ProjectMember projectMember2 = ProjectMember.builder()
                                 .project(project2)
