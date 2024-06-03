@@ -6,11 +6,10 @@ function IssueComment({ user, issue, comment, setComment }) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    // API 요청을 보내기 전에, 로컬 상태에 코멘트를 추가하는 방식
     const localComment = {
         id: user.id,
         memberId: user.memberId,
-        content: comment.newComment, // 현재 입력 필드에 있는 코멘트 내용
+        content: comment.newComment, 
         createdAt: formatDate(new Date().toISOString())
     };
 
@@ -47,14 +46,14 @@ function IssueComment({ user, issue, comment, setComment }) {
                 }),
             });
 
-            const data = await response.json(); // response.json() 호출 결과를 기다린 후 변수에 할당
+            const data = await response.json(); 
             console.log(localComment);
 
             if (data.isSuccess) {
                 setComment((prevIssue) => ({
                     ...prevIssue,
                     comments: [...prevIssue.comments, localComment],
-                    newComment: '', // 입력 필드 초기화
+                    newComment: '', 
                 }));
             } else {
                 alert(data.message || 'Something went wrong');
