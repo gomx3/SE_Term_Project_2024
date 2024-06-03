@@ -1,0 +1,87 @@
+body, html, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.home-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.home-header {
+  flex: 0 0 15%;  
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background-color: #f8f5f9;
+  border-bottom: 1px solid #ccc;
+}
+
+.home-main {
+  flex: 0 0 88%; 
+  display: flex;
+}
+
+.home-catalog {
+  flex: 0 0 11%; 
+  padding: 10px;
+  border-right: 1px solid #cccccc;
+  background-color: #fafafa;
+}
+
+.home-content {
+  flex: 0 0 89%;  
+  padding: 10px;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  margin-left: 10px; 
+}
+
+.add-button {
+  font-size: 15px;
+  width: 150px;
+  height: 60px;
+  background-color: #d7c3de; 
+  color: #fff; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  margin-left: 10px;
+  margin-top: 0;
+}
+
+.proj-cancel {
+  width: 80px;
+  height: 40px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-left: 2px;
+}
+
+.proj-add {
+  width: 60px;
+  height: 40px;
+  margin-left: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.logout-link{
+  width: 80px;
+  height: 35px;
+  margin-left: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.project-item {
+  cursor: pointer; 
+}
